@@ -1,33 +1,83 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import React, { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { AsYouType, isValidPhoneNumber } from "libphonenumber-js/max";
 import Icon from "./icons/Icon";
 import ContactFormField from "./ContactFormField";
 import type { SiteDictionary } from "@/lib/dictionaries";
+import type { Locale } from "@/lib/dictionaries";
 
 type FormData = {
   name: string;
-  email: string;
+  contact: string;
   subject: string;
   message: string;
 };
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-type ContactFormClientProps = {
-  copy: SiteDictionary["contactForm"];
+const LOCALE_TO_COUNTRY: Record<Locale, string> = {
+  en: "US",
+  cs: "CZ",
+  ru: "RU",
 };
 
-export default function ContactFormClient({ copy }: ContactFormClientProps) {
+function isEmail(value: string): boolean {
+  return EMAIL_REGEX.test(value.trim());
+}
+
+function validateContact(value: string, defaultCountry: string): boolean {
+  const trimmed = value.trim();
+  if (!trimmed) return false;
+  if (isEmail(trimmed)) return true;
+  return isValidPhoneNumber(trimmed, defaultCountry as never);
+}
+
+function formatPhoneInput(value: string, defaultCountry: string): string {
+  if (value.includes("@")) return value;
+  const trimmed = value.trim();
+  if (!trimmed) return value;
+
+  const hadPlus = trimmed.startsWith("+");
+  const digits = trimmed.replace(/\D/g, "");
+  if (digits.length === 0) return hadPlus ? "+" : value;
+
+  const withPlus = hadPlus ? trimmed : `+${digits}`;
+  // Если юзер сам ввёл + и код страны — форматируем через libphonenumber
+  if (hadPlus) {
+    const formatter = new AsYouType();
+    return formatter.input(withPlus);
+  }
+  // Просто + и группировка по 3
+  const parts: string[] = [];
+  for (let i = 0; i < digits.length; i += 3) {
+    parts.push(digits.slice(i, i + 3));
+  }
+  return "+" + parts.join(" ");
+}
+
+type ContactFormClientProps = {
+  copy: SiteDictionary["contactForm"];
+  locale: Locale;
+};
+
+export default function ContactFormClient({
+  copy,
+  locale,
+}: ContactFormClientProps) {
+  const defaultCountry = useMemo(
+    () => LOCALE_TO_COUNTRY[locale] ?? "US",
+    [locale]
+  );
   const [formData, setFormData] = useState<FormData>({
     name: "",
-    email: "",
+    contact: "",
     subject: "",
     message: "",
   });
   const [status, setStatus] = useState<
-    "idle" | "sending" | "success" | "error"
+    "idle" | "sending" | "success" | "error" | "rateLimit"
   >("idle");
   const [focused, setFocused] = useState<keyof FormData | null>(null);
   const [errors, setErrors] = useState<
@@ -37,13 +87,15 @@ export default function ContactFormClient({ copy }: ContactFormClientProps) {
 
   const validate = (): boolean => {
     const e: Partial<Record<keyof FormData, boolean>> = {};
-    const { email } = formData;
-    if (!EMAIL_REGEX.test(email.trim())) e.email = true;
+    const { contact } = formData;
+    if (!validateContact(contact, defaultCountry)) e.contact = true;
     setErrors(e);
     return Object.keys(e).length === 0;
   };
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (
+    e: Parameters<NonNullable<React.ComponentProps<"form">["onSubmit"]>>[0]
+  ) => {
     e.preventDefault();
     if (honeypot || !validate()) return;
 
@@ -52,15 +104,27 @@ export default function ContactFormClient({ copy }: ContactFormClientProps) {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          defaultCountry,
+          locale,
+          website: honeypot,
+        }),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to submit contact form");
+        if (response.status === 429) {
+          setStatus("rateLimit");
+          setTimeout(() => setStatus("idle"), 15000);
+        } else {
+          setStatus("error");
+          setTimeout(() => setStatus("idle"), 6000);
+        }
+        return;
       }
 
       setStatus("success");
-      setFormData({ name: "", email: "", subject: "", message: "" });
+      setFormData({ name: "", contact: "", subject: "", message: "" });
       setErrors({});
       setHoneypot("");
       setTimeout(() => setStatus("idle"), 6000);
@@ -71,7 +135,11 @@ export default function ContactFormClient({ copy }: ContactFormClientProps) {
   };
 
   const updateField = (id: keyof FormData, value: string) => {
-    setFormData((p) => ({ ...p, [id]: value }));
+    const finalValue =
+      id === "contact" && /^[\d+\s\-()]*$/.test(value) && !value.includes("@")
+        ? formatPhoneInput(value, defaultCountry)
+        : value;
+    setFormData((p) => ({ ...p, [id]: finalValue }));
     if (errors[id]) {
       setErrors((e) => {
         const next = { ...e };
@@ -122,15 +190,18 @@ export default function ContactFormClient({ copy }: ContactFormClientProps) {
           onBlur={() => setFocused(null)}
         />
         <ContactFormField
-          id="email"
-          label={copy.email}
-          type="email"
-          value={formData.email}
-          isFocused={focused === "email"}
-          error={!!errors.email}
+          id="contact"
+          label={copy.contact}
+          type="text"
+          inputMode={
+            /^[\d+\s\-()]/.test(formData.contact.trim()) ? "tel" : "email"
+          }
+          value={formData.contact}
+          isFocused={focused === "contact"}
+          error={!!errors.contact}
           required
-          onChange={(v) => updateField("email", v)}
-          onFocus={() => setFocused("email")}
+          onChange={(v) => updateField("contact", v)}
+          onFocus={() => setFocused("contact")}
           onBlur={() => setFocused(null)}
         />
       </div>
@@ -186,6 +257,19 @@ export default function ContactFormClient({ copy }: ContactFormClientProps) {
           {copy.error}
         </p>
       )}
+      {status === "rateLimit" && (
+        <p
+          role="alert"
+          style={{
+            marginTop: "1.25rem",
+            fontFamily: "var(--font-body)",
+            fontSize: "13px",
+            color: "#c44",
+          }}
+        >
+          {copy.rateLimitError}
+        </p>
+      )}
       <div style={{ marginTop: "2.5rem" }}>
         <AnimatePresence mode="wait">
           {status === "success" ? (
@@ -211,18 +295,26 @@ export default function ContactFormClient({ copy }: ContactFormClientProps) {
             <motion.button
               key="submit"
               type="submit"
-              disabled={status === "sending"}
+              disabled={status === "sending" || status === "rateLimit"}
               whileHover={
-                status !== "sending" ? { scale: 1.01, translateY: -1 } : {}
+                status !== "sending" && status !== "rateLimit"
+                  ? { scale: 1.01, translateY: -1 }
+                  : {}
               }
-              whileTap={status !== "sending" ? { scale: 0.98 } : {}}
+              whileTap={
+                status !== "sending" && status !== "rateLimit"
+                  ? { scale: 0.98 }
+                  : {}
+              }
               style={{
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "10px",
                 padding: "15px 36px",
                 backgroundColor:
-                  status === "sending" ? "#9f9f9f" : "var(--c-blue)",
+                  status === "sending" || status === "rateLimit"
+                    ? "#9f9f9f"
+                    : "var(--c-blue)",
                 color: "white",
                 fontFamily: "var(--font-ui)",
                 fontSize: "11px",
@@ -231,11 +323,14 @@ export default function ContactFormClient({ copy }: ContactFormClientProps) {
                 textTransform: "uppercase",
                 border: "none",
                 borderRadius: "2px",
-                cursor: status === "sending" ? "not-allowed" : "pointer",
+                cursor:
+                  status === "sending" || status === "rateLimit"
+                    ? "not-allowed"
+                    : "pointer",
                 transition:
                   "background-color 0.22s ease, box-shadow 0.22s ease",
                 boxShadow:
-                  status !== "sending"
+                  status !== "sending" && status !== "rateLimit"
                     ? "0 4px 20px rgba(29,86,176,0.28)"
                     : "none",
               }}

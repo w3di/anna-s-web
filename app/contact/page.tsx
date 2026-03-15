@@ -159,7 +159,7 @@ export default async function ContactPage() {
                 >
                   {copy.formText}
                 </p>
-                <ContactForm copy={dictionary.contactForm} />
+                <ContactForm copy={dictionary.contactForm} locale={locale} />
               </div>
             </AnimateOnScroll>
 

@@ -4,6 +4,8 @@ export type FieldProps = {
   id: string;
   label: string;
   type?: string;
+  inputMode?: "email" | "tel" | "text";
+  prefix?: string;
   multiline?: boolean;
   rows?: number;
   value: string;
@@ -19,6 +21,8 @@ export default function ContactFormField({
   id,
   label,
   type = "text",
+  inputMode,
+  prefix,
   multiline = false,
   rows = 5,
   value,
@@ -30,6 +34,7 @@ export default function ContactFormField({
   onBlur,
 }: FieldProps) {
   const hasValue = value.length > 0;
+  const showPrefix = Boolean(prefix);
   const inputStyle = {
     width: "100%" as const,
     background: "transparent" as const,
@@ -81,17 +86,39 @@ export default function ContactFormField({
           style={{ ...inputStyle, resize: "none" as const, lineHeight: "1.7" }}
         />
       ) : (
-        <input
-          id={id}
-          type={type}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          onFocus={onFocus}
-          onBlur={onBlur}
-          required={required}
-          aria-invalid={error || undefined}
-          style={inputStyle}
-        />
+        <div
+          style={{
+            display: showPrefix ? "flex" : "block",
+            alignItems: "baseline",
+            gap: 0,
+          }}
+        >
+          {showPrefix && (
+            <span
+              style={{
+                fontFamily: "var(--font-body)",
+                fontSize: "15px",
+                color: "#0a0a0a",
+                flexShrink: 0,
+                paddingRight: "2px",
+              }}
+            >
+              {prefix}
+            </span>
+          )}
+          <input
+            id={id}
+            type={type}
+            inputMode={inputMode}
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            onFocus={onFocus}
+            onBlur={onBlur}
+            required={required}
+            aria-invalid={error || undefined}
+            style={{ ...inputStyle, flex: showPrefix ? 1 : undefined }}
+          />
+        </div>
       )}
     </div>
   );

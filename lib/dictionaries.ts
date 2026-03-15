@@ -140,7 +140,7 @@ export type SiteDictionary = {
   };
   contactForm: {
     name: string;
-    email: string;
+    contact: string;
     subject: string;
     message: string;
     send: string;
@@ -148,6 +148,7 @@ export type SiteDictionary = {
     success: string;
     validationError: string;
     error: string;
+    rateLimitError: string;
   };
   metadata: {
     homeTitle: string;
@@ -461,15 +462,16 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
     },
     contactForm: {
       name: "Full Name",
-      email: "Email Address",
+      contact: "Email or Phone",
       subject: "Subject (optional)",
       message: "Your Message",
       send: "Send Message",
       sending: "Sending...",
       success:
         "Thank you — your message has been sent. I will be in touch shortly.",
-      validationError: "Please enter a valid email address.",
+      validationError: "Please enter a valid email or phone number.",
       error: "Something went wrong. Please try again in a moment.",
+      rateLimitError: "Too many attempts. Please try again tomorrow.",
     },
     metadata: {
       homeTitle:
@@ -783,14 +785,15 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
     },
     contactForm: {
       name: "Celé jméno",
-      email: "E-mail",
+      contact: "E-mail nebo telefon",
       subject: "Předmět (volitelné)",
       message: "Vaše zpráva",
       send: "Odeslat zprávu",
       sending: "Odesílání...",
       success: "Děkuji — vaše zpráva byla odeslána. Brzy se vám ozvu.",
-      validationError: "Zadejte prosím platnou e-mailovou adresu.",
+      validationError: "Zadejte prosím platný e-mail nebo telefonní číslo.",
       error: "Něco se pokazilo. Zkuste to prosím za chvíli znovu.",
+      rateLimitError: "Příliš mnoho pokusů. Zkuste to prosím zítra.",
     },
     metadata: {
       homeTitle:
@@ -1107,14 +1110,15 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
     },
     contactForm: {
       name: "Полное имя",
-      email: "E-mail",
+      contact: "E-mail или телефон",
       subject: "Тема (необязательно)",
       message: "Ваше сообщение",
       send: "Отправить сообщение",
       sending: "Отправка...",
       success: "Спасибо — ваше сообщение отправлено. Я скоро свяжусь с вами.",
-      validationError: "Введите корректный e-mail.",
+      validationError: "Введите корректный e-mail или номер телефона.",
       error: "Что-то пошло не так. Пожалуйста, попробуйте ещё раз через минуту.",
+      rateLimitError: "Слишком много попыток. Попробуйте завтра.",
     },
     metadata: {
       homeTitle:

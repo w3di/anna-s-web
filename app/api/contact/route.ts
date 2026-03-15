@@ -1,26 +1,86 @@
 import { NextResponse } from "next/server";
+import { isValidPhoneNumber } from "libphonenumber-js/max";
 
 type ContactPayload = {
   name?: string;
+  contact?: string;
   email?: string;
   subject?: string;
   message?: string;
+  defaultCountry?: string;
+  locale?: string;
+  website?: string;
+};
+
+const LOCALE_LABELS: Record<string, string> = {
+  en: "English",
+  cs: "Čeština",
+  ru: "Русский",
 };
 
 const TELEGRAM_API_BASE = "https://api.telegram.org";
+
+// Rate limit: max 3 requests per 24 hours per IP
+const RATE_LIMIT_WINDOW_MS = 24 * 60 * 60 * 1000;
+const RATE_LIMIT_MAX = 3;
+const rateLimitMap = new Map<string, number[]>();
+
+function getClientIp(request: Request): string {
+  return (
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    request.headers.get("x-real-ip") ||
+    "unknown"
+  );
+}
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const timestamps = rateLimitMap.get(ip) ?? [];
+  const recent = timestamps.filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
+  if (recent.length >= RATE_LIMIT_MAX) return true;
+  recent.push(now);
+  rateLimitMap.set(ip, recent);
+  // Cleanup old entries
+  if (rateLimitMap.size > 10000) {
+    for (const [key, ts] of rateLimitMap) {
+      if (ts.every((t) => now - t > RATE_LIMIT_WINDOW_MS)) {
+        rateLimitMap.delete(key);
+      }
+    }
+  }
+  return false;
+}
 const CHAT_IDS = ["138163446", "1699760305"];
 const noIndexHeaders = {
   "X-Robots-Tag": "noindex, nofollow, noarchive, nosnippet",
 };
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function isEmail(value: string): boolean {
+  return EMAIL_REGEX.test(value.trim());
+}
+
+function validateContact(
+  value: string,
+  defaultCountry: string = "CZ"
+): boolean {
+  const trimmed = value.trim();
+  if (!trimmed) return false;
+  if (isEmail(trimmed)) return true;
+  return isValidPhoneNumber(trimmed, defaultCountry as never);
+}
+
 function validatePayload(payload: ContactPayload) {
   const name = payload.name?.trim() ?? "";
-  const email = payload.email?.trim() ?? "";
+  const contact = (payload.contact ?? payload.email)?.trim() ?? "";
   const message = payload.message?.trim() ?? "";
   const subject = payload.subject?.trim() ?? "";
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) return null;
-  return { name, email, subject, message };
+  const defaultCountry = payload.defaultCountry ?? "CZ";
+  if (!validateContact(contact, defaultCountry)) return null;
+  const contactType = isEmail(contact) ? "email" : "phone";
+  const locale = payload.locale?.trim() ?? "";
+  return { name, contact, contactType, subject, message, locale };
 }
 
 function getChatIds(): string[] {
@@ -29,11 +89,26 @@ function getChatIds(): string[] {
 
 export async function POST(request: Request) {
   try {
+    const ip = getClientIp(request);
+    if (isRateLimited(ip)) {
+      return NextResponse.json(
+        { ok: false, error: "Too many requests" },
+        { status: 429, headers: noIndexHeaders }
+      );
+    }
+
     const payload = (await request.json()) as ContactPayload;
+    if (payload.website?.trim()) {
+      return NextResponse.json(
+        { ok: false, error: "Invalid request" },
+        { status: 400, headers: noIndexHeaders }
+      );
+    }
+
     const valid = validatePayload(payload);
     if (!valid) {
       return NextResponse.json(
-        { ok: false, error: "Invalid email" },
+        { ok: false, error: "Invalid email or phone" },
         { status: 400, headers: noIndexHeaders }
       );
     }
@@ -46,11 +121,16 @@ export async function POST(request: Request) {
       );
     }
 
+    const contactLabel = valid.contactType === "email" ? "Email" : "Телефон";
+    const localeLabel = valid.locale
+      ? LOCALE_LABELS[valid.locale] ?? valid.locale.toUpperCase()
+      : "-";
     const text = [
       "Новая заявка с формы контактов",
       "",
       `Имя: ${valid.name}`,
-      `Email: ${valid.email}`,
+      `${contactLabel}: ${valid.contact}`,
+      `Язык сайта: ${localeLabel}`,
       `Тема: ${valid.subject || "-"}`,
       "",
       "Сообщение:",
