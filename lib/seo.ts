@@ -69,6 +69,8 @@ export function buildPageMetadata({
       images: [
         {
           url: imageUrl,
+          width: 1200,
+          height: 630,
           alt: title,
         },
       ],
@@ -77,7 +79,14 @@ export function buildPageMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: [imageUrl],
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
     },
   };
 }
