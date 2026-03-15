@@ -3,28 +3,29 @@ import { locales } from "@/lib/dictionaries";
 import { buildLanguageAlternates, toAbsoluteUrl } from "@/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const defaultOgImage = "/opengraph-image.png";
   const pages = [
     {
       path: "/",
-      imagePath: "/hero-landscape.webp",
+      imagePath: defaultOgImage,
       changeFrequency: "weekly" as const,
       priority: 1,
     },
     {
       path: "/about",
-      imagePath: "/about-banner.webp",
+      imagePath: defaultOgImage,
       changeFrequency: "monthly" as const,
       priority: 0.8,
     },
     {
       path: "/sessions",
-      imagePath: "/sessions-banner.webp",
+      imagePath: defaultOgImage,
       changeFrequency: "monthly" as const,
       priority: 0.9,
     },
     {
       path: "/contact",
-      imagePath: "/contact-banner.webp",
+      imagePath: defaultOgImage,
       changeFrequency: "monthly" as const,
       priority: 0.7,
     },

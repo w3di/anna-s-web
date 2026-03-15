@@ -48,7 +48,6 @@ export async function generateMetadata({
     description: dictionary.metadata.sessionsDescription,
     pathname: "/sessions",
     locale,
-    imagePath: "/sessions-banner.webp",
   });
 }
 

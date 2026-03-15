@@ -33,7 +33,6 @@ export async function generateMetadata({
     description: dictionary.metadata.homeDescription,
     pathname: "/",
     locale,
-    imagePath: "/hero-landscape.webp",
   });
 }
 
@@ -57,7 +56,7 @@ export default async function LocalizedHomePage({ params }: LocalePageProps) {
         inLanguage: locale,
         primaryImageOfPage: {
           "@type": "ImageObject",
-          url: toAbsoluteUrl("/hero-landscape.webp"),
+          url: toAbsoluteUrl("/opengraph-image.png"),
         },
       },
       {
