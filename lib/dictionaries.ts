@@ -150,6 +150,13 @@ export type SiteDictionary = {
     error: string;
     rateLimitError: string;
   };
+  notFoundPage: {
+    overline: string;
+    title: string;
+    subtitle: string;
+    description: string;
+    cta: string;
+  };
   metadata: {
     homeTitle: string;
     homeDescription: string;
@@ -473,6 +480,14 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       error: "Something went wrong. Please try again in a moment.",
       rateLimitError: "Too many attempts. Please try again tomorrow.",
     },
+    notFoundPage: {
+      overline: "Error 404",
+      title: "404",
+      subtitle: "Page not found",
+      description:
+        "The page you are looking for may have been moved, renamed, or simply does not exist. Let\u2019s guide you back.",
+      cta: "Go to Home",
+    },
     metadata: {
       homeTitle:
         "Mind of Heart — Anna Kolmykova | Systemic Constellations & Coaching",
@@ -794,6 +809,14 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       validationError: "Zadejte prosím platný e-mail nebo telefonní číslo.",
       error: "Něco se pokazilo. Zkuste to prosím za chvíli znovu.",
       rateLimitError: "Příliš mnoho pokusů. Zkuste to prosím zítra.",
+    },
+    notFoundPage: {
+      overline: "Chyba 404",
+      title: "404",
+      subtitle: "Stránka nenalezena",
+      description:
+        "Stránka, kterou hledáte, mohla být přesunuta, přejmenována nebo jednoduše neexistuje. Vraťme vás zpět.",
+      cta: "Zpět na úvod",
     },
     metadata: {
       homeTitle:
@@ -1117,8 +1140,17 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       sending: "Отправка...",
       success: "Спасибо — ваше сообщение отправлено. Я скоро свяжусь с вами.",
       validationError: "Введите корректный e-mail или номер телефона.",
-      error: "Что-то пошло не так. Пожалуйста, попробуйте ещё раз через минуту.",
+      error:
+        "Что-то пошло не так. Пожалуйста, попробуйте ещё раз через минуту.",
       rateLimitError: "Слишком много попыток. Попробуйте завтра.",
+    },
+    notFoundPage: {
+      overline: "Ошибка 404",
+      title: "404",
+      subtitle: "Страница не найдена",
+      description:
+        "Страница, которую вы ищете, могла быть перемещена, переименована или просто не существует. Давайте вернём вас обратно.",
+      cta: "На главную",
     },
     metadata: {
       homeTitle:

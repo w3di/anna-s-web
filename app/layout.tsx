@@ -3,6 +3,7 @@ import { Playfair_Display, Raleway, Open_Sans } from "next/font/google";
 import "./globals.css";
 import { getSiteDictionary } from "@/lib/locale";
 import SmoothScroll from "@/components/SmoothScroll";
+import BannerPreloadConsumer from "@/components/banner-preload-consumer";
 import {
   availableLanguages,
   buildPageMetadata,
@@ -154,6 +155,7 @@ export default async function RootLayout({
         />
       </head>
       <body id="site-top" className="antialiased">
+        <BannerPreloadConsumer />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
