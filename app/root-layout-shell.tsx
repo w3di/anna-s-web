@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Playfair_Display, Raleway, Open_Sans } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import SmoothScroll from "@/components/SmoothScroll";
 
 const playfair = Playfair_Display({
@@ -40,6 +41,7 @@ export default function RootLayoutShell({
           Skip to main content
         </a>
         <SmoothScroll>{children}</SmoothScroll>
+        <SpeedInsights />
       </body>
     </html>
   );
