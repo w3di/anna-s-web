@@ -6,7 +6,7 @@ export const siteName = "Mind of Heart";
 export const personId = `${siteUrl}/#person`;
 export const serviceId = `${siteUrl}/#service`;
 export const websiteId = `${siteUrl}/#website`;
-export const defaultOgImagePath = "/hero-landscape.webp";
+export const defaultOgImagePath = "/opengraph-image.png";
 export const availableLanguages = ["en", "cs", "ru"] as const;
 export const businessAddress = {
   "@type": "PostalAddress",

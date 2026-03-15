@@ -1,9 +1,8 @@
 "use client";
 
-import { ReactLenis, useLenis } from "lenis/react";
-import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { ReactLenis } from "lenis/react";
 import "lenis/dist/lenis.css";
+import SmoothScrollReset from "./SmoothScrollReset";
 
 const lenisOptions = {
   duration: 1.2,
@@ -18,19 +17,6 @@ const lenisOptions = {
   anchors: { offset: 78 },
 };
 
-function ScrollReset() {
-  const lenis = useLenis();
-  const pathname = usePathname();
-
-  useEffect(() => {
-    if (lenis && pathname) {
-      lenis.scrollTo(0, { immediate: true, force: true });
-    }
-  }, [lenis, pathname]);
-
-  return null;
-}
-
 export default function SmoothScroll({
   children,
 }: {
@@ -38,7 +24,7 @@ export default function SmoothScroll({
 }) {
   return (
     <ReactLenis root options={lenisOptions}>
-      <ScrollReset />
+      <SmoothScrollReset />
       {children}
     </ReactLenis>
   );

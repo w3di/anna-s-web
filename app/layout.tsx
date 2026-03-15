@@ -47,6 +47,13 @@ export async function generateMetadata(): Promise<Metadata> {
     ...pageMetadata,
     metadataBase: new URL(siteUrl),
     applicationName: siteName,
+    icons: {
+      icon: [
+        { url: "/favicon.ico", sizes: "any" },
+        { url: "/icon", type: "image/png", sizes: "48x48" },
+      ],
+      apple: [{ url: "/apple-icon", type: "image/png", sizes: "180x180" }],
+    },
     authors: [{ name: "Anna Kolmykova", url: siteUrl }],
     creator: "Anna Kolmykova",
     publisher: siteName,
@@ -137,7 +144,7 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteSchema) }}
         />
       </head>
-      <body className="antialiased">
+      <body id="site-top" className="antialiased">
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

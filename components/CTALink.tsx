@@ -1,7 +1,5 @@
-"use client";
-
 /**
- * CTALink — thin compatibility wrapper around Button.
+ * CTALink — thin compatibility wrapper around Button (SSR).
  * Kept for backward compatibility; prefer Button directly in new code.
  */
 import Button, { ButtonVariant } from "./ui/Button";

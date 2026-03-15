@@ -1,20 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useLenis } from "lenis/react";
 import { motion, AnimatePresence } from "framer-motion";
 import Icon from "./icons/Icon";
 
 export default function BackToTop() {
   const [visible, setVisible] = useState(false);
-  const lenis = useLenis();
-
-  useLenis(
-    (l) => {
-      setVisible(l.scroll > 400);
-    },
-    [lenis]
-  );
+  const onScroll = useCallback((l: { scroll: number }) => {
+    setVisible(l.scroll > 400);
+  }, []);
+  const lenis = useLenis(onScroll);
 
   const scrollToTop = () => {
     lenis?.scrollTo(0, { duration: 1.2 });

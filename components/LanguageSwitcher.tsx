@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState, useTransition } from "react";
+import { useEffect, useId, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { locales, type Locale, type SiteDictionary } from "@/lib/dictionaries";
@@ -23,9 +23,13 @@ export default function LanguageSwitcher({
   inverted = false,
 }: Props) {
   const router = useRouter();
-  const layoutId = useId();
   const [selected, setSelected] = useState<Locale>(locale);
   const [isPending, startTransition] = useTransition();
+  const layoutId = useId();
+
+  useEffect(() => {
+    setSelected(locale);
+  }, [locale]);
 
   async function setLocale(nextLocale: Locale) {
     if (nextLocale === selected) return;
@@ -65,18 +69,39 @@ export default function LanguageSwitcher({
           <motion.button
             key={code}
             type="button"
+            layout
             onClick={() => void setLocale(code)}
             aria-pressed={active}
             title={labels[code]}
             disabled={isPending && active}
-            layout
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.98 }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color =
+                active
+                  ? inverted
+                    ? "var(--c-ink)"
+                    : "#ffffff"
+                  : inverted
+                  ? "rgba(255,255,255,0.9)"
+                  : "var(--c-ink)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = active
+                ? inverted
+                  ? "var(--c-ink)"
+                  : "#ffffff"
+                : inverted
+                ? "rgba(255,255,255,0.72)"
+                : "var(--c-gray-70)";
+            }}
             style={{
               appearance: "none",
               border: "none",
               cursor: "pointer",
               borderRadius: "999px",
               padding: compact ? "7px 9px" : "8px 11px",
-              fontFamily: "Raleway, sans-serif",
+              fontFamily: "var(--font-ui)",
               fontSize: compact ? "9px" : "10px",
               fontWeight: 700,
               letterSpacing: compact ? "1.5px" : "2px",
@@ -93,28 +118,13 @@ export default function LanguageSwitcher({
                 : "var(--c-gray-70)",
               minWidth: compact ? "36px" : "42px",
             }}
-            transition={{
-              color: { duration: 0.2 },
-            }}
-            whileHover={!active ? { scale: 1.05 } : undefined}
-            whileTap={{ scale: 0.97 }}
-            onMouseEnter={(event) => {
-              if (active) return;
-              (event.currentTarget as HTMLElement).style.backgroundColor =
-                inverted ? "rgba(255,255,255,0.1)" : "rgba(29,86,176,0.08)";
-            }}
-            onMouseLeave={(event) => {
-              if (active) return;
-              (event.currentTarget as HTMLElement).style.backgroundColor =
-                "transparent";
-            }}
           >
             {active && (
               <motion.span
                 layoutId={`lang-toggle-${layoutId}`}
                 transition={{
                   type: "spring",
-                  stiffness: 400,
+                  stiffness: 380,
                   damping: 30,
                 }}
                 style={{

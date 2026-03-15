@@ -1,0 +1,35 @@
+import type { MetadataRoute } from "next";
+import { siteName } from "@/lib/seo";
+
+export default function manifest(): MetadataRoute.Manifest {
+  return {
+    name: siteName,
+    short_name: siteName,
+    description:
+      "Systemic constellation facilitator and process-oriented psychologist in Prague and online.",
+    start_url: "/",
+    display: "standalone",
+    background_color: "#fdfaf6",
+    theme_color: "#fdfaf6",
+    icons: [
+      {
+        src: "/favicon.ico",
+        sizes: "any",
+        type: "image/x-icon",
+        purpose: "any",
+      },
+      {
+        src: "/icon",
+        sizes: "48x48",
+        type: "image/png",
+        purpose: "any",
+      },
+      {
+        src: "/apple-icon",
+        sizes: "180x180",
+        type: "image/png",
+        purpose: "any",
+      },
+    ],
+  };
+}

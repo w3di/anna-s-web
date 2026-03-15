@@ -93,7 +93,7 @@ export default async function AboutPage() {
       />
 
       {/* How I work */}
-      <section style={{ backgroundColor: "#fdfaf6" }}>
+      <section className="defer-section" style={{ backgroundColor: "#fdfaf6" }}>
         <div
           className="container section-pad-lg about-intro-grid"
           style={{
@@ -116,7 +116,10 @@ export default async function AboutPage() {
                 src="/about-anna.webp"
                 alt="Anna Kolmykova"
                 fill
-                sizes="(max-width: 860px) 90vw, min(48vw, 1152px)"
+                sizes="(max-width: 860px) 92vw, min(42vw, 640px)"
+                loading="lazy"
+                quality={90}
+                fetchPriority="low"
                 style={{ objectFit: "cover", borderRadius: "2px" }}
               />
             </div>
@@ -132,7 +135,7 @@ export default async function AboutPage() {
               </span>
               <h2
                 style={{
-                  fontFamily: "Playfair Display, serif",
+                  fontFamily: "var(--font-display)",
                   fontSize: "clamp(2rem, 4vw, 3rem)",
                   fontWeight: 400,
                   lineHeight: 1.15,
@@ -145,10 +148,10 @@ export default async function AboutPage() {
 
               <p
                 style={{
-                  fontFamily: "Open Sans, sans-serif",
+                  fontFamily: "var(--font-body)",
                   fontSize: "15px",
                   lineHeight: "1.9",
-                  color: "#555",
+                  color: "#444",
                   marginBottom: "1.5rem",
                 }}
               >
@@ -156,10 +159,10 @@ export default async function AboutPage() {
               </p>
               <p
                 style={{
-                  fontFamily: "Open Sans, sans-serif",
+                  fontFamily: "var(--font-body)",
                   fontSize: "15px",
                   lineHeight: "1.9",
-                  color: "#555",
+                  color: "#444",
                   marginBottom: "2.5rem",
                 }}
               >
@@ -178,7 +181,7 @@ export default async function AboutPage() {
                 >
                   <span
                     style={{
-                      fontFamily: "Georgia, serif",
+                      fontFamily: "var(--font-display)",
                       fontSize: "1.1rem",
                       color: "var(--c-blue)",
                       flexShrink: 0,
@@ -190,7 +193,7 @@ export default async function AboutPage() {
                   <div>
                     <span
                       style={{
-                        fontFamily: "Raleway, sans-serif",
+                        fontFamily: "var(--font-ui)",
                         fontSize: "10px",
                         fontWeight: 700,
                         letterSpacing: "2px",
@@ -204,7 +207,7 @@ export default async function AboutPage() {
                     </span>
                     <span
                       style={{
-                        fontFamily: "Open Sans, sans-serif",
+                        fontFamily: "var(--font-body)",
                         fontSize: "13px",
                         color: "#5a5a5a",
                       }}
@@ -220,19 +223,26 @@ export default async function AboutPage() {
       </section>
 
       {/* Education */}
-      <section style={{ backgroundColor: "#111111", position: "relative" }}>
+      <section
+        className="defer-section"
+        style={{ backgroundColor: "#111111", position: "relative" }}
+      >
         <div className="container section-pad-lg">
           <AnimateOnScroll direction="up">
             <div style={{ marginBottom: "clamp(2.5rem, 5vw, 4rem)" }}>
               <span
                 className="t-overline"
-                style={{ display: "block", marginBottom: "1rem" }}
+                style={{
+                  display: "block",
+                  marginBottom: "1rem",
+                  color: "#8eb7ff",
+                }}
               >
                 {copy.backgroundOverline}
               </span>
               <h2
                 style={{
-                  fontFamily: "Playfair Display, serif",
+                  fontFamily: "var(--font-display)",
                   fontSize: "clamp(2rem, 4vw, 3rem)",
                   fontWeight: 400,
                   color: "white",
@@ -266,11 +276,11 @@ export default async function AboutPage() {
                 >
                   <span
                     style={{
-                      fontFamily: "Raleway, sans-serif",
+                      fontFamily: "var(--font-ui)",
                       fontSize: "10px",
                       fontWeight: 700,
                       letterSpacing: "1.5px",
-                      color: "var(--c-blue)",
+                      color: "#8eb7ff",
                       flexShrink: 0,
                       paddingTop: "3px",
                       minWidth: "52px",
@@ -280,10 +290,10 @@ export default async function AboutPage() {
                   </span>
                   <span
                     style={{
-                      fontFamily: "Open Sans, sans-serif",
+                      fontFamily: "var(--font-body)",
                       fontSize: "15px",
                       lineHeight: "1.65",
-                      color: "rgba(255,255,255,0.78)",
+                      color: "rgba(255,255,255,0.84)",
                     }}
                   >
                     {item.item}
@@ -296,7 +306,7 @@ export default async function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section style={{ backgroundColor: "#fdfaf6" }}>
+      <section className="defer-section" style={{ backgroundColor: "#fdfaf6" }}>
         <div className="container section-pad" style={{ textAlign: "center" }}>
           <AnimateOnScroll direction="up">
             <span
@@ -307,7 +317,7 @@ export default async function AboutPage() {
             </span>
             <h2
               style={{
-                fontFamily: "Playfair Display, serif",
+                fontFamily: "var(--font-display)",
                 fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
                 fontWeight: 400,
                 color: "#0a0a0a",
@@ -319,7 +329,7 @@ export default async function AboutPage() {
             </h2>
             <p
               style={{
-                fontFamily: "Open Sans, sans-serif",
+                fontFamily: "var(--font-body)",
                 fontSize: "15px",
                 color: "#666",
                 maxWidth: "440px",

@@ -132,6 +132,7 @@ export default async function SessionsPage() {
         <section
           key={session.id}
           id={session.id}
+          className="defer-section"
           style={{ backgroundColor: index % 2 === 0 ? "#fdfaf6" : "#111111" }}
         >
           <div
@@ -165,7 +166,7 @@ export default async function SessionsPage() {
                 >
                   <span
                     style={{
-                      fontFamily: "Raleway, sans-serif",
+                      fontFamily: "var(--font-ui)",
                       fontSize: "11px",
                       fontWeight: 700,
                       letterSpacing: "1px",
@@ -187,6 +188,9 @@ export default async function SessionsPage() {
                     src={getSessionImage(session.id)}
                     alt={session.title}
                     fill
+                    sizes="(max-width: 860px) 92vw, (max-width: 1400px) 48vw, 640px"
+                    loading="lazy"
+                    fetchPriority="low"
                     style={{
                       objectFit: "cover",
                       borderRadius: "2px",
@@ -208,13 +212,17 @@ export default async function SessionsPage() {
               <div>
                 <span
                   className="t-overline"
-                  style={{ display: "block", marginBottom: "0.8rem" }}
+                  style={{
+                    display: "block",
+                    marginBottom: "0.8rem",
+                    color: index % 2 === 0 ? "var(--c-blue)" : "#8eb7ff",
+                  }}
                 >
                   {session.subtitle}
                 </span>
                 <h2
                   style={{
-                    fontFamily: "Playfair Display, serif",
+                    fontFamily: "var(--font-display)",
                     fontSize: "clamp(2rem, 3.5vw, 2.8rem)",
                     fontWeight: 400,
                     lineHeight: 1.15,
@@ -226,10 +234,10 @@ export default async function SessionsPage() {
                 </h2>
                 <p
                   style={{
-                    fontFamily: "Open Sans, sans-serif",
+                    fontFamily: "var(--font-body)",
                     fontSize: "15px",
                     lineHeight: "1.9",
-                    color: index % 2 === 0 ? "#555" : "rgba(255,255,255,0.66)",
+                    color: index % 2 === 0 ? "#444" : "rgba(255,255,255,0.84)",
                     marginBottom: "1.2rem",
                   }}
                 >
@@ -237,10 +245,10 @@ export default async function SessionsPage() {
                 </p>
                 <p
                   style={{
-                    fontFamily: "Open Sans, sans-serif",
+                    fontFamily: "var(--font-body)",
                     fontSize: "15px",
                     lineHeight: "1.9",
-                    color: index % 2 === 0 ? "#555" : "rgba(255,255,255,0.66)",
+                    color: index % 2 === 0 ? "#444" : "rgba(255,255,255,0.84)",
                     marginBottom: "2rem",
                   }}
                 >
@@ -264,10 +272,10 @@ export default async function SessionsPage() {
                         display: "flex",
                         alignItems: "center",
                         gap: "12px",
-                        fontFamily: "Open Sans, sans-serif",
+                        fontFamily: "var(--font-body)",
                         fontSize: "14px",
                         color:
-                          index % 2 === 0 ? "#555" : "rgba(255,255,255,0.58)",
+                          index % 2 === 0 ? "#444" : "rgba(255,255,255,0.8)",
                       }}
                     >
                       <span
@@ -299,18 +307,18 @@ export default async function SessionsPage() {
         </section>
       ))}
 
-      <section style={{ backgroundColor: "#0a0a0a" }}>
+      <section className="defer-section" style={{ backgroundColor: "#0a0a0a" }}>
         <div className="container section-pad" style={{ textAlign: "center" }}>
           <AnimateOnScroll direction="up">
             <span
               className="t-overline"
-              style={{ display: "block", marginBottom: "1rem" }}
+              style={{ display: "block", marginBottom: "1rem", color: "#8eb7ff" }}
             >
               {copy.ctaOverline}
             </span>
             <h2
               style={{
-                fontFamily: "Playfair Display, serif",
+                fontFamily: "var(--font-display)",
                 fontSize: "clamp(1.8rem, 4vw, 3rem)",
                 fontWeight: 400,
                 color: "white",
@@ -321,9 +329,9 @@ export default async function SessionsPage() {
             </h2>
             <p
               style={{
-                fontFamily: "Open Sans, sans-serif",
+                fontFamily: "var(--font-body)",
                 fontSize: "15px",
-                color: "rgba(255,255,255,0.58)",
+                color: "rgba(255,255,255,0.82)",
                 maxWidth: "440px",
                 margin: "0 auto 2.5rem",
                 lineHeight: "1.75",

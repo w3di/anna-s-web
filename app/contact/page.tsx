@@ -103,6 +103,7 @@ export default async function ContactPage() {
 
       <section
         id="form"
+        className="defer-section"
         style={{
           backgroundColor: "#fdfaf6",
           scrollMarginTop: "var(--header-height, 80px)",
@@ -128,7 +129,7 @@ export default async function ContactPage() {
                 </span>
                 <h2
                   style={{
-                    fontFamily: "Playfair Display, serif",
+                    fontFamily: "var(--font-display)",
                     fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
                     fontWeight: 400,
                     lineHeight: 1.2,
@@ -148,10 +149,10 @@ export default async function ContactPage() {
                 />
                 <p
                   style={{
-                    fontFamily: "Open Sans, sans-serif",
+                    fontFamily: "var(--font-body)",
                     fontSize: "15px",
                     lineHeight: "1.8",
-                    color: "#555",
+                    color: "#444",
                     marginBottom: "2.5rem",
                     maxWidth: "480px",
                   }}
@@ -172,7 +173,7 @@ export default async function ContactPage() {
                 </span>
                 <h3
                   style={{
-                    fontFamily: "Playfair Display, serif",
+                    fontFamily: "var(--font-display)",
                     fontSize: "1.7rem",
                     fontWeight: 400,
                     color: "#0a0a0a",
@@ -247,12 +248,12 @@ export default async function ContactPage() {
                       <div>
                         <span
                           style={{
-                            fontFamily: "Raleway, sans-serif",
+                            fontFamily: "var(--font-ui)",
                             fontSize: "9px",
                             fontWeight: 700,
                             letterSpacing: "2px",
                             textTransform: "uppercase",
-                            color: "#8a8a8a",
+                            color: "#666666",
                             display: "block",
                             marginBottom: "3px",
                           }}
@@ -263,7 +264,7 @@ export default async function ContactPage() {
                           <a
                             href={detail.href}
                             style={{
-                              fontFamily: "Open Sans, sans-serif",
+                              fontFamily: "var(--font-body)",
                               fontSize: "15px",
                               color: "var(--c-blue)",
                               textDecoration: "none",
@@ -274,7 +275,7 @@ export default async function ContactPage() {
                         ) : (
                           <span
                             style={{
-                              fontFamily: "Open Sans, sans-serif",
+                              fontFamily: "var(--font-body)",
                               fontSize: "15px",
                               color: "#333",
                             }}
@@ -285,9 +286,9 @@ export default async function ContactPage() {
                         {detail.sub && (
                           <span
                             style={{
-                              fontFamily: "Open Sans, sans-serif",
+                              fontFamily: "var(--font-body)",
                               fontSize: "12px",
-                              color: "#8a8a8a",
+                              color: "#666666",
                               display: "block",
                               marginTop: "2px",
                             }}
@@ -311,11 +312,11 @@ export default async function ContactPage() {
                 >
                   <p
                     style={{
-                      fontFamily: "Playfair Display, serif",
+                      fontFamily: "var(--font-display)",
                       fontSize: "1rem",
                       fontStyle: "italic",
                       lineHeight: "1.7",
-                      color: "rgba(255,255,255,0.7)",
+                      color: "rgba(255,255,255,0.88)",
                       margin: 0,
                     }}
                   >
@@ -323,11 +324,11 @@ export default async function ContactPage() {
                   </p>
                   <span
                     style={{
-                      fontFamily: "Raleway, sans-serif",
+                      fontFamily: "var(--font-ui)",
                       fontSize: "10px",
                       letterSpacing: "2px",
                       textTransform: "uppercase",
-                      color: "rgba(255,255,255,0.3)",
+                      color: "rgba(255,255,255,0.66)",
                       display: "block",
                       marginTop: "1rem",
                     }}

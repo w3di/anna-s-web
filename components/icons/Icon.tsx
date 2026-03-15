@@ -42,6 +42,7 @@ export default function Icon({
       src={`/icons/${name}.svg`}
       alt=""
       width={w}
+      quality={90}
       height={h}
       aria-hidden
       className={className}

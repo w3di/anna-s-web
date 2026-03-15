@@ -1,67 +1,10 @@
-"use client";
-
 import Image from "next/image";
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
 import AnimateOnScroll from "./AnimateOnScroll";
 import Button from "./ui/Button";
 import Icon from "./icons/Icon";
+import StatCounter from "./about/StatCounter";
+import FloatingLocationTag from "./about/FloatingLocationTag";
 import type { SiteDictionary } from "@/lib/dictionaries";
-
-function StatCounter({
-  value,
-  label,
-  delay,
-}: {
-  value: string;
-  label: string;
-  delay: number;
-}) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 20 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{
-        delay,
-        duration: 0.6,
-        ease: [0.25, 0.46, 0.45, 0.94] as const,
-      }}
-      style={{ textAlign: "center" }}
-    >
-      <span
-        style={{
-          fontFamily: "Playfair Display, serif",
-          fontSize: "clamp(2.2rem, 4vw, 3.4rem)",
-          fontWeight: 400,
-          fontStyle: "italic",
-          color: "var(--c-blue)",
-          display: "block",
-          lineHeight: 1,
-          marginBottom: "0.4rem",
-        }}
-      >
-        {value}
-      </span>
-      <span
-        style={{
-          fontFamily: "Raleway, sans-serif",
-          fontSize: "10px",
-          fontWeight: 700,
-          letterSpacing: "2.5px",
-          textTransform: "uppercase",
-          color: "#888",
-          display: "block",
-        }}
-      >
-        {label}
-      </span>
-    </motion.div>
-  );
-}
 
 type AboutSectionProps = {
   copy: SiteDictionary["homeAbout"];
@@ -70,13 +13,14 @@ type AboutSectionProps = {
 export default function AboutSection({ copy }: AboutSectionProps) {
   return (
     <section
+      id="home-about"
+      className="defer-section"
       style={{
         backgroundColor: "#fdfaf6",
         position: "relative",
         overflow: "hidden",
       }}
     >
-      {/* Decorative bg text */}
       <div
         aria-hidden="true"
         style={{
@@ -84,7 +28,7 @@ export default function AboutSection({ copy }: AboutSectionProps) {
           top: "50%",
           right: "-2rem",
           transform: "translateY(-50%)",
-          fontFamily: "Playfair Display, serif",
+          fontFamily: "var(--font-display)",
           fontSize: "clamp(8rem, 16vw, 18rem)",
           fontWeight: 700,
           fontStyle: "italic",
@@ -111,10 +55,8 @@ export default function AboutSection({ copy }: AboutSectionProps) {
           }}
           className="about-grid"
         >
-          {/* ── Photo column ────────────────────────────────── */}
           <AnimateOnScroll direction="left">
             <div style={{ position: "relative" }}>
-              {/* Blue accent block behind */}
               <div
                 style={{
                   position: "absolute",
@@ -128,7 +70,6 @@ export default function AboutSection({ copy }: AboutSectionProps) {
                 }}
               />
 
-              {/* Main photo */}
               <div
                 className="img-zoom"
                 style={{ borderRadius: "2px", position: "relative", zIndex: 1 }}
@@ -138,57 +79,21 @@ export default function AboutSection({ copy }: AboutSectionProps) {
                   alt="Anna Kolmykova — Systemic Constellation Facilitator"
                   width={478}
                   height={717}
-                  sizes="(max-width: 860px) 90vw, 600px"
+                  quality={90}
+                  sizes="(max-width: 860px) 92vw, min(42vw, 640px)"
+                  loading="lazy"
+                  fetchPriority="low"
                   style={{ width: "100%", height: "auto", borderRadius: "2px" }}
                 />
               </div>
 
-              {/* Floating tag */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.5, duration: 0.6 }}
-                style={{
-                  position: "absolute",
-                  bottom: "2.5rem",
-                  right: "-1.5rem",
-                  background: "#0a0a0a",
-                  color: "white",
-                  padding: "1.2rem 1.6rem",
-                  borderRadius: "2px",
-                  zIndex: 10,
-                  minWidth: "160px",
-                }}
-                className="hide-mobile"
-              >
-                <span
-                  style={{
-                    fontFamily: "Playfair Display, serif",
-                    fontSize: "1.4rem",
-                    fontStyle: "italic",
-                    display: "block",
-                    marginBottom: "2px",
-                  }}
-                >
-                  {copy.locationTitle}
-                </span>
-                <span
-                  style={{
-                    fontFamily: "Raleway, sans-serif",
-                    fontSize: "9px",
-                    letterSpacing: "2.5px",
-                    textTransform: "uppercase",
-                    color: "rgba(255,255,255,0.45)",
-                  }}
-                >
-                  {copy.locationText}
-                </span>
-              </motion.div>
+              <FloatingLocationTag
+                locationTitle={copy.locationTitle}
+                locationText={copy.locationText}
+              />
             </div>
           </AnimateOnScroll>
 
-          {/* ── Text column ─────────────────────────────────── */}
           <AnimateOnScroll direction="right" delay={0.15}>
             <div>
               <span
@@ -200,7 +105,7 @@ export default function AboutSection({ copy }: AboutSectionProps) {
 
               <h2
                 style={{
-                  fontFamily: "Playfair Display, serif",
+                  fontFamily: "var(--font-display)",
                   fontSize: "clamp(2rem, 4vw, 3.4rem)",
                   fontWeight: 400,
                   lineHeight: 1.15,
@@ -218,10 +123,10 @@ export default function AboutSection({ copy }: AboutSectionProps) {
 
               <div
                 style={{
-                  fontFamily: "Open Sans, sans-serif",
+                  fontFamily: "var(--font-body)",
                   fontSize: "15px",
                   lineHeight: "1.9",
-                  color: "#555",
+                  color: "#444",
                   display: "flex",
                   flexDirection: "column",
                   gap: "1.1rem",
@@ -233,7 +138,6 @@ export default function AboutSection({ copy }: AboutSectionProps) {
                 ))}
               </div>
 
-              {/* Stats row */}
               <div
                 style={{
                   display: "grid",
@@ -250,7 +154,6 @@ export default function AboutSection({ copy }: AboutSectionProps) {
                 ))}
               </div>
 
-              {/* CTAs */}
               <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
                 <Button
                   as="link"

@@ -1,5 +1,3 @@
-"use client";
-
 import { ButtonHTMLAttributes, forwardRef, ReactNode } from "react";
 import Link from "next/link";
 import styles from "./Button.module.css";
@@ -130,7 +128,6 @@ const Button = forwardRef<HTMLButtonElement, Props>((allProps, ref) => {
     iconRight,
     children,
     className,
-    as,
     ...rest
   } = allProps as ButtonProps & NativeButtonProps & { as?: string };
 
@@ -179,7 +176,12 @@ const Button = forwardRef<HTMLButtonElement, Props>((allProps, ref) => {
   }
 
   /* ── Button variant ── */
-  const { disabled, type = "button", onClick, ...domRest } = rest as NativeButtonProps & {
+  const {
+    disabled,
+    type = "button",
+    onClick,
+    ...domRest
+  } = rest as NativeButtonProps & {
     disabled?: boolean;
     type?: "button" | "submit" | "reset";
     onClick?: React.MouseEventHandler<HTMLButtonElement>;

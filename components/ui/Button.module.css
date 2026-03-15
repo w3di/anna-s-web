@@ -14,7 +14,7 @@
   position: relative;
   overflow: hidden;
 
-  font-family: "Raleway", "Open Sans", Arial, sans-serif;
+  font-family: var(--font-ui);
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
