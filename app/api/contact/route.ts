@@ -14,7 +14,7 @@ type ContactPayload = {
 
 const LOCALE_LABELS: Record<string, string> = {
   en: "English",
-  cs: "Čeština",
+  cz: "Čeština",
   ru: "Русский",
 };
 
@@ -86,7 +86,10 @@ function validatePayload(payload: ContactPayload) {
 function getChatIds(): string[] {
   const raw = process.env.TELEGRAM_CHAT_IDS?.trim();
   if (!raw) return [];
-  return raw.split(",").map((id) => id.trim()).filter(Boolean);
+  return raw
+    .split(",")
+    .map((id) => id.trim())
+    .filter(Boolean);
 }
 
 export async function POST(request: Request) {

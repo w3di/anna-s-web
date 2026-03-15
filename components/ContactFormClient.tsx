@@ -21,7 +21,7 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const LOCALE_TO_COUNTRY: Record<Locale, string> = {
   en: "US",
-  cs: "CZ",
+  cz: "CZ",
   ru: "RU",
 };
 
@@ -298,7 +298,11 @@ export default function ContactFormClient({
                 size="lg"
                 loading={status === "sending"}
                 disabled={status === "rateLimit"}
-                iconRight={status === "sending" ? undefined : <Icon name="arrow-right" white />}
+                iconRight={
+                  status === "sending" ? undefined : (
+                    <Icon name="arrow-right" white />
+                  )
+                }
               >
                 {status === "sending" ? copy.sending : copy.send}
               </Button>

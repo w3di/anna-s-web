@@ -1,4 +1,4 @@
-export const locales = ["en", "cs", "ru"] as const;
+export const locales = ["en", "cz", "ru"] as const;
 
 export type Locale = (typeof locales)[number];
 
@@ -172,8 +172,8 @@ export type SiteDictionary = {
 export const dictionaries: Record<Locale, SiteDictionary> = {
   en: {
     localeLabel: "Language",
-    languages: { en: "English", cs: "Čeština", ru: "Русский" },
-    languagesShort: { en: "EN", cs: "CZ", ru: "RU" },
+    languages: { en: "English", cz: "Čeština", ru: "Русский" },
+    languagesShort: { en: "EN", cz: "CZ", ru: "RU" },
     nav: {
       home: "Home",
       about: "About Me",
@@ -504,10 +504,10 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
         "Reach out to Anna Kolmykova to book a session or ask a question.",
     },
   },
-  cs: {
+  cz: {
     localeLabel: "Jazyk",
-    languages: { en: "English", cs: "Čeština", ru: "Русский" },
-    languagesShort: { en: "EN", cs: "CZ", ru: "RU" },
+    languages: { en: "English", cz: "Čeština", ru: "Русский" },
+    languagesShort: { en: "EN", cz: "CZ", ru: "RU" },
     nav: {
       home: "Domů",
       about: "O mně",
@@ -836,8 +836,8 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
   },
   ru: {
     localeLabel: "Язык",
-    languages: { en: "English", cs: "Čeština", ru: "Русский" },
-    languagesShort: { en: "EN", cs: "CZ", ru: "RU" },
+    languages: { en: "English", cz: "Čeština", ru: "Русский" },
+    languagesShort: { en: "EN", cz: "CZ", ru: "RU" },
     nav: {
       home: "Главная",
       about: "Обо мне",

@@ -8,7 +8,7 @@ export const personId = `${siteUrl}/#person`;
 export const serviceId = `${siteUrl}/#service`;
 export const websiteId = `${siteUrl}/#website`;
 export const defaultOgImagePath = "/opengraph-image.png";
-export const availableLanguages = ["en", "cs", "ru"] as const;
+export const availableLanguages = ["en", "cz", "ru"] as const;
 export const contactEmail = "info@mindofheart.com";
 export const contactPhone = "+420608514450";
 export const serviceAreas = ["Prague", "Online"] as const;
@@ -20,7 +20,7 @@ export const businessAddress = {
 
 const openGraphLocaleMap: Record<Locale, string> = {
   en: "en_US",
-  cs: "cs_CZ",
+  cz: "cs_CZ",
   ru: "ru_RU",
 };
 
