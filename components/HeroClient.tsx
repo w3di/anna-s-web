@@ -6,13 +6,14 @@ import { useRef } from "react";
 import { useLenis } from "lenis/react";
 import Button from "./ui/Button";
 import Icon from "./icons/Icon";
-import type { SiteDictionary } from "@/lib/dictionaries";
+import type { Locale, SiteDictionary } from "@/lib/dictionaries";
 
 type HeroClientProps = {
+  locale: Locale;
   copy: SiteDictionary["hero"];
 };
 
-export default function HeroClient({ copy }: HeroClientProps) {
+export default function HeroClient({ locale, copy }: HeroClientProps) {
   const ref = useRef<HTMLElement>(null);
   const lenis = useLenis();
   const { scrollYProgress } = useScroll({
@@ -179,13 +180,14 @@ export default function HeroClient({ copy }: HeroClientProps) {
             <Button
               as="link"
               href="/sessions"
+              locale={locale}
               variant="primary"
               size="lg"
               iconRight={<Icon name="arrow-right" white />}
             >
               {copy.primaryCta}
             </Button>
-            <Button as="link" href="/about" variant="white" size="lg">
+            <Button as="link" href="/about" locale={locale} variant="white" size="lg">
               {copy.secondaryCta}
             </Button>
           </motion.div>

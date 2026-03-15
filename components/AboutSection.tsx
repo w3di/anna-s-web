@@ -4,13 +4,14 @@ import Button from "./ui/Button";
 import Icon from "./icons/Icon";
 import StatCounter from "./about/StatCounter";
 import FloatingLocationTag from "./about/FloatingLocationTag";
-import type { SiteDictionary } from "@/lib/dictionaries";
+import type { Locale, SiteDictionary } from "@/lib/dictionaries";
 
 type AboutSectionProps = {
+  locale: Locale;
   copy: SiteDictionary["homeAbout"];
 };
 
-export default function AboutSection({ copy }: AboutSectionProps) {
+export default function AboutSection({ locale, copy }: AboutSectionProps) {
   return (
     <section
       id="home-about"
@@ -158,6 +159,7 @@ export default function AboutSection({ copy }: AboutSectionProps) {
                 <Button
                   as="link"
                   href="/about"
+                  locale={locale}
                   variant="primary"
                   size="md"
                   iconRight={<Icon name="arrow-right" white />}
@@ -167,6 +169,7 @@ export default function AboutSection({ copy }: AboutSectionProps) {
                 <Button
                   as="link"
                   href="/contact#form"
+                  locale={locale}
                   variant="outline"
                   size="md"
                 >

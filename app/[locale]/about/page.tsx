@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PageBanner from "@/components/PageBanner";
@@ -5,19 +7,25 @@ import BackToTop from "@/components/BackToTop";
 import AnimateOnScroll from "@/components/AnimateOnScroll";
 import Button from "@/components/ui/Button";
 import Icon from "@/components/icons/Icon";
-import Image from "next/image";
-import type { Metadata } from "next";
-import { getSiteDictionary } from "@/lib/locale";
+import { getRouteDictionary } from "@/lib/locale";
 import {
+  buildLocalizedBreadcrumbSchema,
   buildPageMetadata,
   personId,
-  siteUrl,
   toAbsoluteUrl,
+  toLocalizedAbsoluteUrl,
   websiteId,
 } from "@/lib/seo";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const { locale, dictionary } = await getSiteDictionary();
+type LocalePageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: LocalePageProps): Promise<Metadata> {
+  const { locale, dictionary } = await getRouteDictionary((await params).locale);
+
   return buildPageMetadata({
     title: dictionary.metadata.aboutTitle,
     description: dictionary.metadata.aboutDescription,
@@ -27,16 +35,18 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-export default async function AboutPage() {
-  const { locale, dictionary } = await getSiteDictionary();
+export default async function LocalizedAboutPage({ params }: LocalePageProps) {
+  const { locale, dictionary } = await getRouteDictionary((await params).locale);
   const copy = dictionary.aboutPage;
+  const aboutUrl = toLocalizedAbsoluteUrl(locale, "/about");
+
   const aboutPageSchema = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "AboutPage",
-        "@id": `${siteUrl}/about#webpage`,
-        url: `${siteUrl}/about`,
+        "@id": `${aboutUrl}#webpage`,
+        url: aboutUrl,
         name: dictionary.metadata.aboutTitle,
         description: dictionary.metadata.aboutDescription,
         isPartOf: { "@id": websiteId },
@@ -48,27 +58,16 @@ export default async function AboutPage() {
         },
       },
       {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: dictionary.nav.home,
-            item: siteUrl,
-          },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: dictionary.nav.about,
-            item: `${siteUrl}/about`,
-          },
-        ],
+        ...buildLocalizedBreadcrumbSchema(locale, [
+          { name: dictionary.nav.home, path: "/" },
+          { name: dictionary.nav.about, path: "/about" },
+        ]),
       },
     ],
   };
 
   return (
-    <main>
+    <main id="main-content">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutPageSchema) }}
@@ -92,7 +91,6 @@ export default async function AboutPage() {
         subtitle={copy.subtitle}
       />
 
-      {/* How I work */}
       <section className="defer-section" style={{ backgroundColor: "#fdfaf6" }}>
         <div
           className="container section-pad-lg about-intro-grid"
@@ -169,9 +167,9 @@ export default async function AboutPage() {
                 {copy.intro2}
               </p>
 
-              {copy.principles.map((p, i) => (
+              {copy.principles.map((principle, index) => (
                 <div
-                  key={i}
+                  key={index}
                   style={{
                     display: "flex",
                     gap: "1rem",
@@ -188,7 +186,7 @@ export default async function AboutPage() {
                       marginTop: "2px",
                     }}
                   >
-                    {p.icon}
+                    {principle.icon}
                   </span>
                   <div>
                     <span
@@ -203,7 +201,7 @@ export default async function AboutPage() {
                         marginBottom: "2px",
                       }}
                     >
-                      {p.title}
+                      {principle.title}
                     </span>
                     <span
                       style={{
@@ -212,7 +210,7 @@ export default async function AboutPage() {
                         color: "#5a5a5a",
                       }}
                     >
-                      {p.desc}
+                      {principle.desc}
                     </span>
                   </div>
                 </div>
@@ -222,7 +220,6 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      {/* Education */}
       <section
         className="defer-section"
         style={{ backgroundColor: "#111111", position: "relative" }}
@@ -263,8 +260,8 @@ export default async function AboutPage() {
           </AnimateOnScroll>
 
           <div style={{ maxWidth: "760px" }}>
-            {copy.education.map((item, i) => (
-              <AnimateOnScroll key={i} direction="left" delay={i * 0.06}>
+            {copy.education.map((item, index) => (
+              <AnimateOnScroll key={index} direction="left" delay={index * 0.06}>
                 <div
                   style={{
                     display: "flex",
@@ -305,7 +302,6 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="defer-section" style={{ backgroundColor: "#fdfaf6" }}>
         <div className="container section-pad" style={{ textAlign: "center" }}>
           <AnimateOnScroll direction="up">
@@ -350,13 +346,20 @@ export default async function AboutPage() {
               <Button
                 as="link"
                 href="/contact#form"
+                locale={locale}
                 variant="primary"
                 size="lg"
                 iconRight={<Icon name="arrow-right" white />}
               >
                 {copy.ctaPrimary}
               </Button>
-              <Button as="link" href="/sessions" variant="outline" size="lg">
+              <Button
+                as="link"
+                href="/sessions"
+                locale={locale}
+                variant="outline"
+                size="lg"
+              >
                 {copy.ctaSecondary}
               </Button>
             </div>
@@ -364,7 +367,10 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <Footer dictionary={{ nav: dictionary.nav, footer: dictionary.footer }} />
+      <Footer
+        locale={locale}
+        dictionary={{ nav: dictionary.nav, footer: dictionary.footer }}
+      />
       <BackToTop />
 
       <style>{`

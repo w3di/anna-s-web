@@ -3,6 +3,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   outputFileTracingRoot: path.join(process.cwd()),
+  experimental: {
+    globalNotFound: true,
+  },
   images: {
     deviceSizes: [
       640, 750, 828, 1080, 1152, 1200, 1280, 1440, 1600, 1920, 2048,
@@ -15,30 +18,6 @@ const nextConfig: NextConfig = {
         pathname: "/wp-content/uploads/**",
       },
     ],
-  },
-  async redirects() {
-    return [
-      {
-        source: "/about-us",
-        destination: "/about",
-        permanent: true,
-      },
-      {
-        source: "/contact-page",
-        destination: "/contact",
-        permanent: true,
-      },
-      {
-        source: "/contact-us",
-        destination: "/contact",
-        permanent: true,
-      },
-      {
-        source: "/our-services",
-        destination: "/sessions",
-        permanent: true,
-      },
-    ];
   },
 };
 

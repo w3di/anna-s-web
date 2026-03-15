@@ -27,6 +27,7 @@ export default function PhilosophySectionClient({
   return (
     <section
       ref={ref}
+      aria-labelledby="philosophy-heading"
       className="defer-section"
       style={{
         position: "relative",
@@ -34,7 +35,6 @@ export default function PhilosophySectionClient({
         backgroundColor: "#0a0a0a",
       }}
     >
-      {/* Parallax background */}
       <motion.div
         style={{
           position: "absolute",
@@ -68,8 +68,10 @@ export default function PhilosophySectionClient({
           }}
           className="philosophy-grid"
         >
-          {/* Quote */}
           <div ref={textRef}>
+            <h2 id="philosophy-heading" className="sr-only">
+              {copy.overline}
+            </h2>
             <motion.span
               initial={{ opacity: 0, x: -20 }}
               animate={textInView ? { opacity: 1, x: 0 } : {}}
@@ -138,12 +140,11 @@ export default function PhilosophySectionClient({
             </motion.div>
           </div>
 
-          {/* Pillars */}
-          <div>
+          <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
             {copy.pillars.map((p, i) => (
               <PhilosophyPillar key={i} pillar={p} index={i} />
             ))}
-          </div>
+          </ul>
         </div>
       </div>
 

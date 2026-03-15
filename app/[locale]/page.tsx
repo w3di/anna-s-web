@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import AboutSection from "@/components/AboutSection";
@@ -6,22 +7,26 @@ import PhilosophySection from "@/components/PhilosophySection";
 import ProcessSection from "@/components/ProcessSection";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
-import { getSiteDictionary } from "@/lib/locale";
-import type { Metadata } from "next";
+import { getRouteDictionary } from "@/lib/locale";
 import {
   buildPageMetadata,
   personId,
   serviceId,
-  siteName,
-  siteUrl,
   toAbsoluteUrl,
+  toLocalizedAbsoluteUrl,
   websiteId,
 } from "@/lib/seo";
 
 const HOME_SERVICE_IDS = ["private", "business", "coaching"] as const;
 
-export async function generateMetadata(): Promise<Metadata> {
-  const { locale, dictionary } = await getSiteDictionary();
+type LocalePageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: LocalePageProps): Promise<Metadata> {
+  const { locale, dictionary } = await getRouteDictionary((await params).locale);
 
   return buildPageMetadata({
     title: dictionary.metadata.homeTitle,
@@ -32,20 +37,23 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-export default async function Home() {
-  const { locale, dictionary } = await getSiteDictionary();
+export default async function LocalizedHomePage({ params }: LocalePageProps) {
+  const { locale, dictionary } = await getRouteDictionary((await params).locale);
+  const homeUrl = toLocalizedAbsoluteUrl(locale, "/");
+  const sessionsUrl = toLocalizedAbsoluteUrl(locale, "/sessions");
+
   const homeSchema = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "WebPage",
-        "@id": `${siteUrl}/#webpage`,
-        url: siteUrl,
+        "@id": `${homeUrl}#webpage`,
+        url: homeUrl,
         name: dictionary.metadata.homeTitle,
         description: dictionary.metadata.homeDescription,
         isPartOf: { "@id": websiteId },
         about: { "@id": personId },
-        mainEntity: { "@id": `${siteUrl}/#services` },
+        mainEntity: { "@id": `${homeUrl}#services` },
         inLanguage: locale,
         primaryImageOfPage: {
           "@type": "ImageObject",
@@ -53,28 +61,26 @@ export default async function Home() {
         },
       },
       {
-        "@type": "ItemList",
-        "@id": `${siteUrl}/#services`,
+        "@type": "OfferCatalog",
+        "@id": `${homeUrl}#services`,
         name: dictionary.homeServices.title,
         itemListElement: dictionary.homeServices.items.map((item, index) => ({
           "@type": "ListItem",
           position: index + 1,
           name: `${item.title} ${item.subtitle}`.trim(),
-          item: `${siteUrl}/sessions#${HOME_SERVICE_IDS[index] ?? "private"}`,
+          item: `${sessionsUrl}#${HOME_SERVICE_IDS[index] ?? "private"}`,
         })),
       },
       {
         "@type": "ProfessionalService",
         "@id": serviceId,
-        name: siteName,
-        url: siteUrl,
-        hasOfferCatalog: { "@id": `${siteUrl}/#services` },
+        hasOfferCatalog: { "@id": `${homeUrl}#services` },
       },
     ],
   };
 
   return (
-    <main>
+    <main id="main-content">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(homeSchema) }}
@@ -89,12 +95,15 @@ export default async function Home() {
           nav: dictionary.nav,
         }}
       />
-      <Hero copy={dictionary.hero} />
-      <AboutSection copy={dictionary.homeAbout} />
-      <ServicesSection copy={dictionary.homeServices} />
+      <Hero locale={locale} copy={dictionary.hero} />
+      <AboutSection locale={locale} copy={dictionary.homeAbout} />
+      <ServicesSection locale={locale} copy={dictionary.homeServices} />
       <PhilosophySection copy={dictionary.philosophy} />
-      <ProcessSection copy={dictionary.process} />
-      <Footer dictionary={{ nav: dictionary.nav, footer: dictionary.footer }} />
+      <ProcessSection locale={locale} copy={dictionary.process} />
+      <Footer
+        locale={locale}
+        dictionary={{ nav: dictionary.nav, footer: dictionary.footer }}
+      />
       <BackToTop />
     </main>
   );

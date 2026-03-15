@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useLenis } from "lenis/react";
 import { motion, AnimatePresence } from "framer-motion";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import LocalizedLink from "@/components/localized-link";
 import type { Locale, SiteDictionary } from "@/lib/dictionaries";
+import { stripLocaleFromPathname } from "@/lib/locale-routing";
 
 interface HeaderClientProps {
   transparent?: boolean;
@@ -24,6 +25,7 @@ export default function HeaderClient({
   dictionary,
 }: HeaderClientProps) {
   const pathname = usePathname();
+  const normalizedPathname = stripLocaleFromPathname(pathname);
   const [scrolled, setScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -82,7 +84,6 @@ export default function HeaderClient({
             "background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease",
         }}
       >
-        {/* Reading progress bar */}
         <motion.div
           style={{
             position: "absolute",
@@ -106,8 +107,9 @@ export default function HeaderClient({
             justifyContent: "space-between",
           }}
         >
-          <Link
+          <LocalizedLink
             href="/"
+            locale={locale}
             style={{
               display: "flex",
               alignItems: "center",
@@ -131,19 +133,20 @@ export default function HeaderClient({
                 objectFit: "contain",
               }}
             />
-          </Link>
+          </LocalizedLink>
 
-          {/* Desktop nav */}
           <nav
+            aria-label="Primary navigation"
             style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}
             className="desktop-nav"
           >
             {navLinks.map((link) => {
-              const active = pathname === link.href;
+              const active = normalizedPathname === link.href;
               return (
-                <Link
+                <LocalizedLink
                   key={link.href}
                   href={link.href}
+                  locale={locale}
                   style={{
                     fontFamily: "var(--font-ui)",
                     fontSize: "11px",
@@ -195,7 +198,7 @@ export default function HeaderClient({
                       }}
                     />
                   )}
-                </Link>
+                </LocalizedLink>
               );
             })}
 
@@ -210,8 +213,9 @@ export default function HeaderClient({
               />
             </div>
 
-            <Link
+            <LocalizedLink
               href="/contact#form"
+              locale={locale}
               style={{
                 marginLeft: "0.5rem",
                 fontFamily: "var(--font-ui)",
@@ -244,10 +248,9 @@ export default function HeaderClient({
               }}
             >
               {dictionary.nav.book}
-            </Link>
+            </LocalizedLink>
           </nav>
 
-          {/* Mobile burger */}
           <motion.button
             type="button"
             aria-label={menuOpen ? "Close navigation" : "Open navigation"}
@@ -310,7 +313,6 @@ export default function HeaderClient({
         </div>
       </header>
 
-      {/* Mobile overlay */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -354,6 +356,7 @@ export default function HeaderClient({
             }}
           >
             <nav
+              aria-label="Mobile navigation"
               style={{
                 display: "flex",
                 flexDirection: "column",
@@ -361,11 +364,12 @@ export default function HeaderClient({
               }}
             >
               {navLinks.map((link) => {
-                const active = pathname === link.href;
+                const active = normalizedPathname === link.href;
                 return (
-                  <Link
+                  <LocalizedLink
                     key={link.href}
                     href={link.href}
+                    locale={locale}
                     onClick={() => setMenuOpen(false)}
                     aria-current={active ? "page" : undefined}
                     style={{
@@ -377,7 +381,7 @@ export default function HeaderClient({
                     }}
                   >
                     {link.label}
-                  </Link>
+                  </LocalizedLink>
                 );
               })}
             </nav>
@@ -397,8 +401,9 @@ export default function HeaderClient({
                 shortLabels={dictionary.languagesShort}
                 ariaLabel={dictionary.localeLabel}
               />
-              <Link
+              <LocalizedLink
                 href="/contact#form"
+                locale={locale}
                 onClick={() => setMenuOpen(false)}
                 style={{
                   fontFamily: "var(--font-ui)",
@@ -414,7 +419,7 @@ export default function HeaderClient({
                 }}
               >
                 {dictionary.nav.book}
-              </Link>
+              </LocalizedLink>
             </div>
           </motion.div>
         )}

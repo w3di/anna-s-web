@@ -1,16 +1,17 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import type { SiteDictionary } from "@/lib/dictionaries";
+import type { Locale, SiteDictionary } from "@/lib/dictionaries";
+import LocalizedLink from "./localized-link";
 
 type Props = {
+  locale: Locale;
   dictionary: Pick<SiteDictionary, "nav" | "footer">;
 };
 
-export default function FooterMiddle({ dictionary }: Props) {
+export default function FooterMiddle({ locale, dictionary }: Props) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
   const navLinks = [
@@ -39,8 +40,9 @@ export default function FooterMiddle({ dictionary }: Props) {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <Link
+          <LocalizedLink
             href="/"
+            locale={locale}
             style={{ display: "inline-block", marginBottom: "1.8rem" }}
           >
             <Image
@@ -56,7 +58,7 @@ export default function FooterMiddle({ dictionary }: Props) {
                 opacity: 0.92,
               }}
             />
-          </Link>
+          </LocalizedLink>
           <p
             style={{
               fontFamily: "var(--font-body)",
@@ -69,11 +71,12 @@ export default function FooterMiddle({ dictionary }: Props) {
           >
             {dictionary.footer.brandDescription}
           </p>
-          <div
+          <address
             style={{
               display: "flex",
               flexDirection: "column",
               gap: "0.6rem",
+              fontStyle: "normal",
             }}
           >
             <a
@@ -108,7 +111,7 @@ export default function FooterMiddle({ dictionary }: Props) {
             >
               {dictionary.footer.location}
             </span>
-          </div>
+          </address>
         </motion.div>
 
         <motion.div
@@ -130,6 +133,7 @@ export default function FooterMiddle({ dictionary }: Props) {
             {dictionary.footer.pagesTitle}
           </h4>
           <nav
+            aria-label={dictionary.footer.pagesTitle}
             style={{
               display: "flex",
               flexDirection: "column",
@@ -137,9 +141,10 @@ export default function FooterMiddle({ dictionary }: Props) {
             }}
           >
             {navLinks.map((link) => (
-              <Link
+              <LocalizedLink
                 key={link.href}
                 href={link.href}
+                locale={locale}
                 style={{
                   fontFamily: "var(--font-body)",
                   fontSize: "14px",
@@ -156,7 +161,7 @@ export default function FooterMiddle({ dictionary }: Props) {
                 }
               >
                 {link.label}
-              </Link>
+              </LocalizedLink>
             ))}
           </nav>
         </motion.div>
@@ -180,6 +185,7 @@ export default function FooterMiddle({ dictionary }: Props) {
             {dictionary.footer.sessionsTitle}
           </h4>
           <nav
+            aria-label={dictionary.footer.sessionsTitle}
             style={{
               display: "flex",
               flexDirection: "column",
@@ -191,9 +197,10 @@ export default function FooterMiddle({ dictionary }: Props) {
               [dictionary.footer.sessionLinks[1], "/sessions#business"],
               [dictionary.footer.sessionLinks[2], "/sessions#coaching"],
             ].map(([label, href]) => (
-              <Link
+              <LocalizedLink
                 key={href}
                 href={href}
+                locale={locale}
                 style={{
                   fontFamily: "var(--font-body)",
                   fontSize: "14px",
@@ -210,7 +217,7 @@ export default function FooterMiddle({ dictionary }: Props) {
                 }
               >
                 {label}
-              </Link>
+              </LocalizedLink>
             ))}
           </nav>
         </motion.div>

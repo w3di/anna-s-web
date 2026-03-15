@@ -1,10 +1,11 @@
 import ServicesSectionClient from "./ServicesSectionClient";
-import type { SiteDictionary } from "@/lib/dictionaries";
+import type { Locale, SiteDictionary } from "@/lib/dictionaries";
 
 type ServicesSectionProps = {
+  locale: Locale;
   copy: SiteDictionary["homeServices"];
 };
 
-export default function ServicesSection({ copy }: ServicesSectionProps) {
-  return <ServicesSectionClient copy={copy} />;
+export default function ServicesSection({ locale, copy }: ServicesSectionProps) {
+  return <ServicesSectionClient locale={locale} copy={copy} />;
 }

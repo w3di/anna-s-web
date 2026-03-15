@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { defaultLocale } from "@/lib/dictionaries";
 import { siteName } from "@/lib/seo";
 
 export default function manifest(): MetadataRoute.Manifest {
@@ -7,7 +8,7 @@ export default function manifest(): MetadataRoute.Manifest {
     short_name: siteName,
     description:
       "Systemic constellation facilitator and process-oriented psychologist in Prague and online.",
-    start_url: "/",
+    start_url: `/${defaultLocale}`,
     display: "standalone",
     background_color: "#fdfaf6",
     theme_color: "#fdfaf6",

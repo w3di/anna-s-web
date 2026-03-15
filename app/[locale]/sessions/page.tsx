@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PageBanner from "@/components/PageBanner";
@@ -5,15 +7,15 @@ import BackToTop from "@/components/BackToTop";
 import AnimateOnScroll from "@/components/AnimateOnScroll";
 import Button from "@/components/ui/Button";
 import Icon from "@/components/icons/Icon";
-import Image from "next/image";
-import type { Metadata } from "next";
-import { getSiteDictionary } from "@/lib/locale";
+import { getRouteDictionary } from "@/lib/locale";
 import {
   availableLanguages,
+  buildLocalizedBreadcrumbSchema,
   buildPageMetadata,
   personId,
-  siteUrl,
+  serviceAreas,
   toAbsoluteUrl,
+  toLocalizedAbsoluteUrl,
   websiteId,
 } from "@/lib/seo";
 
@@ -28,8 +30,19 @@ function getSessionImage(id: string) {
   }
 }
 
-export async function generateMetadata(): Promise<Metadata> {
-  const { locale, dictionary } = await getSiteDictionary();
+type LocalePageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: LocalePageProps): Promise<Metadata> {
+  const { locale, dictionary } = await getRouteDictionary(
+    (
+      await params
+    ).locale
+  );
+
   return buildPageMetadata({
     title: dictionary.metadata.sessionsTitle,
     description: dictionary.metadata.sessionsDescription,
@@ -39,33 +52,42 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-export default async function SessionsPage() {
-  const { locale, dictionary } = await getSiteDictionary();
+export default async function LocalizedSessionsPage({
+  params,
+}: LocalePageProps) {
+  const { locale, dictionary } = await getRouteDictionary(
+    (
+      await params
+    ).locale
+  );
   const copy = dictionary.sessionsPage;
+  const sessionsUrl = toLocalizedAbsoluteUrl(locale, "/sessions");
+
   const sessionItems = copy.items.map((session) => ({
     "@type": "Service",
-    "@id": `${siteUrl}/sessions#${session.id}`,
-    url: `${siteUrl}/sessions#${session.id}`,
+    "@id": `${sessionsUrl}#${session.id}`,
+    url: `${sessionsUrl}#${session.id}`,
     name: `${session.title} ${session.subtitle}`.trim(),
     description: `${session.intro} ${session.description}`,
     serviceType: session.title,
     provider: { "@id": personId },
-    areaServed: ["Prague", "Online"],
+    areaServed: [...serviceAreas],
     availableLanguage: [...availableLanguages],
   }));
+
   const sessionsPageSchema = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "CollectionPage",
-        "@id": `${siteUrl}/sessions#webpage`,
-        url: `${siteUrl}/sessions`,
+        "@id": `${sessionsUrl}#webpage`,
+        url: sessionsUrl,
         name: dictionary.metadata.sessionsTitle,
         description: dictionary.metadata.sessionsDescription,
         isPartOf: { "@id": websiteId },
         about: { "@id": personId },
         inLanguage: locale,
-        mainEntity: { "@id": `${siteUrl}/sessions#list` },
+        mainEntity: { "@id": `${sessionsUrl}#list` },
         primaryImageOfPage: {
           "@type": "ImageObject",
           url: toAbsoluteUrl("/sessions-banner.webp"),
@@ -73,38 +95,27 @@ export default async function SessionsPage() {
       },
       {
         "@type": "ItemList",
-        "@id": `${siteUrl}/sessions#list`,
+        "@id": `${sessionsUrl}#list`,
         name: copy.title,
         itemListElement: sessionItems.map((session, index) => ({
           "@type": "ListItem",
           position: index + 1,
           name: session.name,
-          item: `${siteUrl}/sessions#${copy.items[index].id}`,
+          item: `${sessionsUrl}#${copy.items[index].id}`,
         })),
       },
       ...sessionItems,
       {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: dictionary.nav.home,
-            item: siteUrl,
-          },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: dictionary.nav.sessions,
-            item: `${siteUrl}/sessions`,
-          },
-        ],
+        ...buildLocalizedBreadcrumbSchema(locale, [
+          { name: dictionary.nav.home, path: "/" },
+          { name: dictionary.nav.sessions, path: "/sessions" },
+        ]),
       },
     ],
   };
 
   return (
-    <main>
+    <main id="main-content">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(sessionsPageSchema) }}
@@ -295,6 +306,7 @@ export default async function SessionsPage() {
                 <Button
                   as="link"
                   href="/contact#form"
+                  locale={locale}
                   variant={index % 2 === 0 ? "primary" : "white"}
                   size="md"
                   iconRight={<Icon name="arrow-right" white />}
@@ -346,6 +358,7 @@ export default async function SessionsPage() {
             <Button
               as="link"
               href="/contact#form"
+              locale={locale}
               variant="primary"
               size="lg"
               iconRight={<Icon name="arrow-right" white />}
@@ -356,7 +369,10 @@ export default async function SessionsPage() {
         </div>
       </section>
 
-      <Footer dictionary={{ nav: dictionary.nav, footer: dictionary.footer }} />
+      <Footer
+        locale={locale}
+        dictionary={{ nav: dictionary.nav, footer: dictionary.footer }}
+      />
       <BackToTop />
 
       <style>{`

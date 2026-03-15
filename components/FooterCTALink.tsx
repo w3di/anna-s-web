@@ -1,16 +1,19 @@
 "use client";
 
-import Link from "next/link";
+import type { Locale } from "@/lib/dictionaries";
+import LocalizedLink from "./localized-link";
 import Icon from "./icons/Icon";
 
 type Props = {
+  locale: Locale;
   label: string;
 };
 
-export default function FooterCTALink({ label }: Props) {
+export default function FooterCTALink({ locale, label }: Props) {
   return (
-    <Link
+    <LocalizedLink
       href="/contact#form"
+      locale={locale}
       className="footer-cta-link"
       style={{
         display: "inline-flex",
@@ -42,6 +45,6 @@ export default function FooterCTALink({ label }: Props) {
     >
       {label}
       <Icon name="arrow-right" white />
-    </Link>
+    </LocalizedLink>
   );
 }

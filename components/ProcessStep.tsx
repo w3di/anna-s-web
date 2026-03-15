@@ -17,7 +17,7 @@ export default function ProcessStep({ step, index, total }: StepProps) {
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
-    <motion.div
+    <motion.li
       ref={ref}
       initial={{ opacity: 0, y: 32 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -101,6 +101,6 @@ export default function ProcessStep({ step, index, total }: StepProps) {
           </p>
         </div>
       </div>
-    </motion.div>
+    </motion.li>
   );
 }

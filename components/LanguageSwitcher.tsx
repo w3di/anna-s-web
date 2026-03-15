@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useId, useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { useId } from "react";
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { locales, type Locale, type SiteDictionary } from "@/lib/dictionaries";
+import LocalizedLink from "./localized-link";
 
 type Props = {
   locale: Locale;
@@ -22,25 +23,24 @@ export default function LanguageSwitcher({
   compact = false,
   inverted = false,
 }: Props) {
-  const router = useRouter();
-  const [selected, setSelected] = useState<Locale>(locale);
-  const [isPending, startTransition] = useTransition();
+  const pathname = usePathname();
   const layoutId = useId();
+  const currentHref = pathname || "/";
 
-  useEffect(() => {
-    setSelected(locale);
-  }, [locale]);
+  function persistLocale(nextLocale: Locale) {
+    const body = JSON.stringify({ locale: nextLocale });
 
-  async function setLocale(nextLocale: Locale) {
-    if (nextLocale === selected) return;
-    setSelected(nextLocale);
-    await fetch("/api/locale", {
+    if (typeof navigator !== "undefined" && navigator.sendBeacon) {
+      const payload = new Blob([body], { type: "application/json" });
+      navigator.sendBeacon("/api/locale", payload);
+      return;
+    }
+
+    void fetch("/api/locale", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ locale: nextLocale }),
-    });
-    startTransition(() => {
-      router.refresh();
+      body,
+      keepalive: true,
     });
   }
 
@@ -64,60 +64,33 @@ export default function LanguageSwitcher({
       }}
     >
       {locales.map((code) => {
-        const active = selected === code;
-        return (
-          <motion.button
-            key={code}
-            type="button"
-            layout
-            onClick={() => void setLocale(code)}
-            aria-pressed={active}
-            title={labels[code]}
-            disabled={isPending && active}
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.98 }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.color = active
-                ? inverted
-                  ? "var(--c-ink)"
-                  : "#ffffff"
-                : inverted
-                ? "rgba(255,255,255,0.9)"
-                : "var(--c-ink)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.color = active
-                ? inverted
-                  ? "var(--c-ink)"
-                  : "#ffffff"
-                : inverted
-                ? "rgba(255,255,255,0.72)"
-                : "var(--c-gray-70)";
-            }}
-            style={{
-              appearance: "none",
-              border: "none",
-              cursor: "pointer",
-              borderRadius: "999px",
-              padding: compact ? "7px 9px" : "8px 11px",
-              fontFamily: "var(--font-ui)",
-              fontSize: compact ? "9px" : "10px",
-              fontWeight: 700,
-              letterSpacing: compact ? "1.5px" : "2px",
-              textTransform: "uppercase",
-              position: "relative",
-              zIndex: active ? 1 : 0,
-              backgroundColor: "transparent",
-              color: active
-                ? inverted
-                  ? "var(--c-ink)"
-                  : "#ffffff"
-                : inverted
-                ? "rgba(255,255,255,0.72)"
-                : "var(--c-gray-70)",
-              minWidth: compact ? "36px" : "42px",
-            }}
-          >
+        const active = locale === code;
+        const itemStyle = {
+          display: "inline-flex",
+          alignItems: "center",
+          justifyContent: "center",
+          borderRadius: "999px",
+          padding: compact ? "7px 9px" : "8px 11px",
+          fontFamily: "var(--font-ui)",
+          fontSize: compact ? "9px" : "10px",
+          fontWeight: 700,
+          letterSpacing: compact ? "1.5px" : "2px",
+          textTransform: "uppercase" as const,
+          position: "relative" as const,
+          zIndex: active ? 1 : 0,
+          backgroundColor: "transparent",
+          color: active
+            ? inverted
+              ? "var(--c-ink)"
+              : "#ffffff"
+            : inverted
+            ? "rgba(255,255,255,0.72)"
+            : "var(--c-gray-70)",
+          minWidth: compact ? "36px" : "42px",
+          textDecoration: "none",
+        };
+        const itemContent = (
+          <>
             {active && (
               <motion.span
                 layoutId={`lang-toggle-${layoutId}`}
@@ -139,7 +112,46 @@ export default function LanguageSwitcher({
               />
             )}
             {shortLabels[code]}
-          </motion.button>
+          </>
+        );
+
+        if (active) {
+          return (
+            <span
+              key={code}
+              aria-current="page"
+              title={labels[code]}
+              style={itemStyle}
+            >
+              {itemContent}
+            </span>
+          );
+        }
+
+        return (
+          <LocalizedLink
+            key={code}
+            href={currentHref}
+            locale={code}
+            title={labels[code]}
+            onClick={() => persistLocale(code)}
+            onMouseEnter={(event) => {
+              event.currentTarget.style.color = inverted
+                ? "rgba(255,255,255,0.9)"
+                : "var(--c-ink)";
+            }}
+            onMouseLeave={(event) => {
+              event.currentTarget.style.color = inverted
+                ? "rgba(255,255,255,0.72)"
+                : "var(--c-gray-70)";
+            }}
+            style={{
+              ...itemStyle,
+              cursor: "pointer",
+            }}
+          >
+            {itemContent}
+          </LocalizedLink>
         );
       })}
     </motion.div>

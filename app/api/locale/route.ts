@@ -26,10 +26,12 @@ export async function POST(request: Request) {
     { ok: true, locale },
     { headers: noIndexHeaders }
   );
+
   response.cookies.set(localeCookieName, locale, {
     path: "/",
     maxAge: 60 * 60 * 24 * 365,
     sameSite: "lax",
   });
+
   return response;
 }

@@ -5,15 +5,17 @@ import { motion, useInView } from "framer-motion";
 import Button from "./ui/Button";
 import Icon from "./icons/Icon";
 import ServiceCard from "./ServiceCard";
-import type { SiteDictionary } from "@/lib/dictionaries";
+import type { Locale, SiteDictionary } from "@/lib/dictionaries";
 
 type ServicesCopy = SiteDictionary["homeServices"];
 
 type ServicesSectionClientProps = {
+  locale: Locale;
   copy: ServicesCopy;
 };
 
 export default function ServicesSectionClient({
+  locale,
   copy,
 }: ServicesSectionClientProps) {
   const headingRef = useRef(null);
@@ -79,6 +81,7 @@ export default function ServicesSectionClient({
               <Button
                 as="link"
                 href="/sessions"
+                locale={locale}
                 variant="white"
                 size="md"
                 iconRight={<Icon name="arrow-right" white />}
@@ -111,7 +114,7 @@ export default function ServicesSectionClient({
           className="services-grid"
         >
           {copy.items.map((s, i) => (
-            <ServiceCard key={i} service={s} index={i} />
+            <ServiceCard key={i} locale={locale} service={s} index={i} />
           ))}
         </div>
 
@@ -122,6 +125,7 @@ export default function ServicesSectionClient({
           <Button
             as="link"
             href="/sessions"
+            locale={locale}
             variant="white"
             size="md"
             iconRight={<Icon name="arrow-right" white />}

@@ -5,15 +5,17 @@ import { motion, useInView } from "framer-motion";
 import Button from "./ui/Button";
 import Icon from "./icons/Icon";
 import ProcessStep from "./ProcessStep";
-import type { SiteDictionary } from "@/lib/dictionaries";
+import type { Locale, SiteDictionary } from "@/lib/dictionaries";
 
 type ProcessCopy = SiteDictionary["process"];
 
 type ProcessSectionClientProps = {
+  locale: Locale;
   copy: ProcessCopy;
 };
 
 export default function ProcessSectionClient({
+  locale,
   copy,
 }: ProcessSectionClientProps) {
   const headingRef = useRef(null);
@@ -97,6 +99,7 @@ export default function ProcessSectionClient({
                 <Button
                   as="link"
                   href="/contact#form"
+                  locale={locale}
                   variant="primary"
                   size="md"
                   iconRight={<Icon name="arrow-right" white />}
@@ -107,7 +110,7 @@ export default function ProcessSectionClient({
             </div>
           </div>
 
-          <div>
+          <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
             {copy.steps.map((s, i) => (
               <ProcessStep
                 key={i}
@@ -116,7 +119,7 @@ export default function ProcessSectionClient({
                 total={copy.steps.length}
               />
             ))}
-          </div>
+          </ol>
         </div>
       </div>
 

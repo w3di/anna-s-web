@@ -1,10 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import { useRef, useState } from "react";
-import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import Icon from "./icons/Icon";
-import type { SiteDictionary } from "@/lib/dictionaries";
+import LocalizedLink from "./localized-link";
+import type { Locale, SiteDictionary } from "@/lib/dictionaries";
 
 type ServicesCopy = SiteDictionary["homeServices"];
 
@@ -26,11 +27,12 @@ function getServiceImage(num: string) {
 }
 
 type ServiceCardProps = {
+  locale: Locale;
   service: ServicesCopy["items"][number];
   index: number;
 };
 
-export default function ServiceCard({ service, index }: ServiceCardProps) {
+export default function ServiceCard({ locale, service, index }: ServiceCardProps) {
   const [hovered, setHovered] = useState(false);
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
@@ -39,7 +41,11 @@ export default function ServiceCard({ service, index }: ServiceCardProps) {
   const href = `/sessions#${sectionId}`;
 
   return (
-    <Link href={href} style={{ textDecoration: "none", color: "inherit" }}>
+    <LocalizedLink
+      href={href}
+      locale={locale}
+      style={{ textDecoration: "none", color: "inherit" }}
+    >
       <motion.article
         ref={ref}
         initial={{ opacity: 0, y: 48 }}
@@ -66,17 +72,26 @@ export default function ServiceCard({ service, index }: ServiceCardProps) {
           style={{
             position: "absolute",
             inset: 0,
-            backgroundImage: `url(${getServiceImage(service.num)})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
             transform: hovered ? "scale(1.05)" : "scale(1)",
             transition: "transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-            filter:
-              service.num === "01"
-                ? "saturate(0.75) sepia(0.22) hue-rotate(-12deg) contrast(0.94) brightness(1.05)"
-                : undefined,
           }}
-        />
+        >
+          <Image
+            src={getServiceImage(service.num)}
+            alt={`${service.title} ${service.subtitle}`.trim()}
+            fill
+            sizes="(max-width: 860px) 92vw, (max-width: 1280px) 48vw, 420px"
+            quality={75}
+            style={{
+              objectFit: "cover",
+              objectPosition: "center",
+              filter:
+                service.num === "01"
+                  ? "saturate(0.75) sepia(0.22) hue-rotate(-12deg) contrast(0.94) brightness(1.05)"
+                  : undefined,
+            }}
+          />
+        </div>
 
         <div
           style={{
@@ -224,6 +239,6 @@ export default function ServiceCard({ service, index }: ServiceCardProps) {
           </div>
         </div>
       </motion.article>
-    </Link>
+    </LocalizedLink>
   );
 }

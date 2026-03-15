@@ -17,7 +17,7 @@ export default function PhilosophyPillar({ pillar, index }: PillarProps) {
   const [hovered, setHovered] = useState(false);
 
   return (
-    <motion.div
+    <motion.li
       ref={ref}
       initial={{ opacity: 0, x: 30 }}
       animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -46,7 +46,7 @@ export default function PhilosophyPillar({ pillar, index }: PillarProps) {
           {pillar.symbol}
         </span>
         <div>
-          <div
+          <h3
             style={{
               fontFamily: "var(--font-ui)",
               fontSize: "10px",
@@ -55,11 +55,11 @@ export default function PhilosophyPillar({ pillar, index }: PillarProps) {
               textTransform: "uppercase",
               color: hovered ? "var(--c-blue)" : "rgba(255,255,255,0.35)",
               transition: "color 0.3s ease",
-              marginBottom: "0.6rem",
+              margin: "0 0 0.6rem",
             }}
           >
             {pillar.label}
-          </div>
+          </h3>
           <p
             style={{
               fontFamily: "var(--font-body)",
@@ -74,6 +74,6 @@ export default function PhilosophyPillar({ pillar, index }: PillarProps) {
           </p>
         </div>
       </div>
-    </motion.div>
+    </motion.li>
   );
 }

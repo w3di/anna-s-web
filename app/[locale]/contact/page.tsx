@@ -1,22 +1,33 @@
+import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PageBanner from "@/components/PageBanner";
 import BackToTop from "@/components/BackToTop";
 import ContactForm from "@/components/ContactForm";
 import AnimateOnScroll from "@/components/AnimateOnScroll";
-import type { Metadata } from "next";
-import { getSiteDictionary } from "@/lib/locale";
+import { getRouteDictionary } from "@/lib/locale";
 import {
   availableLanguages,
+  buildLocalizedBreadcrumbSchema,
   buildPageMetadata,
+  contactEmail,
+  contactPhone,
   personId,
-  siteUrl,
+  serviceAreas,
   toAbsoluteUrl,
+  toLocalizedAbsoluteUrl,
   websiteId,
 } from "@/lib/seo";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const { locale, dictionary } = await getSiteDictionary();
+type LocalePageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: LocalePageProps): Promise<Metadata> {
+  const { locale, dictionary } = await getRouteDictionary((await params).locale);
+
   return buildPageMetadata({
     title: dictionary.metadata.contactTitle,
     description: dictionary.metadata.contactDescription,
@@ -26,22 +37,44 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-export default async function ContactPage() {
-  const { locale, dictionary } = await getSiteDictionary();
+export default async function LocalizedContactPage({ params }: LocalePageProps) {
+  const { locale, dictionary } = await getRouteDictionary((await params).locale);
   const copy = dictionary.contactPage;
+  const contactUrl = toLocalizedAbsoluteUrl(locale, "/contact");
+  const contactDetails = [
+    {
+      label: copy.locationLabel,
+      value: copy.locationValue,
+      href: undefined,
+      sub: copy.locationSub,
+    },
+    {
+      label: copy.emailLabel,
+      value: copy.emailValue,
+      href: `mailto:${contactEmail}`,
+      sub: undefined,
+    },
+    {
+      label: copy.phoneLabel,
+      value: copy.phoneValue,
+      href: `tel:${contactPhone}`,
+      sub: undefined,
+    },
+  ] as const;
+
   const contactPageSchema = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "ContactPage",
-        "@id": `${siteUrl}/contact#webpage`,
-        url: `${siteUrl}/contact`,
+        "@id": `${contactUrl}#webpage`,
+        url: contactUrl,
         name: dictionary.metadata.contactTitle,
         description: dictionary.metadata.contactDescription,
         isPartOf: { "@id": websiteId },
         about: { "@id": personId },
         inLanguage: locale,
-        mainEntity: { "@id": `${siteUrl}/contact#contact-point` },
+        mainEntity: { "@id": `${contactUrl}#contact-point` },
         primaryImageOfPage: {
           "@type": "ImageObject",
           url: toAbsoluteUrl("/contact-banner.webp"),
@@ -49,35 +82,24 @@ export default async function ContactPage() {
       },
       {
         "@type": "ContactPoint",
-        "@id": `${siteUrl}/contact#contact-point`,
-        email: "info@mindofheart.com",
-        telephone: "+420608514450",
+        "@id": `${contactUrl}#contact-point`,
+        email: contactEmail,
+        telephone: contactPhone,
         contactType: "consultation booking",
-        areaServed: ["Prague", "Online"],
+        areaServed: [...serviceAreas],
         availableLanguage: [...availableLanguages],
       },
       {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: dictionary.nav.home,
-            item: siteUrl,
-          },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: dictionary.nav.contact,
-            item: `${siteUrl}/contact`,
-          },
-        ],
+        ...buildLocalizedBreadcrumbSchema(locale, [
+          { name: dictionary.nav.home, path: "/" },
+          { name: dictionary.nav.contact, path: "/contact" },
+        ]),
       },
     ],
   };
 
   return (
-    <main>
+    <main id="main-content">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageSchema) }}
@@ -191,115 +213,101 @@ export default async function ContactPage() {
                   }}
                 />
 
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "2rem",
-                  }}
-                >
-                  {[
-                    {
-                      label: copy.locationLabel,
-                      value: copy.locationValue,
-                      href: undefined,
-                      sub: copy.locationSub,
-                    },
-                    {
-                      label: copy.emailLabel,
-                      value: copy.emailValue,
-                      href: "mailto:info@mindofheart.com",
-                      sub: undefined,
-                    },
-                    {
-                      label: copy.phoneLabel,
-                      value: copy.phoneValue,
-                      href: "tel:+420608514450",
-                      sub: undefined,
-                    },
-                  ].map((detail, index) => (
-                    <div
-                      key={detail.label}
-                      style={{
-                        display: "flex",
-                        gap: "1.2rem",
-                        alignItems: "flex-start",
-                      }}
-                    >
+                <address style={{ fontStyle: "normal" }}>
+                  <dl
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "2rem",
+                      margin: 0,
+                    }}
+                  >
+                    {contactDetails.map((detail, index) => (
                       <div
+                        key={detail.label}
                         style={{
-                          width: "40px",
-                          height: "40px",
-                          background: "rgba(29,86,176,0.08)",
-                          border: "1px solid rgba(29,86,176,0.15)",
-                          borderRadius: "50%",
                           display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          flexShrink: 0,
+                          gap: "1.2rem",
+                          alignItems: "flex-start",
                         }}
                       >
-                        <span
-                          style={{ color: "var(--c-blue)", fontSize: "14px" }}
-                        >
-                          {index === 0 ? "◎" : index === 1 ? "✉" : "☎"}
-                        </span>
-                      </div>
-                      <div>
-                        <span
+                        <div
                           style={{
-                            fontFamily: "var(--font-ui)",
-                            fontSize: "9px",
-                            fontWeight: 700,
-                            letterSpacing: "2px",
-                            textTransform: "uppercase",
-                            color: "#666666",
-                            display: "block",
-                            marginBottom: "3px",
+                            width: "40px",
+                            height: "40px",
+                            background: "rgba(29,86,176,0.08)",
+                            border: "1px solid rgba(29,86,176,0.15)",
+                            borderRadius: "50%",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            flexShrink: 0,
                           }}
                         >
-                          {detail.label}
-                        </span>
-                        {detail.href ? (
-                          <a
-                            href={detail.href}
-                            style={{
-                              fontFamily: "var(--font-body)",
-                              fontSize: "15px",
-                              color: "var(--c-blue)",
-                              textDecoration: "none",
-                            }}
-                          >
-                            {detail.value}
-                          </a>
-                        ) : (
                           <span
-                            style={{
-                              fontFamily: "var(--font-body)",
-                              fontSize: "15px",
-                              color: "#333",
-                            }}
+                            aria-hidden="true"
+                            style={{ color: "var(--c-blue)", fontSize: "14px" }}
                           >
-                            {detail.value}
+                            {index === 0 ? "◎" : index === 1 ? "✉" : "☎"}
                           </span>
-                        )}
-                        {detail.sub && (
-                          <span
+                        </div>
+                        <div>
+                          <dt
                             style={{
-                              fontFamily: "var(--font-body)",
-                              fontSize: "12px",
+                              fontFamily: "var(--font-ui)",
+                              fontSize: "9px",
+                              fontWeight: 700,
+                              letterSpacing: "2px",
+                              textTransform: "uppercase",
                               color: "#666666",
-                              display: "block",
-                              marginTop: "2px",
+                              marginBottom: "3px",
                             }}
                           >
-                            {detail.sub}
-                          </span>
-                        )}
+                            {detail.label}
+                          </dt>
+                          <dd style={{ margin: 0 }}>
+                            {detail.href ? (
+                              <a
+                                href={detail.href}
+                                style={{
+                                  fontFamily: "var(--font-body)",
+                                  fontSize: "15px",
+                                  color: "var(--c-blue)",
+                                  textDecoration: "none",
+                                }}
+                              >
+                                {detail.value}
+                              </a>
+                            ) : (
+                              <span
+                                style={{
+                                  fontFamily: "var(--font-body)",
+                                  fontSize: "15px",
+                                  color: "#333",
+                                }}
+                              >
+                                {detail.value}
+                              </span>
+                            )}
+                            {detail.sub && (
+                              <span
+                                style={{
+                                  fontFamily: "var(--font-body)",
+                                  fontSize: "12px",
+                                  color: "#666666",
+                                  display: "block",
+                                  marginTop: "2px",
+                                }}
+                              >
+                                {detail.sub}
+                              </span>
+                            )}
+                          </dd>
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </dl>
+                </address>
 
                 <div
                   style={{
@@ -342,7 +350,10 @@ export default async function ContactPage() {
         </div>
       </section>
 
-      <Footer dictionary={{ nav: dictionary.nav, footer: dictionary.footer }} />
+      <Footer
+        locale={locale}
+        dictionary={{ nav: dictionary.nav, footer: dictionary.footer }}
+      />
       <BackToTop />
 
       <style>{`

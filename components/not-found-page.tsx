@@ -3,14 +3,24 @@ import Footer from "@/components/Footer";
 import Button from "@/components/ui/Button";
 import Icon from "@/components/icons/Icon";
 import AnimateOnScroll from "@/components/AnimateOnScroll";
-import { getSiteDictionary } from "@/lib/locale";
+import type { Locale, SiteDictionary } from "@/lib/dictionaries";
 
-export default async function NotFound() {
-  const { locale, dictionary } = await getSiteDictionary();
+type NotFoundPageProps = {
+  locale: Locale;
+  dictionary: Pick<
+    SiteDictionary,
+    "localeLabel" | "languages" | "languagesShort" | "nav" | "footer" | "notFoundPage"
+  >;
+};
+
+export default function NotFoundPage({
+  locale,
+  dictionary,
+}: NotFoundPageProps) {
   const copy = dictionary.notFoundPage;
 
   return (
-    <main>
+    <main id="main-content">
       <Header
         locale={locale}
         dictionary={{
@@ -123,6 +133,7 @@ export default async function NotFound() {
             <Button
               as="link"
               href="/"
+              locale={locale}
               variant="primary"
               size="lg"
               iconRight={<Icon name="arrow-right" white />}
@@ -133,7 +144,10 @@ export default async function NotFound() {
         </div>
       </section>
 
-      <Footer dictionary={{ nav: dictionary.nav, footer: dictionary.footer }} />
+      <Footer
+        locale={locale}
+        dictionary={{ nav: dictionary.nav, footer: dictionary.footer }}
+      />
     </main>
   );
 }

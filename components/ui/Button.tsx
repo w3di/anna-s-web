@@ -1,5 +1,7 @@
 import { ButtonHTMLAttributes, forwardRef, ReactNode } from "react";
 import Link from "next/link";
+import type { Locale } from "@/lib/dictionaries";
+import { getLocalizedHref } from "@/lib/locale-routing";
 import styles from "./Button.module.css";
 
 /* ─────────────────────────────────────────────────────────────
@@ -19,6 +21,7 @@ export type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl";
 interface SharedProps {
   variant?: ButtonVariant;
   size?: ButtonSize;
+  locale?: Locale;
   iconLeft?: ReactNode;
   iconRight?: ReactNode;
   loading?: boolean;
@@ -121,6 +124,7 @@ const Button = forwardRef<HTMLButtonElement, Props>((allProps, ref) => {
   const {
     variant = "primary",
     size = "md",
+    locale,
     loading = false,
     full = false,
     iconOnly = false,
@@ -155,11 +159,13 @@ const Button = forwardRef<HTMLButtonElement, Props>((allProps, ref) => {
 
   if (isLinkButton) {
     const { href, external } = allProps as ButtonLinkProps;
+    const resolvedHref =
+      external || !locale ? href : getLocalizedHref(locale, href);
 
     if (external) {
       return (
         <a
-          href={href}
+          href={resolvedHref}
           className={cls}
           target="_blank"
           rel="noopener noreferrer"
@@ -169,7 +175,7 @@ const Button = forwardRef<HTMLButtonElement, Props>((allProps, ref) => {
       );
     }
     return (
-      <Link href={href} className={cls}>
+      <Link href={resolvedHref} className={cls}>
         {content}
       </Link>
     );

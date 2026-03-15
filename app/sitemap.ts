@@ -1,20 +1,44 @@
 import type { MetadataRoute } from "next";
-import { siteUrl } from "@/lib/seo";
+import { locales } from "@/lib/dictionaries";
+import { buildLanguageAlternates, toAbsoluteUrl } from "@/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
-
   const pages = [
-    { path: "/", changeFrequency: "weekly" as const, priority: 1 },
-    { path: "/about", changeFrequency: "monthly" as const, priority: 0.8 },
-    { path: "/sessions", changeFrequency: "monthly" as const, priority: 0.9 },
-    { path: "/contact", changeFrequency: "monthly" as const, priority: 0.7 },
+    {
+      path: "/",
+      imagePath: "/hero-landscape.webp",
+      changeFrequency: "weekly" as const,
+      priority: 1,
+    },
+    {
+      path: "/about",
+      imagePath: "/about-banner.webp",
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
+    {
+      path: "/sessions",
+      imagePath: "/sessions-banner.webp",
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    },
+    {
+      path: "/contact",
+      imagePath: "/contact-banner.webp",
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    },
   ];
 
-  return pages.map((page) => ({
-    url: page.path === "/" ? siteUrl : `${siteUrl}${page.path}`,
-    lastModified: now,
-    changeFrequency: page.changeFrequency,
-    priority: page.priority,
-  }));
+  return pages.flatMap((page) => {
+    const languages = buildLanguageAlternates(page.path);
+
+    return locales.map((locale) => ({
+      url: languages[locale],
+      alternates: { languages },
+      images: [toAbsoluteUrl(page.imagePath)],
+      changeFrequency: page.changeFrequency,
+      priority: page.priority,
+    }));
+  });
 }

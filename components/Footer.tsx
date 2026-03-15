@@ -1,12 +1,13 @@
 import FooterCTALink from "./FooterCTALink";
 import FooterMiddle from "./FooterMiddle";
-import type { SiteDictionary } from "@/lib/dictionaries";
+import type { Locale, SiteDictionary } from "@/lib/dictionaries";
 
 type FooterProps = {
+  locale: Locale;
   dictionary: Pick<SiteDictionary, "nav" | "footer">;
 };
 
-export default function Footer({ dictionary }: FooterProps) {
+export default function Footer({ locale, dictionary }: FooterProps) {
   return (
     <footer
       className="defer-section"
@@ -64,11 +65,11 @@ export default function Footer({ dictionary }: FooterProps) {
               {dictionary.footer.ctaTitle}
             </h3>
           </div>
-          <FooterCTALink label={dictionary.footer.ctaButton} />
+          <FooterCTALink locale={locale} label={dictionary.footer.ctaButton} />
         </div>
       </div>
 
-      <FooterMiddle dictionary={dictionary} />
+      <FooterMiddle locale={locale} dictionary={dictionary} />
 
       <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
         <div

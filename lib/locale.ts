@@ -1,24 +1,27 @@
 import "server-only";
 
-import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
 import {
-  defaultLocale,
   getDictionary,
   isLocale,
-  localeCookieName,
   type Locale,
+  type SiteDictionary,
 } from "@/lib/dictionaries";
 
-export async function getSiteLocale(): Promise<Locale> {
-  const cookieStore = await cookies();
-  const locale = cookieStore.get(localeCookieName)?.value;
-  return isLocale(locale) ? locale : defaultLocale;
-}
+type RouteDictionaryResult = {
+  locale: Locale;
+  dictionary: SiteDictionary;
+};
 
-export async function getSiteDictionary() {
-  const locale = await getSiteLocale();
+export async function getRouteDictionary(
+  localeParam: string
+): Promise<RouteDictionaryResult> {
+  if (!isLocale(localeParam)) {
+    notFound();
+  }
+
   return {
-    locale,
-    dictionary: getDictionary(locale),
+    locale: localeParam,
+    dictionary: getDictionary(localeParam),
   };
 }
