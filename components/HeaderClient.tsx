@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useLenis } from "lenis/react";
@@ -26,15 +26,20 @@ export default function HeaderClient({
 }: HeaderClientProps) {
   const pathname = usePathname();
   const normalizedPathname = stripLocaleFromPathname(pathname);
+  const mobileMenuId = useId();
+  const mobileMenuTitleId = `${mobileMenuId}-title`;
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const menuWasOpenRef = useRef(false);
   const [scrolled, setScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
-  const onScroll = useCallback((l: { scroll: number; limit: number }) => {
-    const progress = l.scroll / (l.limit - window.innerHeight || 1);
+  const lenis = useLenis((l: { scroll: number; limit: number }) => {
+    const limit = l.limit - window.innerHeight;
+    const progress = limit > 0 ? l.scroll / limit : 0;
     setScrollProgress(progress);
     setScrolled(l.scroll > 60);
-  }, []);
-  const lenis = useLenis(onScroll);
+  });
 
   useEffect(() => {
     queueMicrotask(() => setMenuOpen(false));
@@ -44,17 +49,72 @@ export default function HeaderClient({
     if (menuOpen) {
       document.body.style.overflow = "hidden";
       lenis?.stop();
+      queueMicrotask(() => {
+        const firstFocusable = mobileMenuRef.current?.querySelector<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        );
+        firstFocusable?.focus();
+      });
     } else {
       document.body.style.overflow = "";
       lenis?.start();
+      if (menuWasOpenRef.current) {
+        menuButtonRef.current?.focus();
+      }
     }
+    menuWasOpenRef.current = menuOpen;
     return () => {
       document.body.style.overflow = "";
       lenis?.start();
     };
   }, [menuOpen, lenis]);
 
-  const isLight = transparent && !scrolled;
+  function getFocusableMenuItems() {
+    if (!mobileMenuRef.current) {
+      return [];
+    }
+
+    return Array.from(
+      mobileMenuRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      )
+    );
+  }
+
+  function handleMobileMenuKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      setMenuOpen(false);
+      return;
+    }
+
+    if (event.key !== "Tab") {
+      return;
+    }
+
+    const focusableItems = getFocusableMenuItems();
+
+    if (focusableItems.length === 0) {
+      event.preventDefault();
+      return;
+    }
+
+    const firstItem = focusableItems[0];
+    const lastItem = focusableItems[focusableItems.length - 1];
+    const activeElement = document.activeElement;
+
+    if (event.shiftKey && activeElement === firstItem) {
+      event.preventDefault();
+      lastItem.focus();
+    }
+
+    if (!event.shiftKey && activeElement === lastItem) {
+      event.preventDefault();
+      firstItem.focus();
+    }
+  }
+
+  const isLight = transparent && !scrolled && !menuOpen;
   const navLinks = [
     { href: "/", label: dictionary.nav.home },
     { href: "/about", label: dictionary.nav.about },
@@ -147,6 +207,7 @@ export default function HeaderClient({
                   key={link.href}
                   href={link.href}
                   locale={locale}
+                  className="header-nav-link"
                   style={{
                     fontFamily: "var(--font-ui)",
                     fontSize: "11px",
@@ -252,11 +313,13 @@ export default function HeaderClient({
           </nav>
 
           <motion.button
+            ref={menuButtonRef}
             type="button"
-            aria-label={menuOpen ? "Close navigation" : "Open navigation"}
+            aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={menuOpen}
+            aria-controls={mobileMenuId}
             onClick={() => setMenuOpen((o) => !o)}
-            className="mobile-nav"
+            className="mobile-nav mobile-nav-trigger"
             style={{
               display: "none",
               width: "42px",
@@ -320,6 +383,7 @@ export default function HeaderClient({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
+            aria-hidden="true"
             style={{
               position: "fixed",
               inset: 0,
@@ -333,6 +397,8 @@ export default function HeaderClient({
       <AnimatePresence>
         {menuOpen && (
           <motion.div
+            id={mobileMenuId}
+            ref={mobileMenuRef}
             initial={{ clipPath: "circle(0% at calc(100% - 2rem) 3.5rem)" }}
             animate={{
               clipPath: "circle(150% at calc(100% - 2rem) 3.5rem)",
@@ -341,6 +407,11 @@ export default function HeaderClient({
               clipPath: "circle(0% at calc(100% - 2rem) 3.5rem)",
             }}
             transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby={mobileMenuTitleId}
+            tabIndex={-1}
+            onKeyDown={handleMobileMenuKeyDown}
             style={{
               position: "fixed",
               top: 0,
@@ -355,6 +426,9 @@ export default function HeaderClient({
               overflow: "auto",
             }}
           >
+            <h2 id={mobileMenuTitleId} className="sr-only">
+              Site navigation
+            </h2>
             <nav
               aria-label="Mobile navigation"
               style={{
@@ -370,6 +444,7 @@ export default function HeaderClient({
                     key={link.href}
                     href={link.href}
                     locale={locale}
+                    className="mobile-menu-link"
                     onClick={() => setMenuOpen(false)}
                     aria-current={active ? "page" : undefined}
                     style={{
@@ -404,6 +479,7 @@ export default function HeaderClient({
               <LocalizedLink
                 href="/contact#form"
                 locale={locale}
+                className="mobile-menu-book-link"
                 onClick={() => setMenuOpen(false)}
                 style={{
                   fontFamily: "var(--font-ui)",

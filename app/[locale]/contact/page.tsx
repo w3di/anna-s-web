@@ -41,6 +41,7 @@ export default async function LocalizedContactPage({ params }: LocalePageProps) 
   const { locale, dictionary } = await getRouteDictionary((await params).locale);
   const copy = dictionary.contactPage;
   const contactUrl = toLocalizedAbsoluteUrl(locale, "/contact");
+  const formHeadingId = "contact-form-heading";
   const contactDetails = [
     {
       label: copy.locationLabel,
@@ -99,11 +100,7 @@ export default async function LocalizedContactPage({ params }: LocalePageProps) 
   };
 
   return (
-    <main id="main-content">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageSchema) }}
-      />
+    <>
       <Header
         transparent
         locale={locale}
@@ -113,6 +110,11 @@ export default async function LocalizedContactPage({ params }: LocalePageProps) 
           languagesShort: dictionary.languagesShort,
           nav: dictionary.nav,
         }}
+      />
+      <main id="main-content">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageSchema) }}
       />
       <PageBanner
         title={copy.title}
@@ -125,6 +127,7 @@ export default async function LocalizedContactPage({ params }: LocalePageProps) 
 
       <section
         id="form"
+        aria-labelledby={formHeadingId}
         className="defer-section"
         style={{
           backgroundColor: "#fdfaf6",
@@ -150,6 +153,7 @@ export default async function LocalizedContactPage({ params }: LocalePageProps) 
                   {copy.formOverline}
                 </span>
                 <h2
+                  id={formHeadingId}
                   style={{
                     fontFamily: "var(--font-display)",
                     fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
@@ -269,6 +273,7 @@ export default async function LocalizedContactPage({ params }: LocalePageProps) 
                             {detail.href ? (
                               <a
                                 href={detail.href}
+                                className="contact-detail-link"
                                 style={{
                                   fontFamily: "var(--font-body)",
                                   fontSize: "15px",
@@ -350,17 +355,17 @@ export default async function LocalizedContactPage({ params }: LocalePageProps) 
         </div>
       </section>
 
-      <Footer
-        locale={locale}
-        dictionary={{ nav: dictionary.nav, footer: dictionary.footer }}
-      />
-      <BackToTop />
-
       <style>{`
         @media (max-width: 860px) {
           .contact-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
-    </main>
+      </main>
+      <Footer
+        locale={locale}
+        dictionary={{ nav: dictionary.nav, footer: dictionary.footer }}
+      />
+      <BackToTop />
+    </>
   );
 }

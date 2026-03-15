@@ -37,7 +37,7 @@ export default function RootLayoutShell({
     >
       <body id="site-top" className="antialiased">
         <a href="#main-content" className="skip-link">
-          Skip to content
+          Skip to main content
         </a>
         <SmoothScroll>{children}</SmoothScroll>
       </body>

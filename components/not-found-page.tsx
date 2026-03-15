@@ -20,7 +20,7 @@ export default function NotFoundPage({
   const copy = dictionary.notFoundPage;
 
   return (
-    <main id="main-content">
+    <>
       <Header
         locale={locale}
         dictionary={{
@@ -31,7 +31,8 @@ export default function NotFoundPage({
         }}
       />
 
-      <section
+      <main id="main-content">
+        <section
         style={{
           backgroundColor: "var(--c-ivory)",
           minHeight: "calc(100vh - var(--header-height))",
@@ -42,8 +43,8 @@ export default function NotFoundPage({
           position: "relative",
           overflow: "hidden",
         }}
-      >
-        <div
+        >
+          <div
           style={{
             position: "absolute",
             inset: 0,
@@ -51,9 +52,9 @@ export default function NotFoundPage({
               "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(29,86,176,0.04) 0%, transparent 70%)",
             pointerEvents: "none",
           }}
-        />
+          />
 
-        <div
+          <div
           className="container"
           style={{
             textAlign: "center",
@@ -61,17 +62,17 @@ export default function NotFoundPage({
             position: "relative",
             zIndex: 1,
           }}
-        >
-          <AnimateOnScroll direction="up" duration={0.8}>
+          >
+            <AnimateOnScroll direction="up" duration={0.8}>
             <span
               className="t-overline"
               style={{ display: "block", marginBottom: "1.5rem" }}
             >
               {copy.overline}
             </span>
-          </AnimateOnScroll>
+            </AnimateOnScroll>
 
-          <AnimateOnScroll direction="up" delay={0.1} duration={0.9}>
+            <AnimateOnScroll direction="up" delay={0.1} duration={0.9}>
             <h1
               style={{
                 fontFamily: "var(--font-display)",
@@ -86,9 +87,9 @@ export default function NotFoundPage({
             >
               {copy.title}
             </h1>
-          </AnimateOnScroll>
+            </AnimateOnScroll>
 
-          <AnimateOnScroll direction="up" delay={0.2} duration={0.8}>
+            <AnimateOnScroll direction="up" delay={0.2} duration={0.8}>
             <h2
               style={{
                 fontFamily: "var(--font-display)",
@@ -101,9 +102,9 @@ export default function NotFoundPage({
             >
               {copy.subtitle}
             </h2>
-          </AnimateOnScroll>
+            </AnimateOnScroll>
 
-          <AnimateOnScroll direction="fade" delay={0.35} duration={0.6}>
+            <AnimateOnScroll direction="fade" delay={0.35} duration={0.6}>
             <div
               style={{
                 width: "56px",
@@ -112,9 +113,9 @@ export default function NotFoundPage({
                 margin: "1.5rem auto",
               }}
             />
-          </AnimateOnScroll>
+            </AnimateOnScroll>
 
-          <AnimateOnScroll direction="up" delay={0.4} duration={0.7}>
+            <AnimateOnScroll direction="up" delay={0.4} duration={0.7}>
             <p
               style={{
                 fontFamily: "var(--font-body)",
@@ -127,9 +128,9 @@ export default function NotFoundPage({
             >
               {copy.description}
             </p>
-          </AnimateOnScroll>
+            </AnimateOnScroll>
 
-          <AnimateOnScroll direction="up" delay={0.5} duration={0.7}>
+            <AnimateOnScroll direction="up" delay={0.5} duration={0.7}>
             <Button
               as="link"
               href="/"
@@ -140,14 +141,15 @@ export default function NotFoundPage({
             >
               {copy.cta}
             </Button>
-          </AnimateOnScroll>
-        </div>
-      </section>
+            </AnimateOnScroll>
+          </div>
+        </section>
+      </main>
 
       <Footer
         locale={locale}
         dictionary={{ nav: dictionary.nav, footer: dictionary.footer }}
       />
-    </main>
+    </>
   );
 }

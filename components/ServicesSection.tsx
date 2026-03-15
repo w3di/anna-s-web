@@ -6,6 +6,9 @@ type ServicesSectionProps = {
   copy: SiteDictionary["homeServices"];
 };
 
-export default function ServicesSection({ locale, copy }: ServicesSectionProps) {
+export default function ServicesSection({
+  locale,
+  copy,
+}: ServicesSectionProps) {
   return <ServicesSectionClient locale={locale} copy={copy} />;
 }

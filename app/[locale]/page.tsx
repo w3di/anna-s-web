@@ -80,11 +80,7 @@ export default async function LocalizedHomePage({ params }: LocalePageProps) {
   };
 
   return (
-    <main id="main-content">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeSchema) }}
-      />
+    <>
       <Header
         transparent
         locale={locale}
@@ -95,16 +91,22 @@ export default async function LocalizedHomePage({ params }: LocalePageProps) {
           nav: dictionary.nav,
         }}
       />
+      <main id="main-content">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeSchema) }}
+      />
       <Hero locale={locale} copy={dictionary.hero} />
       <AboutSection locale={locale} copy={dictionary.homeAbout} />
       <ServicesSection locale={locale} copy={dictionary.homeServices} />
       <PhilosophySection copy={dictionary.philosophy} />
       <ProcessSection locale={locale} copy={dictionary.process} />
+      </main>
       <Footer
         locale={locale}
         dictionary={{ nav: dictionary.nav, footer: dictionary.footer }}
       />
       <BackToTop />
-    </main>
+    </>
   );
 }

@@ -1,16 +1,15 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { useLenis } from "lenis/react";
 import { motion, AnimatePresence } from "framer-motion";
 import Icon from "./icons/Icon";
 
 export default function BackToTop() {
   const [visible, setVisible] = useState(false);
-  const onScroll = useCallback((l: { scroll: number }) => {
+  const lenis = useLenis((l: { scroll: number }) => {
     setVisible(l.scroll > 400);
-  }, []);
-  const lenis = useLenis(onScroll);
+  });
 
   const scrollToTop = () => {
     lenis?.scrollTo(0, { duration: 1.2 });
@@ -26,6 +25,7 @@ export default function BackToTop() {
           transition={{ duration: 0.3 }}
           onClick={scrollToTop}
           aria-label="Back to top"
+          className="back-to-top"
           style={{
             position: "fixed",
             bottom: "2rem",

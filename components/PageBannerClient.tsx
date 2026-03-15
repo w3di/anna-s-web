@@ -30,7 +30,7 @@ export default function PageBannerClient({
   const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "8%"]);
 
   return (
-    <section
+    <header
       ref={ref}
       style={{
         position: "relative",
@@ -53,6 +53,7 @@ export default function PageBannerClient({
         <Image
           src={backgroundImage}
           alt=""
+          aria-hidden="true"
           fill
           sizes="(max-width: 1920px) 100vw, 1920px"
           priority
@@ -156,6 +157,6 @@ export default function PageBannerClient({
           }}
         />
       </motion.div>
-    </section>
+    </header>
   );
 }

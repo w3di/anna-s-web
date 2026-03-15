@@ -20,9 +20,14 @@ export default function ProcessSectionClient({
 }: ProcessSectionClientProps) {
   const headingRef = useRef(null);
   const headingInView = useInView(headingRef, { once: true, margin: "-60px" });
+  const headingId = "process-heading";
 
   return (
-    <section className="defer-section" style={{ backgroundColor: "#fdfaf6" }}>
+    <section
+      className="defer-section"
+      aria-labelledby={headingId}
+      style={{ backgroundColor: "#fdfaf6" }}
+    >
       <div className="container section-pad-lg">
         <div
           style={{
@@ -45,6 +50,7 @@ export default function ProcessSectionClient({
               </motion.span>
 
               <motion.h2
+                id={headingId}
                 initial={{ opacity: 0, y: 20 }}
                 animate={headingInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.1, duration: 0.7 }}

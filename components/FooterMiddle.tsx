@@ -43,6 +43,7 @@ export default function FooterMiddle({ locale, dictionary }: Props) {
           <LocalizedLink
             href="/"
             locale={locale}
+            className="footer-brand-link"
             style={{ display: "inline-block", marginBottom: "1.8rem" }}
           >
             <Image
@@ -81,6 +82,7 @@ export default function FooterMiddle({ locale, dictionary }: Props) {
           >
             <a
               href="mailto:info@mindofheart.com"
+              className="footer-contact-link"
               style={{
                 fontFamily: "var(--font-body)",
                 fontSize: "14px",
@@ -93,6 +95,7 @@ export default function FooterMiddle({ locale, dictionary }: Props) {
             </a>
             <a
               href="tel:+420608514450"
+              className="footer-contact-link"
               style={{
                 fontFamily: "var(--font-body)",
                 fontSize: "14px",
@@ -140,29 +143,41 @@ export default function FooterMiddle({ locale, dictionary }: Props) {
               gap: "0.8rem",
             }}
           >
-            {navLinks.map((link) => (
-              <LocalizedLink
-                key={link.href}
-                href={link.href}
-                locale={locale}
-                style={{
-                  fontFamily: "var(--font-body)",
-                  fontSize: "14px",
-                  color: "rgba(255,255,255,0.84)",
-                  textDecoration: "none",
-                  transition: "color 0.2s",
-                }}
-                onMouseEnter={(e) =>
-                  ((e.target as HTMLElement).style.color = "var(--c-blue)")
-                }
-                onMouseLeave={(e) =>
-                  ((e.target as HTMLElement).style.color =
-                    "rgba(255,255,255,0.84)")
-                }
-              >
-                {link.label}
-              </LocalizedLink>
-            ))}
+            <ul
+              style={{
+                listStyle: "none",
+                margin: 0,
+                padding: 0,
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.8rem",
+              }}
+            >
+              {navLinks.map((link) => (
+                <li key={link.href}>
+                  <LocalizedLink
+                    href={link.href}
+                    locale={locale}
+                    className="footer-link"
+                    style={{
+                      fontFamily: "var(--font-body)",
+                      fontSize: "14px",
+                      color: "rgba(255,255,255,0.84)",
+                      textDecoration: "none",
+                      transition: "color 0.2s",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = "var(--c-blue)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.color = "rgba(255,255,255,0.84)";
+                    }}
+                  >
+                    {link.label}
+                  </LocalizedLink>
+                </li>
+              ))}
+            </ul>
           </nav>
         </motion.div>
 
@@ -192,33 +207,45 @@ export default function FooterMiddle({ locale, dictionary }: Props) {
               gap: "0.8rem",
             }}
           >
-            {[
-              [dictionary.footer.sessionLinks[0], "/sessions#private"],
-              [dictionary.footer.sessionLinks[1], "/sessions#business"],
-              [dictionary.footer.sessionLinks[2], "/sessions#coaching"],
-            ].map(([label, href]) => (
-              <LocalizedLink
-                key={href}
-                href={href}
-                locale={locale}
-                style={{
-                  fontFamily: "var(--font-body)",
-                  fontSize: "14px",
-                  color: "rgba(255,255,255,0.84)",
-                  textDecoration: "none",
-                  transition: "color 0.2s",
-                }}
-                onMouseEnter={(e) =>
-                  ((e.target as HTMLElement).style.color = "var(--c-blue)")
-                }
-                onMouseLeave={(e) =>
-                  ((e.target as HTMLElement).style.color =
-                    "rgba(255,255,255,0.84)")
-                }
-              >
-                {label}
-              </LocalizedLink>
-            ))}
+            <ul
+              style={{
+                listStyle: "none",
+                margin: 0,
+                padding: 0,
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.8rem",
+              }}
+            >
+              {[
+                [dictionary.footer.sessionLinks[0], "/sessions#private"],
+                [dictionary.footer.sessionLinks[1], "/sessions#business"],
+                [dictionary.footer.sessionLinks[2], "/sessions#coaching"],
+              ].map(([label, href]) => (
+                <li key={href}>
+                  <LocalizedLink
+                    href={href}
+                    locale={locale}
+                    className="footer-link"
+                    style={{
+                      fontFamily: "var(--font-body)",
+                      fontSize: "14px",
+                      color: "rgba(255,255,255,0.84)",
+                      textDecoration: "none",
+                      transition: "color 0.2s",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = "var(--c-blue)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.color = "rgba(255,255,255,0.84)";
+                    }}
+                  >
+                    {label}
+                  </LocalizedLink>
+                </li>
+              ))}
+            </ul>
           </nav>
         </motion.div>
       </div>

@@ -12,9 +12,12 @@ type AboutSectionProps = {
 };
 
 export default function AboutSection({ locale, copy }: AboutSectionProps) {
+  const headingId = "home-about-heading";
+
   return (
     <section
       id="home-about"
+      aria-labelledby={headingId}
       className="defer-section"
       style={{
         backgroundColor: "#fdfaf6",
@@ -105,6 +108,7 @@ export default function AboutSection({ locale, copy }: AboutSectionProps) {
               </span>
 
               <h2
+                id={headingId}
                 style={{
                   fontFamily: "var(--font-display)",
                   fontSize: "clamp(2rem, 4vw, 3.4rem)",

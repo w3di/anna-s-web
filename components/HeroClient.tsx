@@ -41,7 +41,7 @@ export default function HeroClient({ locale, copy }: HeroClientProps) {
   };
 
   return (
-    <section
+    <header
       ref={ref}
       style={{
         position: "relative",
@@ -117,11 +117,11 @@ export default function HeroClient({ locale, copy }: HeroClientProps) {
             }}
           >
             <span
-            style={{
-              width: "36px",
-              height: "1px",
-              background: "rgba(29,86,176,0.85)",
-            }}
+              style={{
+                width: "36px",
+                height: "1px",
+                background: "rgba(29,86,176,0.85)",
+              }}
             />
             <span
               className="t-overline-light"
@@ -187,7 +187,13 @@ export default function HeroClient({ locale, copy }: HeroClientProps) {
             >
               {copy.primaryCta}
             </Button>
-            <Button as="link" href="/about" locale={locale} variant="white" size="lg">
+            <Button
+              as="link"
+              href="/about"
+              locale={locale}
+              variant="white"
+              size="lg"
+            >
               {copy.secondaryCta}
             </Button>
           </motion.div>
@@ -313,6 +319,6 @@ export default function HeroClient({ locale, copy }: HeroClientProps) {
           </span>
         ))}
       </motion.div>
-    </section>
+    </header>
   );
 }

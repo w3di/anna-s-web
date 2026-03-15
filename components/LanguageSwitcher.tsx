@@ -45,10 +45,10 @@ export default function LanguageSwitcher({
   }
 
   return (
-    <motion.div
-      role="group"
+    <motion.nav
       aria-label={ariaLabel}
       initial={false}
+      className="language-switcher"
       style={{
         display: "inline-flex",
         alignItems: "center",
@@ -121,6 +121,7 @@ export default function LanguageSwitcher({
               key={code}
               aria-current="page"
               title={labels[code]}
+              className="language-switcher__current"
               style={itemStyle}
             >
               {itemContent}
@@ -134,6 +135,7 @@ export default function LanguageSwitcher({
             href={currentHref}
             locale={code}
             title={labels[code]}
+            className="language-switcher__link"
             onClick={() => persistLocale(code)}
             onMouseEnter={(event) => {
               event.currentTarget.style.color = inverted
@@ -154,6 +156,6 @@ export default function LanguageSwitcher({
           </LocalizedLink>
         );
       })}
-    </motion.div>
+    </motion.nav>
   );
 }

@@ -20,10 +20,12 @@ export default function ServicesSectionClient({
 }: ServicesSectionClientProps) {
   const headingRef = useRef(null);
   const headingInView = useInView(headingRef, { once: true, margin: "-60px" });
+  const headingId = "services-heading";
 
   return (
     <section
       className="defer-section"
+      aria-labelledby={headingId}
       style={{ backgroundColor: "#0d0d0d", position: "relative" }}
     >
       <div className="container section-pad-lg">
@@ -56,6 +58,7 @@ export default function ServicesSectionClient({
               </motion.span>
 
               <motion.h2
+                id={headingId}
                 initial={{ opacity: 0, y: 24 }}
                 animate={headingInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.1, duration: 0.75 }}
@@ -105,18 +108,21 @@ export default function ServicesSectionClient({
           />
         </div>
 
-        <div
+        <ul
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(3, 1fr)",
             gap: "1.5px",
+            listStyle: "none",
+            margin: 0,
+            padding: 0,
           }}
           className="services-grid"
         >
           {copy.items.map((s, i) => (
             <ServiceCard key={i} locale={locale} service={s} index={i} />
           ))}
-        </div>
+        </ul>
 
         <div
           style={{ marginTop: "2.5rem", textAlign: "center" }}

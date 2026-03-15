@@ -119,6 +119,39 @@ a {
   color: inherit;
 }
 
+.header-nav-link,
+.header-book-link,
+.mobile-nav-trigger,
+.mobile-menu-link,
+.mobile-menu-book-link,
+.footer-link,
+.footer-brand-link,
+.footer-contact-link,
+.footer-cta-link,
+.language-switcher__link,
+.contact-detail-link,
+.service-card-link,
+.back-to-top {
+  border-radius: 2px;
+}
+
+.header-nav-link:focus-visible,
+.header-book-link:focus-visible,
+.mobile-nav-trigger:focus-visible,
+.mobile-menu-link:focus-visible,
+.mobile-menu-book-link:focus-visible,
+.footer-link:focus-visible,
+.footer-brand-link:focus-visible,
+.footer-contact-link:focus-visible,
+.footer-cta-link:focus-visible,
+.language-switcher__link:focus-visible,
+.contact-detail-link:focus-visible,
+.service-card-link:focus-visible,
+.back-to-top:focus-visible {
+  outline: 3px solid var(--c-blue);
+  outline-offset: 4px;
+}
+
 img, video { display: block; max-width: 100%; }
 
 .defer-section {
@@ -237,33 +270,6 @@ img, video { display: block; max-width: 100%; }
   pointer-events: none;
   opacity: 0.5;
   z-index: 0;
-}
-
-/* ═══════════════════════════════════════════════════════════
-   Scrollbar hidden (no indicator on the right)
-═══════════════════════════════════════════════════════════ */
-html,
-html.lenis,
-body,
-* {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-html::-webkit-scrollbar,
-html.lenis::-webkit-scrollbar,
-body::-webkit-scrollbar,
-*::-webkit-scrollbar {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
-  background: transparent !important;
-  appearance: none !important;
-}
-/* fallback: make scrollbar invisible instead of removing */
-@supports (scrollbar-width: none) {
-  * {
-    scrollbar-width: none !important;
-  }
 }
 
 /* ═══════════════════════════════════════════════════════════

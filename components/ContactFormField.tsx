@@ -5,12 +5,15 @@ export type FieldProps = {
   label: string;
   type?: string;
   inputMode?: "email" | "tel" | "text";
+  autoComplete?: string;
   prefix?: string;
   multiline?: boolean;
   rows?: number;
   value: string;
   isFocused: boolean;
   error?: boolean;
+  errorMessage?: string;
+  describedBy?: string;
   required?: boolean;
   onChange: (value: string) => void;
   onFocus: () => void;
@@ -22,12 +25,15 @@ export default function ContactFormField({
   label,
   type = "text",
   inputMode,
+  autoComplete,
   prefix,
   multiline = false,
   rows = 5,
   value,
   isFocused,
   error = false,
+  errorMessage,
+  describedBy,
   required = false,
   onChange,
   onFocus,
@@ -65,7 +71,6 @@ export default function ContactFormField({
           letterSpacing: isFocused || hasValue ? "2px" : "0",
           textTransform: isFocused || hasValue ? "uppercase" : "none",
           color: isFocused ? "var(--c-blue)" : "#626262",
-          pointerEvents: "none",
           transition: "all 0.22s ease",
           lineHeight: 1,
         }}
@@ -83,6 +88,9 @@ export default function ContactFormField({
           onBlur={onBlur}
           required={required}
           aria-invalid={error || undefined}
+          aria-describedby={describedBy}
+          autoComplete={autoComplete}
+          name={id}
           style={{ ...inputStyle, resize: "none" as const, lineHeight: "1.7" }}
         />
       ) : (
@@ -116,10 +124,27 @@ export default function ContactFormField({
             onBlur={onBlur}
             required={required}
             aria-invalid={error || undefined}
+            aria-describedby={describedBy}
+            autoComplete={autoComplete}
+            name={id}
             style={{ ...inputStyle, flex: showPrefix ? 1 : undefined }}
           />
         </div>
       )}
+      {errorMessage && describedBy ? (
+        <p
+          id={describedBy}
+          style={{
+            marginTop: "0.6rem",
+            fontFamily: "var(--font-body)",
+            fontSize: "13px",
+            lineHeight: 1.5,
+            color: "#c44",
+          }}
+        >
+          {errorMessage}
+        </p>
+      ) : null}
     </div>
   );
 }

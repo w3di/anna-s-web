@@ -39,6 +39,9 @@ export default async function LocalizedAboutPage({ params }: LocalePageProps) {
   const { locale, dictionary } = await getRouteDictionary((await params).locale);
   const copy = dictionary.aboutPage;
   const aboutUrl = toLocalizedAbsoluteUrl(locale, "/about");
+  const approachHeadingId = "about-approach-heading";
+  const backgroundHeadingId = "about-background-heading";
+  const ctaHeadingId = "about-cta-heading";
 
   const aboutPageSchema = {
     "@context": "https://schema.org",
@@ -67,11 +70,7 @@ export default async function LocalizedAboutPage({ params }: LocalePageProps) {
   };
 
   return (
-    <main id="main-content">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutPageSchema) }}
-      />
+    <>
       <Header
         transparent
         locale={locale}
@@ -82,6 +81,11 @@ export default async function LocalizedAboutPage({ params }: LocalePageProps) {
           nav: dictionary.nav,
         }}
       />
+      <main id="main-content">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutPageSchema) }}
+      />
       <PageBanner
         title={copy.title}
         backgroundImage="/about-banner.webp"
@@ -91,7 +95,11 @@ export default async function LocalizedAboutPage({ params }: LocalePageProps) {
         subtitle={copy.subtitle}
       />
 
-      <section className="defer-section" style={{ backgroundColor: "#fdfaf6" }}>
+      <section
+        className="defer-section"
+        aria-labelledby={approachHeadingId}
+        style={{ backgroundColor: "#fdfaf6" }}
+      >
         <div
           className="container section-pad-lg about-intro-grid"
           style={{
@@ -132,6 +140,7 @@ export default async function LocalizedAboutPage({ params }: LocalePageProps) {
                 {copy.approachOverline}
               </span>
               <h2
+                id={approachHeadingId}
                 style={{
                   fontFamily: "var(--font-display)",
                   fontSize: "clamp(2rem, 4vw, 3rem)",
@@ -167,54 +176,56 @@ export default async function LocalizedAboutPage({ params }: LocalePageProps) {
                 {copy.intro2}
               </p>
 
-              {copy.principles.map((principle, index) => (
-                <div
-                  key={index}
-                  style={{
-                    display: "flex",
-                    gap: "1rem",
-                    padding: "0.9rem 0",
-                    borderTop: "1px solid #e8e4de",
-                  }}
-                >
-                  <span
+              <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
+                {copy.principles.map((principle, index) => (
+                  <li
+                    key={index}
                     style={{
-                      fontFamily: "var(--font-display)",
-                      fontSize: "1.1rem",
-                      color: "var(--c-blue)",
-                      flexShrink: 0,
-                      marginTop: "2px",
+                      display: "flex",
+                      gap: "1rem",
+                      padding: "0.9rem 0",
+                      borderTop: "1px solid #e8e4de",
                     }}
                   >
-                    {principle.icon}
-                  </span>
-                  <div>
                     <span
                       style={{
-                        fontFamily: "var(--font-ui)",
-                        fontSize: "10px",
-                        fontWeight: 700,
-                        letterSpacing: "2px",
-                        textTransform: "uppercase",
-                        color: "#2a2a2a",
-                        display: "block",
-                        marginBottom: "2px",
+                        fontFamily: "var(--font-display)",
+                        fontSize: "1.1rem",
+                        color: "var(--c-blue)",
+                        flexShrink: 0,
+                        marginTop: "2px",
                       }}
                     >
-                      {principle.title}
+                      {principle.icon}
                     </span>
-                    <span
-                      style={{
-                        fontFamily: "var(--font-body)",
-                        fontSize: "13px",
-                        color: "#5a5a5a",
-                      }}
-                    >
-                      {principle.desc}
-                    </span>
-                  </div>
-                </div>
-              ))}
+                    <div>
+                      <span
+                        style={{
+                          fontFamily: "var(--font-ui)",
+                          fontSize: "10px",
+                          fontWeight: 700,
+                          letterSpacing: "2px",
+                          textTransform: "uppercase",
+                          color: "#2a2a2a",
+                          display: "block",
+                          marginBottom: "2px",
+                        }}
+                      >
+                        {principle.title}
+                      </span>
+                      <span
+                        style={{
+                          fontFamily: "var(--font-body)",
+                          fontSize: "13px",
+                          color: "#5a5a5a",
+                        }}
+                      >
+                        {principle.desc}
+                      </span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
             </div>
           </AnimateOnScroll>
         </div>
@@ -222,6 +233,7 @@ export default async function LocalizedAboutPage({ params }: LocalePageProps) {
 
       <section
         className="defer-section"
+        aria-labelledby={backgroundHeadingId}
         style={{ backgroundColor: "#111111", position: "relative" }}
       >
         <div className="container section-pad-lg">
@@ -238,6 +250,7 @@ export default async function LocalizedAboutPage({ params }: LocalePageProps) {
                 {copy.backgroundOverline}
               </span>
               <h2
+                id={backgroundHeadingId}
                 style={{
                   fontFamily: "var(--font-display)",
                   fontSize: "clamp(2rem, 4vw, 3rem)",
@@ -259,18 +272,19 @@ export default async function LocalizedAboutPage({ params }: LocalePageProps) {
             </div>
           </AnimateOnScroll>
 
-          <div style={{ maxWidth: "760px" }}>
+          <ul style={{ maxWidth: "760px", listStyle: "none", margin: 0, padding: 0 }}>
             {copy.education.map((item, index) => (
-              <AnimateOnScroll key={index} direction="left" delay={index * 0.06}>
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "2rem",
-                    padding: "1.4rem 0",
-                    borderBottom: "1px solid rgba(255,255,255,0.07)",
-                    alignItems: "flex-start",
-                  }}
-                >
+              <li key={index}>
+                <AnimateOnScroll direction="left" delay={index * 0.06}>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "2rem",
+                      padding: "1.4rem 0",
+                      borderBottom: "1px solid rgba(255,255,255,0.07)",
+                      alignItems: "flex-start",
+                    }}
+                  >
                   <span
                     style={{
                       fontFamily: "var(--font-ui)",
@@ -295,14 +309,19 @@ export default async function LocalizedAboutPage({ params }: LocalePageProps) {
                   >
                     {item.item}
                   </span>
-                </div>
-              </AnimateOnScroll>
+                  </div>
+                </AnimateOnScroll>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
-      <section className="defer-section" style={{ backgroundColor: "#fdfaf6" }}>
+      <section
+        className="defer-section"
+        aria-labelledby={ctaHeadingId}
+        style={{ backgroundColor: "#fdfaf6" }}
+      >
         <div className="container section-pad" style={{ textAlign: "center" }}>
           <AnimateOnScroll direction="up">
             <span
@@ -312,6 +331,7 @@ export default async function LocalizedAboutPage({ params }: LocalePageProps) {
               {copy.ctaOverline}
             </span>
             <h2
+              id={ctaHeadingId}
               style={{
                 fontFamily: "var(--font-display)",
                 fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
@@ -367,17 +387,17 @@ export default async function LocalizedAboutPage({ params }: LocalePageProps) {
         </div>
       </section>
 
-      <Footer
-        locale={locale}
-        dictionary={{ nav: dictionary.nav, footer: dictionary.footer }}
-      />
-      <BackToTop />
-
       <style>{`
         @media (max-width: 860px) {
           .about-intro-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
-    </main>
+      </main>
+      <Footer
+        locale={locale}
+        dictionary={{ nav: dictionary.nav, footer: dictionary.footer }}
+      />
+      <BackToTop />
+    </>
   );
 }
