@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Playfair_Display, Raleway, Open_Sans } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import SmoothScroll from "@/components/SmoothScroll";
 
@@ -41,6 +42,7 @@ export default function RootLayoutShell({
           Skip to main content
         </a>
         <SmoothScroll>{children}</SmoothScroll>
+        <Analytics />
         <SpeedInsights />
       </body>
     </html>
