@@ -50,7 +50,7 @@ function isRateLimited(ip: string): boolean {
   }
   return false;
 }
-const CHAT_IDS = ["138163446", "1699760305"];
+
 const noIndexHeaders = {
   "X-Robots-Tag": "noindex, nofollow, noarchive, nosnippet",
 };
@@ -84,7 +84,9 @@ function validatePayload(payload: ContactPayload) {
 }
 
 function getChatIds(): string[] {
-  return CHAT_IDS;
+  const raw = process.env.TELEGRAM_CHAT_IDS?.trim();
+  if (!raw) return [];
+  return raw.split(",").map((id) => id.trim()).filter(Boolean);
 }
 
 export async function POST(request: Request) {
@@ -121,6 +123,14 @@ export async function POST(request: Request) {
       );
     }
 
+    const chatIds = getChatIds();
+    if (chatIds.length === 0) {
+      return NextResponse.json(
+        { ok: false, error: "Missing TELEGRAM_CHAT_IDS" },
+        { status: 500, headers: noIndexHeaders }
+      );
+    }
+
     const contactLabel = valid.contactType === "email" ? "Email" : "Телефон";
     const localeLabel = valid.locale
       ? LOCALE_LABELS[valid.locale] ?? valid.locale.toUpperCase()
@@ -137,7 +147,6 @@ export async function POST(request: Request) {
       valid.message,
     ].join("\n");
 
-    const chatIds = getChatIds();
     const results = await Promise.all(
       chatIds.map(async (chatId) => {
         const res = await fetch(
