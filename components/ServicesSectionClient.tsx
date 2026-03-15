@@ -13,7 +13,9 @@ type ServicesSectionClientProps = {
   copy: ServicesCopy;
 };
 
-export default function ServicesSectionClient({ copy }: ServicesSectionClientProps) {
+export default function ServicesSectionClient({
+  copy,
+}: ServicesSectionClientProps) {
   const headingRef = useRef(null);
   const headingInView = useInView(headingRef, { once: true, margin: "-60px" });
 
@@ -42,7 +44,11 @@ export default function ServicesSectionClient({ copy }: ServicesSectionClientPro
                 animate={headingInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6 }}
                 className="t-overline"
-                style={{ display: "block", marginBottom: "1rem", color: "#8eb7ff" }}
+                style={{
+                  display: "block",
+                  marginBottom: "1rem",
+                  color: "#8eb7ff",
+                }}
               >
                 {copy.overline}
               </motion.span>

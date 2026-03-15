@@ -13,15 +13,14 @@ type ProcessSectionClientProps = {
   copy: ProcessCopy;
 };
 
-export default function ProcessSectionClient({ copy }: ProcessSectionClientProps) {
+export default function ProcessSectionClient({
+  copy,
+}: ProcessSectionClientProps) {
   const headingRef = useRef(null);
   const headingInView = useInView(headingRef, { once: true, margin: "-60px" });
 
   return (
-    <section
-      className="defer-section"
-      style={{ backgroundColor: "#fdfaf6" }}
-    >
+    <section className="defer-section" style={{ backgroundColor: "#fdfaf6" }}>
       <div className="container section-pad-lg">
         <div
           style={{
@@ -110,7 +109,12 @@ export default function ProcessSectionClient({ copy }: ProcessSectionClientProps
 
           <div>
             {copy.steps.map((s, i) => (
-              <ProcessStep key={i} step={s} index={i} total={copy.steps.length} />
+              <ProcessStep
+                key={i}
+                step={s}
+                index={i}
+                total={copy.steps.length}
+              />
             ))}
           </div>
         </div>

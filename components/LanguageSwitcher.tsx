@@ -77,14 +77,13 @@ export default function LanguageSwitcher({
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.98 }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.color =
-                active
-                  ? inverted
-                    ? "var(--c-ink)"
-                    : "#ffffff"
-                  : inverted
-                  ? "rgba(255,255,255,0.9)"
-                  : "var(--c-ink)";
+              e.currentTarget.style.color = active
+                ? inverted
+                  ? "var(--c-ink)"
+                  : "#ffffff"
+                : inverted
+                ? "rgba(255,255,255,0.9)"
+                : "var(--c-ink)";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.color = active

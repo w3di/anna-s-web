@@ -312,7 +312,11 @@ export default async function SessionsPage() {
           <AnimateOnScroll direction="up">
             <span
               className="t-overline"
-              style={{ display: "block", marginBottom: "1rem", color: "#8eb7ff" }}
+              style={{
+                display: "block",
+                marginBottom: "1rem",
+                color: "#8eb7ff",
+              }}
             >
               {copy.ctaOverline}
             </span>
