@@ -139,6 +139,15 @@ export default async function RootLayout({
     >
       <head>
         <meta name="theme-color" content="#fdfaf6" />
+        <link
+          rel="preload"
+          href="/hero-landscape.webp"
+          as="image"
+          fetchPriority="high"
+        />
+        <link rel="preload" href="/about-banner.webp" as="image" />
+        <link rel="preload" href="/sessions-banner.webp" as="image" />
+        <link rel="preload" href="/contact-banner.webp" as="image" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteSchema) }}
