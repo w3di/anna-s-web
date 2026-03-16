@@ -153,11 +153,9 @@ export function buildSiteSchema({ locale, description }: SiteSchemaInput) {
         logo: toAbsoluteUrl("/mind_of_heart_black_cropped.webp"),
         description,
         areaServed: [...serviceAreas],
-        availableLanguage: [...availableLanguages],
         email: contactEmail,
         telephone: contactPhone,
         address: businessAddress,
-        provider: { "@id": personId },
       },
       {
         "@type": "WebSite",
