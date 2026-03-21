@@ -8,20 +8,20 @@ import SmoothScroll from "@/components/SmoothScroll";
 import GoogleAnalyticsTracker from "@/components/google-analytics-tracker";
 
 const playfair = Playfair_Display({
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext", "cyrillic"],
   weight: ["400", "700"],
   style: ["normal", "italic"],
   variable: "--font-playfair",
 });
 
 const raleway = Raleway({
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext", "cyrillic"],
   weight: ["400", "600", "700"],
   variable: "--font-raleway",
 });
 
 const openSans = Open_Sans({
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext", "cyrillic"],
   weight: ["300", "400"],
   variable: "--font-open-sans",
 });

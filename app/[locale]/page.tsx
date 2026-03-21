@@ -5,10 +5,12 @@ import AboutSection from "@/components/AboutSection";
 import ServicesSection from "@/components/ServicesSection";
 import PhilosophySection from "@/components/PhilosophySection";
 import ProcessSection from "@/components/ProcessSection";
+import HomeFaq from "@/components/HomeFaq";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
 import { getRouteDictionary } from "@/lib/locale";
 import {
+  buildLocalizedBreadcrumbSchema,
   buildPageMetadata,
   personId,
   serviceId,
@@ -26,7 +28,11 @@ type LocalePageProps = {
 export async function generateMetadata({
   params,
 }: LocalePageProps): Promise<Metadata> {
-  const { locale, dictionary } = await getRouteDictionary((await params).locale);
+  const { locale, dictionary } = await getRouteDictionary(
+    (
+      await params
+    ).locale
+  );
 
   return buildPageMetadata({
     title: dictionary.metadata.homeTitle,
@@ -37,7 +43,11 @@ export async function generateMetadata({
 }
 
 export default async function LocalizedHomePage({ params }: LocalePageProps) {
-  const { locale, dictionary } = await getRouteDictionary((await params).locale);
+  const { locale, dictionary } = await getRouteDictionary(
+    (
+      await params
+    ).locale
+  );
   const homeUrl = toLocalizedAbsoluteUrl(locale, "/");
   const sessionsUrl = toLocalizedAbsoluteUrl(locale, "/sessions");
 
@@ -75,6 +85,23 @@ export default async function LocalizedHomePage({ params }: LocalePageProps) {
         "@id": serviceId,
         hasOfferCatalog: { "@id": `${homeUrl}#services` },
       },
+      {
+        ...buildLocalizedBreadcrumbSchema(locale, [
+          { name: dictionary.nav.home, path: "/" },
+        ]),
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${homeUrl}#faq`,
+        mainEntity: dictionary.homeFaq.items.map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.answer,
+          },
+        })),
+      },
     ],
   };
 
@@ -91,15 +118,16 @@ export default async function LocalizedHomePage({ params }: LocalePageProps) {
         }}
       />
       <main id="main-content">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeSchema) }}
-      />
-      <Hero locale={locale} copy={dictionary.hero} />
-      <AboutSection locale={locale} copy={dictionary.homeAbout} />
-      <ServicesSection locale={locale} copy={dictionary.homeServices} />
-      <PhilosophySection copy={dictionary.philosophy} />
-      <ProcessSection locale={locale} copy={dictionary.process} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(homeSchema) }}
+        />
+        <Hero locale={locale} copy={dictionary.hero} />
+        <AboutSection locale={locale} copy={dictionary.homeAbout} />
+        <ServicesSection locale={locale} copy={dictionary.homeServices} />
+        <PhilosophySection copy={dictionary.philosophy} />
+        <ProcessSection locale={locale} copy={dictionary.process} />
+        <HomeFaq copy={dictionary.homeFaq} />
       </main>
       <Footer
         locale={locale}

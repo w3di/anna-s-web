@@ -17,6 +17,7 @@ export type SiteDictionary = {
     home: string;
     about: string;
     sessions: string;
+    blog: string;
     contact: string;
     book: string;
   };
@@ -32,6 +33,7 @@ export type SiteDictionary = {
     location: string;
     founded: string;
     scrollAria: string;
+    seoH1: string;
   };
   homeAbout: {
     overline: string;
@@ -70,6 +72,11 @@ export type SiteDictionary = {
     description: string;
     cta: string;
     steps: Array<{ num: string; title: string; body: string }>;
+  };
+  homeFaq: {
+    overline: string;
+    title: string;
+    items: Array<{ question: string; answer: string }>;
   };
   footer: {
     ctaOverline: string;
@@ -178,6 +185,7 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       home: "Home",
       about: "About Me",
       sessions: "Sessions",
+      blog: "Blog",
       contact: "Contact",
       book: "Book",
     },
@@ -186,7 +194,7 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       firstName: "Anna",
       lastName: "Kolmykova",
       tagline:
-        "Systemic constellation facilitator and process-oriented psychologist helping you move through inner transitions with clarity, depth, and care.",
+        "Psychologist in Prague — systemic constellation facilitator and process-oriented therapist helping you move through inner transitions with clarity, depth, and care.",
       primaryCta: "Explore Sessions",
       secondaryCta: "About Me",
       quote:
@@ -195,13 +203,14 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       location: "Prague · Online",
       founded: "Est. 2020",
       scrollAria: "Scroll down",
+      seoH1: "Psychologist in Prague — Systemic Constellations & Process-Oriented Therapy",
     },
     homeAbout: {
       overline: "About Me",
       title: "Facilitator & psychologist",
       accent: "at your service",
       paragraphs: [
-        "Anna Kolmykova works at the intersection of psychology, embodiment, and consciousness — supporting individuals and leaders through life transitions, relationships, and inner conflicts with depth and clarity.",
+        "Anna Kolmykova is a psychologist in Prague working at the intersection of psychology, embodiment, and consciousness — supporting individuals and leaders through life transitions, relationships, and inner conflicts with depth and clarity.",
         "With more than 10 years of experience in international business across Europe, the USA, and Asia, Anna combines strategic thinking with deep systemic and embodied insight.",
         "Her background in mathematics, clinical psychology, family and organisational constellations, and body-based methods allows her to work with both visible challenges and the deeper dynamics beneath them.",
       ],
@@ -277,7 +286,7 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       title: "The journey begins",
       accent: "with one step",
       description:
-        "Sessions are available online or in person in Prague. Each one is unique — a dialogue between presence and process.",
+        "Sessions with your psychologist in Prague are available online or in person. Each one is unique — a dialogue between presence and process.",
       cta: "Start Your Journey",
       steps: [
         {
@@ -302,12 +311,38 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
         },
       ],
     },
+    homeFaq: {
+      overline: "FAQ",
+      title: "Frequently Asked Questions",
+      items: [
+        {
+          question: "What can I expect from a session with a psychologist in Prague?",
+          answer: "Each session is tailored to your needs. Whether you choose systemic constellations, coaching, or process-oriented therapy, it takes place in a safe and confidential environment — in person in Prague or online. A free 20-minute discovery call helps us understand your request before we begin.",
+        },
+        {
+          question: "Do you offer online sessions?",
+          answer: "Yes. Psychologist Anna Kolmykova offers sessions both in person in Prague and online via secure video. Online sessions are equally effective and available in English, Czech, and Russian.",
+        },
+        {
+          question: "How much does a psychologist in Prague cost?",
+          answer: "Session prices vary depending on the type and duration. Contact us for current rates. A free 20-minute discovery call is always included to make sure the fit is right.",
+        },
+        {
+          question: "What is the difference between constellations and coaching?",
+          answer: "Systemic constellations reveal hidden patterns in family and organisational systems. Coaching focuses on personal growth, clarity, and moving forward. Both approaches can complement each other, and your psychologist in Prague will help you choose the right format.",
+        },
+        {
+          question: "In which languages do you offer sessions?",
+          answer: "Sessions are available in English, Czech, and Russian — both in person in Prague and online worldwide.",
+        },
+      ],
+    },
     footer: {
       ctaOverline: "Ready to begin?",
       ctaTitle: "Take the first step today.",
       ctaButton: "Book a Session",
       brandDescription:
-        "Systemic constellation facilitator and process-oriented psychologist supporting individuals and leaders through lasting inner change.",
+        "Psychologist in Prague — systemic constellation facilitator and process-oriented therapist supporting individuals and leaders through lasting inner change.",
       pagesTitle: "Pages",
       sessionsTitle: "Sessions",
       sessionLinks: [
@@ -490,18 +525,21 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
     },
     metadata: {
       homeTitle:
-        "Mind of Heart — Anna Kolmykova | Systemic Constellations & Coaching",
+        "Psychologist in Prague — Anna Kolmykova | Systemic Constellations & Coaching",
       homeDescription:
-        "Systemic constellation facilitator and process-oriented psychologist in Prague and online.",
-      aboutTitle: "About Me — Anna Kolmykova | Mind of Heart",
+        "Anna Kolmykova — psychologist in Prague offering systemic constellations, process-oriented therapy, and personal coaching. In-person and online sessions. Book a free discovery call.",
+      aboutTitle:
+        "About Anna Kolmykova — Psychologist in Prague | Mind of Heart",
       aboutDescription:
-        "Learn more about Anna Kolmykova, her background, approach, and education.",
-      sessionsTitle: "Sessions — Anna Kolmykova | Mind of Heart",
+        "Meet Anna Kolmykova — systemic constellation facilitator and process-oriented psychologist based in Prague. Education, approach, and certifications. Online and in-person sessions.",
+      sessionsTitle:
+        "Sessions — Psychologist in Prague | Constellations, Coaching & Therapy",
       sessionsDescription:
-        "Private sessions, business constellations, and coaching with Anna Kolmykova.",
-      contactTitle: "Contact — Anna Kolmykova | Mind of Heart",
+        "Book a session with psychologist Anna Kolmykova in Prague or online. Private constellations, business constellations, personal coaching and mentoring.",
+      contactTitle:
+        "Contact — Psychologist Anna Kolmykova in Prague | Mind of Heart",
       contactDescription:
-        "Reach out to Anna Kolmykova to book a session or ask a question.",
+        "Reach out to psychologist Anna Kolmykova in Prague to book a session or ask a question. In-person and online consultations available.",
     },
   },
   cz: {
@@ -512,6 +550,7 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       home: "Domů",
       about: "O mně",
       sessions: "Sezení",
+      blog: "Blog",
       contact: "Kontakt",
       book: "Rezervace",
     },
@@ -520,7 +559,7 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       firstName: "Anna",
       lastName: "Kolmykova",
       tagline:
-        "Facilitátorka systemických konstelací a procesně orientovaná psycholožka, která pomáhá procházet vnitřními změnami s jasností, hloubkou a péčí.",
+        "Psycholožka v Praze — facilitátorka systemických konstelací a procesně orientovaná terapeutka, která pomáhá procházet vnitřními změnami s jasností, hloubkou a péčí.",
       primaryCta: "Prozkoumat sezení",
       secondaryCta: "O mně",
       quote:
@@ -529,13 +568,14 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       location: "Praha · Online",
       founded: "Od r. 2020",
       scrollAria: "Posunout dolů",
+      seoH1: "Psycholožka v Praze — Systemické konstelace a procesně orientovaná terapie",
     },
     homeAbout: {
       overline: "O mně",
       title: "Facilitátorka a psycholožka",
       accent: "ve vaší službě",
       paragraphs: [
-        "Anna Kolmykova pracuje na pomezí psychologie, ztělesnění a vědomí — podporuje jednotlivce i lídry při životních změnách, ve vztazích a vnitřních konfliktech s hloubkou a jasností.",
+        "Anna Kolmykova je psycholožka v Praze, která pracuje na pomezí psychologie, ztělesnění a vědomí — podporuje jednotlivce i lídry při životních změnách, ve vztazích a vnitřních konfliktech s hloubkou a jasností.",
         "Díky více než 10 letům zkušeností v mezinárodním byznysu v Evropě, USA i Asii propojuje strategické myšlení s hlubokým systémovým a tělesným vhledem.",
         "Její zázemí v matematice, klinické psychologii, rodinných a organizačních konstelacích i tělově orientovaných metodách umožňuje pracovat s viditelnými problémy i skrytými dynamikami pod nimi.",
       ],
@@ -611,7 +651,7 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       title: "Cesta začíná",
       accent: "jedním krokem",
       description:
-        "Sezení jsou dostupná online nebo osobně v Praze. Každé je jedinečné — dialog mezi přítomností a procesem.",
+        "Sezení s psycholožkou v Praze jsou dostupná online nebo osobně. Každé je jedinečné — dialog mezi přítomností a procesem.",
       cta: "Začít cestu",
       steps: [
         {
@@ -636,12 +676,38 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
         },
       ],
     },
+    homeFaq: {
+      overline: "FAQ",
+      title: "Často kladené otázky",
+      items: [
+        {
+          question: "Co mohu očekávat od sezení s psycholožkou v Praze?",
+          answer: "Každé sezení je přizpůsobeno vašim potřebám. Ať zvolíte systemické konstelace, koučink nebo procesně orientovanou terapii, probíhá v bezpečném a důvěrném prostředí — osobně v Praze nebo online. Bezplatný 20minutový úvodní hovor nám pomůže porozumět vašemu dotazu.",
+        },
+        {
+          question: "Nabízíte online sezení?",
+          answer: "Ano. Psycholožka Anna Kolmykova nabízí sezení osobně v Praze i online přes zabezpečené video. Online sezení jsou stejně účinná a dostupná v angličtině, češtině a ruštině.",
+        },
+        {
+          question: "Kolik stojí psycholog v Praze?",
+          answer: "Ceny sezení se liší podle typu a délky. Kontaktujte nás pro aktuální ceník. Bezplatný 20minutový úvodní hovor je vždy součástí, abychom ověřili vzájemnou shodu.",
+        },
+        {
+          question: "Jaký je rozdíl mezi konstelacemi a koučinkem?",
+          answer: "Systemické konstelace odhalují skryté vzorce v rodinných a organizačních systémech. Koučink se zaměřuje na osobní růst, jasnost a pohyb vpřed. Oba přístupy se mohou doplňovat a psycholožka v Praze vám pomůže vybrat správný formát.",
+        },
+        {
+          question: "V jakých jazycích nabízíte sezení?",
+          answer: "Sezení jsou dostupná v angličtině, češtině a ruštině — osobně v Praze i online po celém světě.",
+        },
+      ],
+    },
     footer: {
       ctaOverline: "Připraveni začít?",
       ctaTitle: "Udělejte první krok ještě dnes.",
       ctaButton: "Rezervovat sezení",
       brandDescription:
-        "Facilitátorka systemických konstelací a procesně orientovaná psycholožka podporující jednotlivce i lídry v trvalé vnitřní změně.",
+        "Psycholožka v Praze — facilitátorka systemických konstelací a procesně orientovaná terapeutka podporující jednotlivce i lídry v trvalé vnitřní změně.",
       pagesTitle: "Stránky",
       sessionsTitle: "Sezení",
       sessionLinks: [
@@ -820,18 +886,21 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
     },
     metadata: {
       homeTitle:
-        "Mind of Heart — Anna Kolmykova | Systemické konstelace a koučink",
+        "Psycholožka Praha — Anna Kolmykova | Systemické konstelace a koučink",
       homeDescription:
-        "Facilitátorka systemických konstelací a procesně orientovaná psycholožka v Praze a online.",
-      aboutTitle: "O mně — Anna Kolmykova | Mind of Heart",
+        "Anna Kolmykova — psycholožka v Praze. Systemické konstelace, procesně orientovaná terapie a osobní koučink. Sezení osobně i online. Rezervujte si bezplatný úvodní hovor.",
+      aboutTitle:
+        "O Anně Kolmykové — psycholožka v Praze | Mind of Heart",
       aboutDescription:
-        "Zjistěte více o Anně Kolmykové, jejím přístupu, vzdělání a práci.",
-      sessionsTitle: "Sezení — Anna Kolmykova | Mind of Heart",
+        "Seznamte se s Annou Kolmykovou — facilitátorkou systemických konstelací a procesně orientovanou psycholožkou v Praze. Vzdělání, přístup a certifikace.",
+      sessionsTitle:
+        "Sezení — Psycholožka v Praze | Konstelace, koučink a terapie",
       sessionsDescription:
-        "Individuální sezení, organizační konstelace a koučink s Annou Kolmykovou.",
-      contactTitle: "Kontakt — Anna Kolmykova | Mind of Heart",
+        "Rezervujte si sezení s psycholožkou Annou Kolmykovou v Praze nebo online. Individuální konstelace, organizační konstelace, osobní koučink a mentoring.",
+      contactTitle:
+        "Kontakt — Psycholožka Anna Kolmykova v Praze | Mind of Heart",
       contactDescription:
-        "Kontaktujte Annu Kolmykovou kvůli sezení nebo dotazu.",
+        "Kontaktujte psycholožku Annu Kolmykovou v Praze. Osobní i online konzultace. Rezervujte si sezení nebo položte dotaz.",
     },
   },
   ru: {
@@ -842,6 +911,7 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       home: "Главная",
       about: "Обо мне",
       sessions: "Сессии",
+      blog: "Блог",
       contact: "Контакты",
       book: "Запись",
     },
@@ -850,7 +920,7 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       firstName: "Anna",
       lastName: "Kolmykova",
       tagline:
-        "Фасилитатор системных расстановок и процесс-ориентированный психолог, помогающий проходить внутренние переходы с ясностью, глубиной и вниманием.",
+        "Психолог в Праге — фасилитатор системных расстановок и процесс-ориентированный терапевт, помогающий проходить внутренние переходы с ясностью, глубиной и вниманием.",
       primaryCta: "Смотреть сессии",
       secondaryCta: "Обо мне",
       quote:
@@ -859,13 +929,14 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       location: "Прага · Онлайн",
       founded: "С 2020 года",
       scrollAria: "Прокрутить вниз",
+      seoH1: "Психолог в Праге — Системные расстановки и процесс-ориентированная терапия",
     },
     homeAbout: {
       overline: "Обо мне",
       title: "Фасилитатор и психолог",
       accent: "рядом с вами",
       paragraphs: [
-        "Анна Колмыкова работает на пересечении психологии, телесности и сознания — поддерживая людей и лидеров в жизненных переходах, отношениях и внутренних конфликтах с глубиной и ясностью.",
+        "Анна Колмыкова — психолог в Праге, работающий на пересечении психологии, телесности и сознания, поддерживая людей и лидеров в жизненных переходах, отношениях и внутренних конфликтах с глубиной и ясностью.",
         "Более 10 лет международного бизнес-опыта в Европе, США и Азии позволяют ей сочетать стратегическое мышление с глубоким системным и телесным пониманием.",
         "Образование в математике, клинической психологии, семейных и организационных расстановках, а также телесных методах помогает работать и с видимыми трудностями, и с глубинной динамикой под ними.",
       ],
@@ -941,7 +1012,7 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       title: "Путь начинается",
       accent: "с одного шага",
       description:
-        "Сессии доступны онлайн или лично в Праге. Каждая из них уникальна — это диалог между присутствием и процессом.",
+        "Сессии с психологом в Праге доступны онлайн или лично. Каждая из них уникальна — это диалог между присутствием и процессом.",
       cta: "Начать путь",
       steps: [
         {
@@ -966,12 +1037,38 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
         },
       ],
     },
+    homeFaq: {
+      overline: "FAQ",
+      title: "Часто задаваемые вопросы",
+      items: [
+        {
+          question: "Чего ожидать от сессии с психологом в Праге?",
+          answer: "Каждая сессия адаптируется под ваш запрос. Будь то системные расстановки, коучинг или процесс-ориентированная терапия — всё проходит в безопасной и конфиденциальной обстановке, лично в Праге или онлайн. Бесплатный 20-минутный звонок-знакомство поможет понять ваш запрос до начала работы.",
+        },
+        {
+          question: "Вы проводите онлайн-сессии?",
+          answer: "Да. Психолог Анна Колмыкова проводит сессии лично в Праге и онлайн через защищённое видео. Онлайн-сессии одинаково эффективны и доступны на русском, английском и чешском языках.",
+        },
+        {
+          question: "Сколько стоит психолог в Праге?",
+          answer: "Стоимость сессий зависит от типа и продолжительности. Свяжитесь с нами для актуальных цен. Бесплатный 20-минутный ознакомительный звонок всегда включён, чтобы убедиться, что мы подходим друг другу.",
+        },
+        {
+          question: "В чём разница между расстановками и коучингом?",
+          answer: "Системные расстановки раскрывают скрытые паттерны в семейных и организационных системах. Коучинг фокусируется на личностном росте, ясности и движении вперёд. Оба подхода дополняют друг друга, и психолог в Праге поможет выбрать подходящий формат.",
+        },
+        {
+          question: "На каких языках проводятся сессии?",
+          answer: "Сессии доступны на русском, английском и чешском — лично в Праге и онлайн по всему миру.",
+        },
+      ],
+    },
     footer: {
       ctaOverline: "Готовы начать?",
       ctaTitle: "Сделайте первый шаг сегодня.",
       ctaButton: "Записаться на сессию",
       brandDescription:
-        "Фасилитатор системных расстановок и процесс-ориентированный психолог, поддерживающий людей и лидеров в глубокой внутренней трансформации.",
+        "Психолог в Праге — фасилитатор системных расстановок и процесс-ориентированный терапевт, поддерживающий людей и лидеров в глубокой внутренней трансформации.",
       pagesTitle: "Страницы",
       sessionsTitle: "Сессии",
       sessionLinks: [
@@ -1154,18 +1251,21 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
     },
     metadata: {
       homeTitle:
-        "Mind of Heart — Anna Kolmykova | Системные расстановки и коучинг",
+        "Психолог в Праге — Анна Колмыкова | Системные расстановки и коучинг",
       homeDescription:
-        "Фасилитатор системных расстановок и процесс-ориентированный психолог в Праге и онлайн.",
-      aboutTitle: "Обо мне — Anna Kolmykova | Mind of Heart",
+        "Анна Колмыкова — психолог в Праге. Системные расстановки, процесс-ориентированная терапия и личный коучинг. Сессии очно и онлайн. Запишитесь на бесплатную консультацию.",
+      aboutTitle:
+        "Об Анне Колмыковой — психолог в Праге | Mind of Heart",
       aboutDescription:
-        "Узнайте больше об Анне Колмыковой, её подходе, образовании и опыте.",
-      sessionsTitle: "Сессии — Anna Kolmykova | Mind of Heart",
+        "Познакомьтесь с Анной Колмыковой — фасилитатор системных расстановок и процесс-ориентированный психолог в Праге. Образование, подход и сертификации.",
+      sessionsTitle:
+        "Сессии — Психолог в Праге | Расстановки, коучинг и терапия",
       sessionsDescription:
-        "Индивидуальные сессии, организационные расстановки и коучинг с Анной Колмыковой.",
-      contactTitle: "Контакты — Anna Kolmykova | Mind of Heart",
+        "Запишитесь на сессию к психологу Анне Колмыковой в Праге или онлайн. Индивидуальные расстановки, организационные расстановки, личный коучинг и менторинг.",
+      contactTitle:
+        "Контакты — Психолог Анна Колмыкова в Праге | Mind of Heart",
       contactDescription:
-        "Свяжитесь с Анной Колмыковой, чтобы записаться на сессию или задать вопрос.",
+        "Свяжитесь с психологом Анной Колмыковой в Праге. Очные и онлайн консультации. Запишитесь на сессию или задайте вопрос.",
     },
   },
 };

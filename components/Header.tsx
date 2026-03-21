@@ -8,6 +8,7 @@ interface HeaderProps {
     SiteDictionary,
     "localeLabel" | "languages" | "languagesShort" | "nav"
   >;
+  langHrefOverrides?: Partial<Record<Locale, string>>;
 }
 
 export default function Header(props: HeaderProps) {

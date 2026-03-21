@@ -62,7 +62,7 @@ export default function HeroClient({ locale, copy }: HeroClientProps) {
         <Image
           quality={90}
           src="/hero-landscape.webp"
-          alt="Anna Kolmykova — Systemic Constellation Facilitator"
+          alt="Anna Kolmykova — Psychologist in Prague, Systemic Constellation Facilitator"
           fill
           priority
           sizes="(max-width: 768px) 100vw, (max-width: 1280px) 100vw, 1440px"
@@ -131,7 +131,23 @@ export default function HeroClient({ locale, copy }: HeroClientProps) {
             </span>
           </motion.div>
 
-          <motion.h1
+          <h1
+            style={{
+              position: "absolute",
+              width: "1px",
+              height: "1px",
+              padding: 0,
+              margin: "-1px",
+              overflow: "hidden",
+              clip: "rect(0,0,0,0)",
+              whiteSpace: "nowrap",
+              borderWidth: 0,
+            }}
+          >
+            {copy.seoH1}
+          </h1>
+          <motion.div
+            role="presentation"
             variants={item}
             style={{
               fontFamily: "var(--font-display)",
@@ -155,7 +171,7 @@ export default function HeroClient({ locale, copy }: HeroClientProps) {
             >
               {copy.lastName}
             </span>
-          </motion.h1>
+          </motion.div>
 
           <motion.p
             variants={item}

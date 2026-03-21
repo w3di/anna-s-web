@@ -7,7 +7,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: siteName,
     short_name: siteName,
     description:
-      "Systemic constellation facilitator and process-oriented psychologist in Prague and online.",
+      "Anna Kolmykova — psychologist in Prague. Systemic constellations, process-oriented therapy, and personal coaching. In-person and online sessions.",
     start_url: `/${defaultLocale}`,
     display: "standalone",
     background_color: "#fdfaf6",

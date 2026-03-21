@@ -12,13 +12,7 @@ const nextConfig: NextConfig = {
       640, 750, 828, 1080, 1152, 1200, 1280, 1440, 1600, 1920, 2048,
     ],
     qualities: [65, 75, 90],
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "mindofheart.com",
-        pathname: "/wp-content/uploads/**",
-      },
-    ],
+    remotePatterns: [],
   },
 };
 

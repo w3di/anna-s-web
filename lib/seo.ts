@@ -15,7 +15,14 @@ export const serviceAreas = ["Prague", "Online"] as const;
 export const businessAddress = {
   "@type": "PostalAddress",
   addressLocality: "Prague",
+  addressRegion: "Prague",
   addressCountry: "CZ",
+} as const;
+
+export const businessGeo = {
+  "@type": "GeoCoordinates",
+  latitude: "50.0755",
+  longitude: "14.4378",
 } as const;
 
 const openGraphLocaleMap: Record<Locale, string> = {
@@ -134,7 +141,7 @@ export function buildSiteSchema({ locale, description }: SiteSchemaInput) {
         "@id": personId,
         name: "Anna Kolmykova",
         jobTitle:
-          "Systemic constellation facilitator and process-oriented psychologist",
+          "Psychologist in Prague — Systemic constellation facilitator and process-oriented therapist",
         description,
         email: contactEmail,
         telephone: contactPhone,
@@ -143,6 +150,32 @@ export function buildSiteSchema({ locale, description }: SiteSchemaInput) {
         address: businessAddress,
         knowsLanguage: [...availableLanguages],
         worksFor: { "@id": serviceId },
+        hasCredential: [
+          {
+            "@type": "EducationalOccupationalCredential",
+            name: "Clinical Psychology — Professional Requalification",
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            name: "International Training in Family Constellations",
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            name: "International Training in Organisational Constellations",
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            name: "Sacred and Spiritual Process-Oriented Therapy (3-year training)",
+          },
+        ],
+        hasOccupation: {
+          "@type": "Occupation",
+          name: "Psychologist",
+          occupationLocation: {
+            "@type": "City",
+            name: "Prague",
+          },
+        },
       },
       {
         "@type": "ProfessionalService",
@@ -168,6 +201,22 @@ export function buildSiteSchema({ locale, description }: SiteSchemaInput) {
           ...availableLanguages.filter((language) => language !== locale),
         ],
         publisher: { "@id": serviceId },
+      },
+      {
+        "@type": "LocalBusiness",
+        "@id": `${siteUrl}/#localbusiness`,
+        name: `${siteName} — Anna Kolmykova`,
+        description,
+        url: defaultHomeUrl,
+        image: toAbsoluteUrl("/about-anna.webp"),
+        logo: toAbsoluteUrl("/mind_of_heart_black_cropped.webp"),
+        telephone: contactPhone,
+        email: contactEmail,
+        address: businessAddress,
+        geo: businessGeo,
+        areaServed: [...serviceAreas],
+        priceRange: "$$",
+        sameAs: [defaultHomeUrl],
       },
     ],
   };

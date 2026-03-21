@@ -13,6 +13,8 @@ type Props = {
   ariaLabel: string;
   compact?: boolean;
   inverted?: boolean;
+  /** Per-locale hrefs that override the default pathname-based switching */
+  hrefOverrides?: Partial<Record<Locale, string>>;
 };
 
 export default function LanguageSwitcher({
@@ -22,6 +24,7 @@ export default function LanguageSwitcher({
   ariaLabel,
   compact = false,
   inverted = false,
+  hrefOverrides,
 }: Props) {
   const pathname = usePathname();
   const layoutId = useId();
@@ -129,10 +132,12 @@ export default function LanguageSwitcher({
           );
         }
 
+        const targetHref = hrefOverrides?.[code] ?? currentHref;
+
         return (
           <LocalizedLink
             key={code}
-            href={currentHref}
+            href={targetHref}
             locale={code}
             title={labels[code]}
             className="language-switcher__link"

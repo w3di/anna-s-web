@@ -18,6 +18,7 @@ export default function FooterMiddle({ locale, dictionary }: Props) {
     { href: "/", label: dictionary.nav.home },
     { href: "/about", label: dictionary.nav.about },
     { href: "/sessions", label: dictionary.nav.sessions },
+    { href: "/blog", label: dictionary.nav.blog },
     { href: "/contact", label: dictionary.nav.contact },
   ];
 

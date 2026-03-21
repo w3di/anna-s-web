@@ -17,12 +17,14 @@ interface HeaderClientProps {
     SiteDictionary,
     "localeLabel" | "languages" | "languagesShort" | "nav"
   >;
+  langHrefOverrides?: Partial<Record<Locale, string>>;
 }
 
 export default function HeaderClient({
   transparent = false,
   locale,
   dictionary,
+  langHrefOverrides,
 }: HeaderClientProps) {
   const pathname = usePathname();
   const normalizedPathname = stripLocaleFromPathname(pathname);
@@ -119,6 +121,7 @@ export default function HeaderClient({
     { href: "/", label: dictionary.nav.home },
     { href: "/about", label: dictionary.nav.about },
     { href: "/sessions", label: dictionary.nav.sessions },
+    { href: "/blog", label: dictionary.nav.blog },
     { href: "/contact", label: dictionary.nav.contact },
   ];
 
@@ -271,6 +274,7 @@ export default function HeaderClient({
                 ariaLabel={dictionary.localeLabel}
                 compact
                 inverted={isLight}
+                hrefOverrides={langHrefOverrides}
               />
             </div>
 
@@ -475,6 +479,7 @@ export default function HeaderClient({
                 labels={dictionary.languages}
                 shortLabels={dictionary.languagesShort}
                 ariaLabel={dictionary.localeLabel}
+                hrefOverrides={langHrefOverrides}
               />
               <LocalizedLink
                 href="/contact#form"
