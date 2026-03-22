@@ -16,13 +16,10 @@ import {
   getBlogAlternateSlugs,
 } from "@/lib/blog";
 import {
+  buildArticleSchema,
   buildLocalizedBreadcrumbSchema,
   buildPageMetadata,
-  contactEmail,
-  personId,
-  toAbsoluteUrl,
   toLocalizedAbsoluteUrl,
-  websiteId,
 } from "@/lib/seo";
 import { notFound } from "next/navigation";
 
@@ -93,53 +90,25 @@ export default async function BlogPostPage({ params }: BlogPostProps) {
 
   const articleUrl = toLocalizedAbsoluteUrl(locale, `/blog/${slug}`);
 
+  const wordCount = article.sections.reduce(
+    (sum, s) => sum + s.paragraphs.join(" ").split(/\s+/).length,
+    article.description.split(/\s+/).length
+  );
+
   const articleSchema = {
     "@context": "https://schema.org",
     "@graph": [
-      {
-        "@type": "Article",
-        "@id": `${articleUrl}#article`,
+      ...buildArticleSchema({
         url: articleUrl,
-        headline: article.title,
+        title: article.title,
         description: article.description,
-        image: toAbsoluteUrl(article.image),
-        datePublished: article.date,
-        dateModified: article.date,
-        author: { "@id": personId },
-        publisher: {
-          "@type": "Organization",
-          name: "Mind of Heart",
-          email: contactEmail,
-        },
-        isPartOf: { "@id": websiteId },
-        inLanguage: locale,
-        mainEntityOfPage: { "@id": `${articleUrl}#webpage` },
-      },
-      {
-        "@type": "WebPage",
-        "@id": `${articleUrl}#webpage`,
-        url: articleUrl,
-        name: article.title,
-        description: article.description,
-        isPartOf: { "@id": websiteId },
-        inLanguage: locale,
-      },
-      ...(article.faq.length > 0
-        ? [
-            {
-              "@type": "FAQPage",
-              "@id": `${articleUrl}#faq`,
-              mainEntity: article.faq.map((item) => ({
-                "@type": "Question",
-                name: item.question,
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: item.answer,
-                },
-              })),
-            },
-          ]
-        : []),
+        image: article.image,
+        date: article.date,
+        locale,
+        wordCount,
+        keywords: article.sections.map((s) => s.heading),
+        faq: article.faq,
+      }),
       {
         ...buildLocalizedBreadcrumbSchema(locale, [
           { name: dictionary.nav.home, path: "/" },
@@ -169,10 +138,10 @@ export default async function BlogPostPage({ params }: BlogPostProps) {
         />
 
         <article style={{ backgroundColor: "var(--c-ivory)" }}>
-          {/* ── Breadcrumb + meta ── */}
           <div
             style={{
-              paddingTop: "calc(var(--header-height) + clamp(2rem, 4vw, 3.5rem))",
+              paddingTop:
+                "calc(var(--header-height) + clamp(2rem, 4vw, 3.5rem))",
             }}
           >
             <div className="container" style={{ maxWidth: "720px" }}>
@@ -296,9 +265,7 @@ export default async function BlogPostPage({ params }: BlogPostProps) {
           >
             {article.sections.map((section, i) => (
               <AnimateOnScroll key={i} direction="up">
-                <section
-                  style={{ marginBottom: "clamp(2.5rem, 4vw, 3.5rem)" }}
-                >
+                <section style={{ marginBottom: "clamp(2.5rem, 4vw, 3.5rem)" }}>
                   <h2
                     style={{
                       fontFamily: "var(--font-display)",
@@ -320,9 +287,7 @@ export default async function BlogPostPage({ params }: BlogPostProps) {
                         lineHeight: 1.85,
                         color: "var(--c-gray-50)",
                         marginBottom:
-                          j < section.paragraphs.length - 1
-                            ? "1.1rem"
-                            : 0,
+                          j < section.paragraphs.length - 1 ? "1.1rem" : 0,
                       }}
                     >
                       {p}

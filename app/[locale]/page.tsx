@@ -11,6 +11,8 @@ import BackToTop from "@/components/BackToTop";
 import { getRouteDictionary } from "@/lib/locale";
 import {
   buildLocalizedBreadcrumbSchema,
+  buildHowToSchema,
+  buildSpeakableSchema,
   buildPageMetadata,
   personId,
   serviceId,
@@ -102,7 +104,27 @@ export default async function LocalizedHomePage({ params }: LocalePageProps) {
           },
         })),
       },
+      buildHowToSchema({
+        name: `${dictionary.process.title} ${dictionary.process.accent}`,
+        description: dictionary.process.description,
+        steps: dictionary.process.steps.map((step) => ({
+          name: step.title,
+          text: step.body,
+        })),
+        locale,
+      }),
     ],
+  };
+
+  const speakableSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${homeUrl}#webpage-speakable`,
+    speakable: buildSpeakableSchema([
+      "#main-content h1",
+      "#main-content h2",
+      ".home-faq summary",
+    ]),
   };
 
   return (
@@ -121,6 +143,10 @@ export default async function LocalizedHomePage({ params }: LocalePageProps) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(homeSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(speakableSchema) }}
         />
         <Hero locale={locale} copy={dictionary.hero} />
         <AboutSection locale={locale} copy={dictionary.homeAbout} />

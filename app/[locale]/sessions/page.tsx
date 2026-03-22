@@ -11,9 +11,9 @@ import { getRouteDictionary } from "@/lib/locale";
 import {
   availableLanguages,
   buildLocalizedBreadcrumbSchema,
+  buildSpeakableSchema,
   buildPageMetadata,
   personId,
-  serviceAreas,
   toAbsoluteUrl,
   toLocalizedAbsoluteUrl,
   websiteId,
@@ -70,8 +70,39 @@ export default async function LocalizedSessionsPage({
     description: `${session.intro} ${session.description}`,
     serviceType: session.title,
     provider: { "@id": personId },
-    areaServed: [...serviceAreas],
+    areaServed: [
+      { "@type": "City", name: "Prague" },
+      { "@type": "AdministrativeArea", name: "Online" },
+    ],
     availableLanguage: [...availableLanguages],
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "CZK",
+      price: "2500",
+      priceSpecification: {
+        "@type": "PriceSpecification",
+        priceCurrency: "CZK",
+        minPrice: "1500",
+        maxPrice: "3500",
+        unitText: "session",
+      },
+      availability: "https://schema.org/InStock",
+      validFrom: "2025-01-01",
+    },
+    serviceOutput: {
+      "@type": "Thing",
+      name: "Psychology Session",
+      description:
+        session.id === "business"
+          ? "Organisational constellation session"
+          : session.id === "coaching"
+          ? "Personal coaching and mentoring session"
+          : "Private constellation session",
+    },
+    hoursAvailable: {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    },
   }));
 
   const sessionsPageSchema = {
@@ -91,6 +122,11 @@ export default async function LocalizedSessionsPage({
           "@type": "ImageObject",
           url: toAbsoluteUrl("/sessions-banner.webp"),
         },
+        // AEO: speakable for voice search
+        speakable: buildSpeakableSchema([
+          "#main-content h2",
+          "#main-content p",
+        ]),
       },
       {
         "@type": "ItemList",

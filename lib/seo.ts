@@ -132,6 +132,7 @@ type SiteSchemaInput = {
 export function buildSiteSchema({ locale, description }: SiteSchemaInput) {
   const defaultHomeUrl = toLocalizedAbsoluteUrl(defaultLocale, "/");
   const defaultAboutUrl = toLocalizedAbsoluteUrl(defaultLocale, "/about");
+  const contactUrl = toLocalizedAbsoluteUrl(defaultLocale, "/contact");
 
   return {
     "@context": "https://schema.org",
@@ -176,6 +177,7 @@ export function buildSiteSchema({ locale, description }: SiteSchemaInput) {
             name: "Prague",
           },
         },
+        sameAs: [defaultHomeUrl, defaultAboutUrl],
       },
       {
         "@type": "ProfessionalService",
@@ -185,10 +187,28 @@ export function buildSiteSchema({ locale, description }: SiteSchemaInput) {
         image: toAbsoluteUrl("/hero-landscape.webp"),
         logo: toAbsoluteUrl("/mind_of_heart_black_cropped.webp"),
         description,
-        areaServed: [...serviceAreas],
+        areaServed: [
+          { "@type": "City", name: "Prague" },
+          { "@type": "Country", name: "Online" },
+        ],
         email: contactEmail,
         telephone: contactPhone,
         address: businessAddress,
+        potentialAction: {
+          "@type": "ReserveAction",
+          target: {
+            "@type": "EntryPoint",
+            urlTemplate: contactUrl,
+            actionPlatform: [
+              "http://schema.org/DesktopWebPlatform",
+              "http://schema.org/MobileWebPlatform",
+            ],
+          },
+          result: {
+            "@type": "Reservation",
+            name: "Psychology Session Booking",
+          },
+        },
       },
       {
         "@type": "WebSite",
@@ -201,6 +221,14 @@ export function buildSiteSchema({ locale, description }: SiteSchemaInput) {
           ...availableLanguages.filter((language) => language !== locale),
         ],
         publisher: { "@id": serviceId },
+        potentialAction: {
+          "@type": "SearchAction",
+          target: {
+            "@type": "EntryPoint",
+            urlTemplate: `${defaultHomeUrl}blog?q={search_term_string}`,
+          },
+          "query-input": "required name=search_term_string",
+        },
       },
       {
         "@type": "LocalBusiness",
@@ -214,12 +242,144 @@ export function buildSiteSchema({ locale, description }: SiteSchemaInput) {
         email: contactEmail,
         address: businessAddress,
         geo: businessGeo,
-        areaServed: [...serviceAreas],
+        areaServed: [
+          { "@type": "City", name: "Prague" },
+          { "@type": "Country", name: "Online" },
+        ],
         priceRange: "$$",
         sameAs: [defaultHomeUrl],
+        knowsAbout: [
+          "Systemic Constellations",
+          "Family Constellations",
+          "Organisational Constellations",
+          "Process-Oriented Psychology",
+          "Personal Coaching",
+          "Psychotherapy",
+        ],
       },
     ],
   };
+}
+
+// ── AEO: HowTo schema for process/step-by-step sections ──
+
+type HowToStep = {
+  name: string;
+  text: string;
+};
+
+export function buildHowToSchema({
+  name,
+  description,
+  steps,
+  locale,
+}: {
+  name: string;
+  description: string;
+  steps: HowToStep[];
+  locale: Locale;
+}) {
+  return {
+    "@type": "HowTo",
+    name,
+    description,
+    inLanguage: locale,
+    step: steps.map((step, index) => ({
+      "@type": "HowToStep",
+      position: index + 1,
+      name: step.name,
+      text: step.text,
+    })),
+  };
+}
+
+export function buildSpeakableSchema(cssSelectors: string[]) {
+  return {
+    "@type": "SpeakableSpecification",
+    cssSelector: cssSelectors,
+  };
+}
+
+type ArticleSchemaInput = {
+  url: string;
+  title: string;
+  description: string;
+  image: string;
+  date: string;
+  locale: Locale;
+  keywords?: string[];
+  wordCount?: number;
+  faq?: Array<{ question: string; answer: string }>;
+};
+
+export function buildArticleSchema({
+  url,
+  title,
+  description,
+  image,
+  date,
+  locale,
+  keywords,
+  wordCount,
+  faq,
+}: ArticleSchemaInput) {
+  const articleNode: Record<string, unknown> = {
+    "@type": "Article",
+    "@id": `${url}#article`,
+    url,
+    headline: title,
+    description,
+    image: toAbsoluteUrl(image),
+    datePublished: date,
+    dateModified: date,
+    author: { "@id": personId },
+    publisher: {
+      "@type": "Organization",
+      name: "Mind of Heart",
+      email: contactEmail,
+    },
+    isPartOf: { "@id": websiteId },
+    inLanguage: locale,
+    mainEntityOfPage: { "@id": `${url}#webpage` },
+    speakable: buildSpeakableSchema(["article h1", "article h2", "article p"]),
+  };
+
+  if (keywords?.length) {
+    articleNode.keywords = keywords;
+  }
+  if (wordCount) {
+    articleNode.wordCount = wordCount;
+  }
+
+  const graph: Record<string, unknown>[] = [
+    articleNode,
+    {
+      "@type": "WebPage",
+      "@id": `${url}#webpage`,
+      url,
+      name: title,
+      description,
+      isPartOf: { "@id": websiteId },
+      inLanguage: locale,
+    },
+  ];
+
+  if (faq && faq.length > 0) {
+    graph.push({
+      "@type": "FAQPage",
+      "@id": `${url}#faq`,
+      mainEntity: faq.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.answer,
+        },
+      })),
+    });
+  }
+
+  return graph;
 }
 
 export function buildBreadcrumbSchema(items: BreadcrumbInput[]) {
