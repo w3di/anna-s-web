@@ -45,13 +45,15 @@ export default function RootLayoutShell({
           Skip to main content
         </a>
         <SmoothScroll>{children}</SmoothScroll>
+
+        {/* ── Analytics & metrics — loaded last to prioritize content ── */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-99ERRMYEEC"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
         <Script
           id="google-analytics"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html:
               "window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-99ERRMYEEC');",
@@ -60,7 +62,7 @@ export default function RootLayoutShell({
         <GoogleAnalyticsTracker measurementId="G-99ERRMYEEC" />
         <Script
           id="yandex-metrika"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html:
               "(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=107719468', 'ym');ym(107719468, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:\"dataLayer\", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});",
