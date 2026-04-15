@@ -46,12 +46,10 @@ function formatPhoneInput(value: string): string {
   if (digits.length === 0) return hadPlus ? "+" : value;
 
   const withPlus = hadPlus ? trimmed : `+${digits}`;
-  // Если юзер сам ввёл + и код страны — форматируем через libphonenumber
   if (hadPlus) {
     const formatter = new AsYouType();
     return formatter.input(withPlus);
   }
-  // Просто + и группировка по 3
   const parts: string[] = [];
   for (let i = 0; i < digits.length; i += 3) {
     parts.push(digits.slice(i, i + 3));

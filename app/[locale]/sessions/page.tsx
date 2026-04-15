@@ -108,7 +108,6 @@ export default async function LocalizedSessionsPage({
           "@type": "ImageObject",
           url: toAbsoluteUrl("/sessions-banner.webp"),
         },
-        // AEO: speakable for voice search
         speakable: buildSpeakableSchema([
           "#main-content h2",
           "#main-content p",

@@ -95,7 +95,7 @@ export default function HeroClient({ locale, copy }: HeroClientProps) {
           y: textY,
           opacity,
           display: "flex",
-          alignItems: "flex-end",
+          alignItems: "center",
           paddingTop: "calc(var(--header-height) + clamp(1.5rem, 6vh, 4rem))",
           paddingBottom: "clamp(4rem, 8vh, 6.5rem)",
         }}

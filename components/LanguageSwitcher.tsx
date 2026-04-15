@@ -13,7 +13,6 @@ type Props = {
   ariaLabel: string;
   compact?: boolean;
   inverted?: boolean;
-  /** Per-locale hrefs that override the default pathname-based switching */
   hrefOverrides?: Partial<Record<Locale, string>>;
 };
 

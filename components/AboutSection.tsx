@@ -27,6 +27,7 @@ export default function AboutSection({ locale, copy }: AboutSectionProps) {
     >
       <div
         aria-hidden="true"
+        role="presentation"
         style={{
           position: "absolute",
           top: "50%",
@@ -36,11 +37,12 @@ export default function AboutSection({ locale, copy }: AboutSectionProps) {
           fontSize: "clamp(8rem, 16vw, 18rem)",
           fontWeight: 700,
           fontStyle: "italic",
-          color: "rgba(29,86,176,0.03)",
+          color: "transparent",
           lineHeight: 1,
           userSelect: "none",
           pointerEvents: "none",
           whiteSpace: "nowrap",
+          WebkitTextStroke: "1px rgba(29,86,176,0.04)",
         }}
       >
         Anna
@@ -139,7 +141,7 @@ export default function AboutSection({ locale, copy }: AboutSectionProps) {
                   fontFamily: "var(--font-body)",
                   fontSize: "15px",
                   lineHeight: "1.9",
-                  color: "#444",
+                  color: "#3a3a3a",
                   display: "flex",
                   flexDirection: "column",
                   gap: "1.1rem",

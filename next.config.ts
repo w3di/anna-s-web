@@ -16,7 +16,6 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      // 301 redirect old /cz/ locale URLs to /cs/
       {
         source: "/cz",
         destination: "/cs",

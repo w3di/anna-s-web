@@ -1,5 +1,19 @@
 import type { Locale } from "@/lib/dictionaries";
 
+const dateLocaleMap: Record<Locale, string> = {
+  en: "en-US",
+  cs: "cs-CZ",
+  ru: "ru-RU",
+};
+
+export function formatBlogDate(date: string, locale: Locale): string {
+  return new Intl.DateTimeFormat(dateLocaleMap[locale], {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(new Date(date));
+}
+
 export type BlogArticle = {
   slug: string;
   title: string;
@@ -8,6 +22,7 @@ export type BlogArticle = {
   readTime: string;
   image: string;
   imageAlt: string;
+  category: string;
   sections: Array<{
     heading: string;
     paragraphs: string[];
@@ -59,6 +74,7 @@ const en: BlogDictionary = {
       image: "/about-anna.webp",
       imageAlt:
         "Psychologist in Prague — Anna Kolmykova consultation session",
+      category: "Psychology in Prague",
       sections: [
         {
           heading:
@@ -129,6 +145,7 @@ const en: BlogDictionary = {
       image: "/session-private.webp",
       imageAlt:
         "Systemic constellations session with psychologist in Prague",
+      category: "Systemic Constellations",
       sections: [
         {
           heading: "Understanding Systemic Constellations",
@@ -187,6 +204,7 @@ const en: BlogDictionary = {
       readTime: "6",
       image: "/sunset-lake.webp",
       imageAlt: "When to see a psychologist in Prague — reflection and self-care",
+      category: "Mental Health",
       sections: [
         {
           heading: "How Do You Know It Is Time?",
@@ -267,6 +285,7 @@ const en: BlogDictionary = {
       readTime: "7",
       image: "/session-default.webp",
       imageAlt: "Family constellations with psychologist in Prague",
+      category: "Family Constellations",
       sections: [
         {
           heading: "What Are Family Constellations?",
@@ -333,6 +352,7 @@ const en: BlogDictionary = {
       image: "/session-alt.webp",
       imageAlt:
         "Online and in-person therapy with psychologist in Prague",
+      category: "Therapy Formats",
       sections: [
         {
           heading: "The Rise of Online Therapy",
@@ -414,6 +434,7 @@ const cs: BlogDictionary = {
       readTime: "7",
       image: "/about-anna.webp",
       imageAlt: "Psycholožka v Praze — konzultace s Annou Kolmykovou",
+      category: "Psychologie v Praze",
       sections: [
         {
           heading: "Proč je důležité najít správného psychologa v Praze",
@@ -485,6 +506,7 @@ const cs: BlogDictionary = {
       readTime: "8",
       image: "/session-private.webp",
       imageAlt: "Systemické konstelace s psycholožkou v Praze",
+      category: "Systemické konstelace",
       sections: [
         {
           heading: "Porozumění systemickým konstelacím",
@@ -543,6 +565,7 @@ const cs: BlogDictionary = {
       readTime: "6",
       image: "/sunset-lake.webp",
       imageAlt: "Kdy navštívit psychologa v Praze",
+      category: "Duševní zdraví",
       sections: [
         {
           heading: "Jak poznáte, že je ten správný čas?",
@@ -623,6 +646,7 @@ const cs: BlogDictionary = {
       readTime: "7",
       image: "/session-default.webp",
       imageAlt: "Rodinné konstelace s psycholožkou v Praze",
+      category: "Rodinné konstelace",
       sections: [
         {
           heading: "Co jsou rodinné konstelace?",
@@ -688,6 +712,7 @@ const cs: BlogDictionary = {
       readTime: "5",
       image: "/session-alt.webp",
       imageAlt: "Online a osobní terapie s psycholožkou v Praze",
+      category: "Formáty terapie",
       sections: [
         {
           heading: "Vzestup online terapie",
@@ -768,6 +793,7 @@ const ru: BlogDictionary = {
       readTime: "7",
       image: "/about-anna.webp",
       imageAlt: "Психолог в Праге — консультация с Анной Колмыковой",
+      category: "Психология в Праге",
       sections: [
         {
           heading: "Почему важно найти подходящего психолога в Праге",
@@ -839,6 +865,7 @@ const ru: BlogDictionary = {
       readTime: "8",
       image: "/session-private.webp",
       imageAlt: "Системные расстановки с психологом в Праге",
+      category: "Системные расстановки",
       sections: [
         {
           heading: "Понимание системных расстановок",
@@ -897,6 +924,7 @@ const ru: BlogDictionary = {
       readTime: "6",
       image: "/sunset-lake.webp",
       imageAlt: "Когда обратиться к психологу в Праге",
+      category: "Психическое здоровье",
       sections: [
         {
           heading: "Как понять, что пришло время?",
@@ -977,6 +1005,7 @@ const ru: BlogDictionary = {
       readTime: "7",
       image: "/session-default.webp",
       imageAlt: "Семейные расстановки с психологом в Праге",
+      category: "Семейные расстановки",
       sections: [
         {
           heading: "Что такое семейные расстановки?",
@@ -1042,6 +1071,7 @@ const ru: BlogDictionary = {
       readTime: "5",
       image: "/session-alt.webp",
       imageAlt: "Онлайн и очная терапия с психологом в Праге",
+      category: "Форматы терапии",
       sections: [
         {
           heading: "Рост онлайн-терапии",
@@ -1118,10 +1148,6 @@ export function getAllBlogRoutes(): Array<{ locale: Locale; slug: string }> {
   );
 }
 
-/**
- * Given a locale and slug, find the article index and return
- * the matching slug for each locale (by position).
- */
 export function getBlogAlternateSlugs(
   locale: Locale,
   slug: string

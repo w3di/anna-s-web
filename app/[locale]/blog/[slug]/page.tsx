@@ -14,6 +14,7 @@ import {
   getBlogArticle,
   getAllBlogSlugs,
   getBlogAlternateSlugs,
+  formatBlogDate,
 } from "@/lib/blog";
 import {
   buildArticleSchema,
@@ -103,11 +104,13 @@ export default async function BlogPostPage({ params }: BlogPostProps) {
         title: article.title,
         description: article.description,
         image: article.image,
+        imageAlt: article.imageAlt,
         date: article.date,
         locale,
         wordCount,
         keywords: article.sections.map((s) => s.heading),
         faq: article.faq,
+        articleSection: article.category,
       }),
       {
         ...buildLocalizedBreadcrumbSchema(locale, [
@@ -165,7 +168,6 @@ export default async function BlogPostPage({ params }: BlogPostProps) {
             </div>
           </div>
 
-          {/* ── Title ── */}
           <div
             className="container"
             style={{
@@ -184,7 +186,9 @@ export default async function BlogPostPage({ params }: BlogPostProps) {
                 color: "var(--c-gray-30)",
               }}
             >
-              {article.date} &middot; {article.readTime} {blog.readTimeLabel}
+              {article.category} &middot;{" "}
+              <time dateTime={article.date}>{formatBlogDate(article.date, locale)}</time> &middot;{" "}
+              {article.readTime} {blog.readTimeLabel}
             </span>
             <h1
               style={{
@@ -201,7 +205,6 @@ export default async function BlogPostPage({ params }: BlogPostProps) {
             </h1>
           </div>
 
-          {/* ── Image ── */}
           <div
             className="container"
             style={{
@@ -229,7 +232,6 @@ export default async function BlogPostPage({ params }: BlogPostProps) {
             </div>
           </div>
 
-          {/* ── Lead ── */}
           <div
             className="container"
             style={{ maxWidth: "720px", paddingBottom: "2rem" }}
@@ -255,7 +257,6 @@ export default async function BlogPostPage({ params }: BlogPostProps) {
             />
           </div>
 
-          {/* ── Body ── */}
           <div
             className="container"
             style={{
@@ -298,7 +299,6 @@ export default async function BlogPostPage({ params }: BlogPostProps) {
             ))}
           </div>
 
-          {/* ── FAQ ── */}
           {article.faq.length > 0 && (
             <div
               className="container"
@@ -384,7 +384,6 @@ export default async function BlogPostPage({ params }: BlogPostProps) {
           )}
         </article>
 
-        {/* ── CTA ── */}
         <section style={{ backgroundColor: "var(--c-warm)" }}>
           <div
             className="container section-pad"

@@ -6,10 +6,13 @@ import BackToTop from "@/components/BackToTop";
 import AnimateOnScroll from "@/components/AnimateOnScroll";
 import LocalizedLink from "@/components/localized-link";
 import { getRouteDictionary } from "@/lib/locale";
-import { getBlogDictionary } from "@/lib/blog";
+import { getBlogDictionary, formatBlogDate } from "@/lib/blog";
 import {
   buildLocalizedBreadcrumbSchema,
   buildPageMetadata,
+  buildSpeakableSchema,
+  personId,
+  toAbsoluteUrl,
   toLocalizedAbsoluteUrl,
   websiteId,
 } from "@/lib/seo";
@@ -39,6 +42,14 @@ export default async function BlogIndexPage({ params }: LocalePageProps) {
   const blog = getBlogDictionary(locale);
   const blogUrl = toLocalizedAbsoluteUrl(locale, "/blog");
 
+  const itemListElements = blog.articles.map((article, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    url: toLocalizedAbsoluteUrl(locale, `/blog/${article.slug}`),
+    name: article.title,
+    image: toAbsoluteUrl(article.image),
+  }));
+
   const blogSchema = {
     "@context": "https://schema.org",
     "@graph": [
@@ -50,6 +61,22 @@ export default async function BlogIndexPage({ params }: LocalePageProps) {
         description: blog.indexDescription,
         isPartOf: { "@id": websiteId },
         inLanguage: locale,
+        about: {
+          "@type": "Thing",
+          name: "Psychology, Systemic Constellations & Therapy",
+        },
+        mainEntity: { "@id": `${blogUrl}#itemlist` },
+        speakable: buildSpeakableSchema(["h1", "[data-speakable]"]),
+        author: { "@id": personId },
+        numberOfItems: blog.articles.length,
+      },
+      {
+        "@type": "ItemList",
+        "@id": `${blogUrl}#itemlist`,
+        name: blog.indexTitle,
+        numberOfItems: blog.articles.length,
+        itemListOrder: "https://schema.org/ItemListOrderDescending",
+        itemListElement: itemListElements,
       },
       {
         ...buildLocalizedBreadcrumbSchema(locale, [
@@ -79,7 +106,6 @@ export default async function BlogIndexPage({ params }: LocalePageProps) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }}
         />
 
-        {/* ── Heading ── */}
         <section
           style={{
             backgroundColor: "var(--c-ivory)",
@@ -100,10 +126,22 @@ export default async function BlogIndexPage({ params }: LocalePageProps) {
             >
               {blog.indexHeading}
             </h1>
+            <p
+              data-speakable
+              style={{
+                fontFamily: "var(--font-body)",
+                fontSize: "clamp(14px, 1.6vw, 16px)",
+                lineHeight: 1.7,
+                color: "var(--c-gray-50)",
+                marginTop: "1rem",
+                maxWidth: "600px",
+              }}
+            >
+              {blog.indexSubtitle}
+            </p>
           </div>
         </section>
 
-        {/* ── Featured ── */}
         <section style={{ backgroundColor: "var(--c-ivory)" }}>
           <div
             className="container"
@@ -159,8 +197,9 @@ export default async function BlogIndexPage({ params }: LocalePageProps) {
                       color: "var(--c-gray-30)",
                     }}
                   >
-                    {featured.date} &middot; {featured.readTime}{" "}
-                    {blog.readTimeLabel}
+                    {featured.category} &middot;{" "}
+                    <time dateTime={featured.date}>{formatBlogDate(featured.date, locale)}</time>{" "}
+                    &middot; {featured.readTime} {blog.readTimeLabel}
                   </span>
                   <h2
                     className="blog-feat-title"
@@ -208,14 +247,12 @@ export default async function BlogIndexPage({ params }: LocalePageProps) {
           </div>
         </section>
 
-        {/* ── Divider ── */}
         <div style={{ backgroundColor: "var(--c-ivory)" }}>
           <div className="container" style={{ maxWidth: "1060px" }}>
             <div style={{ height: "1px", background: "var(--c-gray-10)" }} />
           </div>
         </div>
 
-        {/* ── Rest of articles ── */}
         <section style={{ backgroundColor: "var(--c-ivory)" }}>
           <div
             className="container"
@@ -283,8 +320,9 @@ export default async function BlogIndexPage({ params }: LocalePageProps) {
                         marginBottom: "0.4rem",
                       }}
                     >
-                      {article.date} &middot; {article.readTime}{" "}
-                      {blog.readTimeLabel}
+                      {article.category} &middot;{" "}
+                      <time dateTime={article.date}>{formatBlogDate(article.date, locale)}</time>{" "}
+                      &middot; {article.readTime} {blog.readTimeLabel}
                     </span>
                     <h2
                       className="blog-card-title"

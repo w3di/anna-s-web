@@ -20,7 +20,6 @@ const LOCALE_LABELS: Record<string, string> = {
 
 const TELEGRAM_API_BASE = "https://api.telegram.org";
 
-// Rate limit: max 3 requests per 24 hours per IP
 const RATE_LIMIT_WINDOW_MS = 24 * 60 * 60 * 1000;
 const RATE_LIMIT_MAX = 3;
 const rateLimitMap = new Map<string, number[]>();
@@ -40,7 +39,6 @@ function isRateLimited(ip: string): boolean {
   if (recent.length >= RATE_LIMIT_MAX) return true;
   recent.push(now);
   rateLimitMap.set(ip, recent);
-  // Cleanup old entries
   if (rateLimitMap.size > 10000) {
     for (const [key, ts] of rateLimitMap) {
       if (ts.every((t) => now - t > RATE_LIMIT_WINDOW_MS)) {
@@ -165,13 +163,6 @@ export async function POST(request: Request) {
           }
         );
         const body = await res.text();
-        if (!res.ok) {
-          console.error("[contact] Telegram send failed", {
-            chatId,
-            status: res.status,
-            body: body.slice(0, 500),
-          });
-        }
         return { ok: res.ok, chatId, body };
       })
     );

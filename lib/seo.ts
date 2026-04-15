@@ -14,16 +14,23 @@ export const contactPhone = "+420608514450";
 export const serviceAreas = ["Prague", "Online"] as const;
 export const businessAddress = {
   "@type": "PostalAddress",
-  addressLocality: "Prague",
+  streetAddress: "Riegrovy sady",
+  postalCode: "120 00",
+  addressLocality: "Prague 2 – Vinohrady",
   addressRegion: "Prague",
   addressCountry: "CZ",
 } as const;
 
 export const businessGeo = {
   "@type": "GeoCoordinates",
-  latitude: "50.0755",
-  longitude: "14.4378",
+  latitude: "50.0797",
+  longitude: "14.4402",
 } as const;
+
+export const socialProfiles = [
+  "https://www.linkedin.com/in/anna-kolmykova-msc-9b60005b/",
+  "https://www.instagram.com/conste.lab",
+] as const;
 
 const openGraphLocaleMap: Record<Locale, string> = {
   en: "en_US",
@@ -127,9 +134,20 @@ export function buildPageMetadata({
 type SiteSchemaInput = {
   locale: Locale;
   description: string;
+  jobTitle?: string;
 };
 
-export function buildSiteSchema({ locale, description }: SiteSchemaInput) {
+const localizedJobTitles: Record<Locale, string> = {
+  en: "Psychologist in Prague — Systemic constellation facilitator and process-oriented therapist",
+  cs: "Psycholožka v Praze — Facilitátorka systemických konstelací a procesně orientovaná terapeutka",
+  ru: "Психолог в Праге — Фасилитатор системных расстановок и процесс-ориентированный терапевт",
+};
+
+export function buildSiteSchema({
+  locale,
+  description,
+  jobTitle,
+}: SiteSchemaInput) {
   const defaultHomeUrl = toLocalizedAbsoluteUrl(defaultLocale, "/");
   const defaultAboutUrl = toLocalizedAbsoluteUrl(defaultLocale, "/about");
   const contactUrl = toLocalizedAbsoluteUrl(defaultLocale, "/contact");
@@ -141,8 +159,7 @@ export function buildSiteSchema({ locale, description }: SiteSchemaInput) {
         "@type": "Person",
         "@id": personId,
         name: "Anna Kolmykova",
-        jobTitle:
-          "Psychologist in Prague — Systemic constellation facilitator and process-oriented therapist",
+        jobTitle: jobTitle ?? localizedJobTitles[locale],
         description,
         email: contactEmail,
         telephone: contactPhone,
@@ -150,6 +167,7 @@ export function buildSiteSchema({ locale, description }: SiteSchemaInput) {
         image: toAbsoluteUrl("/about-anna.webp"),
         address: businessAddress,
         knowsLanguage: ["en", "cs", "ru"],
+        sameAs: [...socialProfiles],
         worksFor: { "@id": serviceId },
         hasCredential: [
           {
@@ -186,13 +204,14 @@ export function buildSiteSchema({ locale, description }: SiteSchemaInput) {
         image: toAbsoluteUrl("/about-anna.webp"),
         logo: toAbsoluteUrl("/mind_of_heart_black_cropped.webp"),
         description,
+        priceRange: "$$",
         areaServed: [
           { "@type": "City", name: "Prague" },
-          {
-            "@type": "Country",
-            name: "Czech Republic",
-          },
+          { "@type": "Country", name: "Czech Republic" },
+          { "@type": "Country", name: "Germany" },
+          { "@type": "Country", name: "Austria" },
         ],
+        hasMap: "https://maps.google.com/maps?q=50.0797,14.4402",
         availableChannel: {
           "@type": "ServiceChannel",
           serviceType: "Online consultation",
@@ -202,6 +221,23 @@ export function buildSiteSchema({ locale, description }: SiteSchemaInput) {
         telephone: contactPhone,
         address: businessAddress,
         geo: businessGeo,
+        sameAs: [...socialProfiles],
+        openingHoursSpecification: [
+          {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+              "Sunday",
+            ],
+            opens: "07:00",
+            closes: "22:00",
+          },
+        ],
         knowsAbout: [
           "Systemic Constellations",
           "Family Constellations",
@@ -241,8 +277,6 @@ export function buildSiteSchema({ locale, description }: SiteSchemaInput) {
     ],
   };
 }
-
-// ── AEO: HowTo schema for process/step-by-step sections ──
 
 type HowToStep = {
   name: string;
@@ -286,11 +320,14 @@ type ArticleSchemaInput = {
   title: string;
   description: string;
   image: string;
+  imageAlt?: string;
   date: string;
   locale: Locale;
   keywords?: string[];
   wordCount?: number;
   faq?: Array<{ question: string; answer: string }>;
+  articleSection?: string;
+  thumbnailUrl?: string;
 };
 
 export function buildArticleSchema({
@@ -298,33 +335,45 @@ export function buildArticleSchema({
   title,
   description,
   image,
+  imageAlt,
   date,
   locale,
   keywords,
   wordCount,
   faq,
+  articleSection,
+  thumbnailUrl,
 }: ArticleSchemaInput) {
+  const imageUrl = toAbsoluteUrl(image);
+  const imageObject = imageAlt
+    ? {
+        "@type": "ImageObject",
+        url: imageUrl,
+        contentUrl: imageUrl,
+        description: imageAlt,
+      }
+    : imageUrl;
   const articleNode: Record<string, unknown> = {
     "@type": "Article",
     "@id": `${url}#article`,
     url,
     headline: title,
     description,
-    image: toAbsoluteUrl(image),
+    image: imageObject,
+    thumbnailUrl: thumbnailUrl ?? imageUrl,
     datePublished: date,
     dateModified: date,
     author: { "@id": personId },
-    publisher: {
-      "@type": "Organization",
-      name: "Mind of Heart",
-      email: contactEmail,
-    },
+    publisher: { "@id": serviceId },
     isPartOf: { "@id": websiteId },
     inLanguage: locale,
     mainEntityOfPage: { "@id": `${url}#webpage` },
     speakable: buildSpeakableSchema(["article h1", "article h2", "article p"]),
   };
 
+  if (articleSection) {
+    articleNode.articleSection = articleSection;
+  }
   if (keywords?.length) {
     articleNode.keywords = keywords;
   }

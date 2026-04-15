@@ -157,14 +157,15 @@ export default async function LocalizedContactPage({
             >
               <AnimateOnScroll direction="left">
                 <div>
-                  <span
+                  <h2
+                    id={formHeadingId}
                     className="t-overline"
                     style={{ display: "block", marginBottom: "1.2rem" }}
                   >
                     {copy.formOverline}
-                  </span>
-                  <h2
-                    id={formHeadingId}
+                  </h2>
+                  <p
+                    aria-hidden="true"
                     style={{
                       fontFamily: "var(--font-display)",
                       fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
@@ -175,7 +176,7 @@ export default async function LocalizedContactPage({
                     }}
                   >
                     {copy.formTitle}
-                  </h2>
+                  </p>
                   <div
                     style={{
                       width: "56px",
@@ -259,15 +260,31 @@ export default async function LocalizedContactPage({
                               flexShrink: 0,
                             }}
                           >
-                            <span
+                            <svg
                               aria-hidden="true"
-                              style={{
-                                color: "var(--c-blue)",
-                                fontSize: "14px",
-                              }}
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="var(--c-blue)"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
                             >
-                              {index === 0 ? "◎" : index === 1 ? "✉" : "☎"}
-                            </span>
+                              {index === 0 ? (
+                                <>
+                                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                                  <circle cx="12" cy="10" r="3" />
+                                </>
+                              ) : index === 1 ? (
+                                <>
+                                  <rect x="2" y="4" width="20" height="16" rx="2" />
+                                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                                </>
+                              ) : (
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                              )}
+                            </svg>
                           </div>
                           <div>
                             <dt
@@ -362,6 +379,26 @@ export default async function LocalizedContactPage({
                     >
                       — {copy.noteAuthor}
                     </span>
+                  </div>
+
+                  <div
+                    style={{
+                      marginTop: "2.5rem",
+                      borderRadius: "4px",
+                      overflow: "hidden",
+                      aspectRatio: "4/3",
+                    }}
+                  >
+                    <iframe
+                      title="Mind of Heart — Prague, Czech Republic"
+                      src="https://maps.google.com/maps?q=50.0797,14.4402&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                      width="100%"
+                      height="100%"
+                      style={{ border: 0 }}
+                      allowFullScreen
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                    />
                   </div>
                 </div>
               </AnimateOnScroll>

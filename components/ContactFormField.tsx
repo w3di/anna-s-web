@@ -58,13 +58,13 @@ export default function ContactFormField({
   };
 
   return (
-    <div style={{ position: "relative", paddingTop: "1.4rem" }}>
+    <div style={{ position: "relative", paddingTop: "1.8rem" }}>
       <label
         htmlFor={id}
         style={{
           position: "absolute",
           left: 0,
-          top: isFocused || hasValue ? "0" : "1.9rem",
+          top: isFocused || hasValue ? "0.2rem" : "2.3rem",
           fontFamily: "var(--font-ui)",
           fontSize: isFocused || hasValue ? "9px" : "13px",
           fontWeight: 700,
@@ -73,6 +73,7 @@ export default function ContactFormField({
           color: isFocused ? "var(--c-blue)" : "#626262",
           transition: "all 0.22s ease",
           lineHeight: 1,
+          pointerEvents: "none",
         }}
       >
         {label}

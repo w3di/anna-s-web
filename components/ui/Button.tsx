@@ -4,9 +4,6 @@ import type { Locale } from "@/lib/dictionaries";
 import { getLocalizedHref } from "@/lib/locale-routing";
 import styles from "./Button.module.css";
 
-/* ─────────────────────────────────────────────────────────────
-   Types
-───────────────────────────────────────────────────────────── */
 export type ButtonVariant =
   | "primary"
   | "outline"
@@ -41,7 +38,6 @@ export interface ButtonLinkProps extends SharedProps {
   external?: boolean;
 }
 
-// Native button attributes minus the ones we handle ourselves
 type NativeButtonProps = Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
   keyof SharedProps | "as"
@@ -49,9 +45,6 @@ type NativeButtonProps = Omit<
 
 type Props = (ButtonProps & NativeButtonProps) | ButtonLinkProps;
 
-/* ─────────────────────────────────────────────────────────────
-   Spinner
-───────────────────────────────────────────────────────────── */
 function Spinner({ dark }: { dark?: boolean }) {
   return (
     <span
@@ -61,9 +54,6 @@ function Spinner({ dark }: { dark?: boolean }) {
   );
 }
 
-/* ─────────────────────────────────────────────────────────────
-   Class builder
-───────────────────────────────────────────────────────────── */
 function buildClass(
   variant: ButtonVariant,
   size: ButtonSize,
@@ -83,9 +73,6 @@ function buildClass(
     .join(" ");
 }
 
-/* ─────────────────────────────────────────────────────────────
-   Inner content
-───────────────────────────────────────────────────────────── */
 function ButtonContent({
   iconLeft,
   iconRight,
@@ -116,11 +103,7 @@ function ButtonContent({
   );
 }
 
-/* ─────────────────────────────────────────────────────────────
-   Button
-───────────────────────────────────────────────────────────── */
 const Button = forwardRef<HTMLButtonElement, Props>((allProps, ref) => {
-  // Extract shared props first
   const {
     variant = "primary",
     size = "md",
@@ -153,7 +136,6 @@ const Button = forwardRef<HTMLButtonElement, Props>((allProps, ref) => {
     </ButtonContent>
   );
 
-  /* ── Link variant ── */
   const isLinkButton =
     "href" in allProps && (allProps as ButtonLinkProps).as === "link";
 
@@ -181,7 +163,6 @@ const Button = forwardRef<HTMLButtonElement, Props>((allProps, ref) => {
     );
   }
 
-  /* ── Button variant ── */
   const {
     disabled,
     type = "button",

@@ -46,7 +46,6 @@ export default function RootLayoutShell({
         </a>
         <SmoothScroll>{children}</SmoothScroll>
 
-        {/* ── Analytics & metrics — loaded last to prioritize content ── */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-99ERRMYEEC"
           strategy="lazyOnload"
