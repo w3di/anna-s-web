@@ -53,7 +53,7 @@ export async function generateMetadata({
   const alternateSlugs = getBlogAlternateSlugs(locale, slug);
   if (alternateSlugs) {
     const languages = Object.fromEntries(
-      (["en", "cz", "ru"] as const).map((l) => [
+      (["en", "cs", "ru"] as const).map((l) => [
         l,
         toLocalizedAbsoluteUrl(l, `/blog/${alternateSlugs[l]}`),
       ])
@@ -81,7 +81,7 @@ export default async function BlogPostPage({ params }: BlogPostProps) {
   const alternateSlugs = getBlogAlternateSlugs(locale, slug);
   const langHrefOverrides = alternateSlugs
     ? Object.fromEntries(
-        (["en", "cz", "ru"] as const).map((l) => [
+        (["en", "cs", "ru"] as const).map((l) => [
           l,
           `/blog/${alternateSlugs[l]}`,
         ])

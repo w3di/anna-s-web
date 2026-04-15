@@ -14,7 +14,7 @@ type ContactPayload = {
 
 const LOCALE_LABELS: Record<string, string> = {
   en: "English",
-  cz: "Čeština",
+  cs: "Čeština",
   ru: "Русский",
 };
 

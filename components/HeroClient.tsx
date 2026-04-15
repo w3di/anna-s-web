@@ -107,30 +107,6 @@ export default function HeroClient({ locale, copy }: HeroClientProps) {
           animate="visible"
           style={{ maxWidth: "780px" }}
         >
-          <motion.div
-            variants={item}
-            style={{
-              marginBottom: "1.5rem",
-              display: "flex",
-              alignItems: "center",
-              gap: "12px",
-            }}
-          >
-            <span
-              style={{
-                width: "36px",
-                height: "1px",
-                background: "rgba(29,86,176,0.85)",
-              }}
-            />
-            <span
-              className="t-overline-light"
-              style={{ color: "rgba(255,255,255,0.55)", letterSpacing: "4px" }}
-            >
-              {copy.overline}
-            </span>
-          </motion.div>
-
           <h1
             style={{
               position: "absolute",
@@ -146,32 +122,6 @@ export default function HeroClient({ locale, copy }: HeroClientProps) {
           >
             {copy.seoH1}
           </h1>
-          <motion.div
-            role="presentation"
-            variants={item}
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "clamp(2.7rem, 6.3vw, 5.85rem)",
-              fontWeight: 400,
-              lineHeight: 1.0,
-              color: "white",
-              letterSpacing: "-1px",
-              marginBottom: "2rem",
-            }}
-          >
-            <span style={{ display: "block", marginBottom: "0.2rem" }}>
-              {copy.firstName}
-            </span>
-            <span
-              style={{
-                display: "block",
-                fontStyle: "italic",
-                color: "rgba(255,255,255,0.75)",
-              }}
-            >
-              {copy.lastName}
-            </span>
-          </motion.div>
 
           <motion.p
             variants={item}
@@ -182,12 +132,28 @@ export default function HeroClient({ locale, copy }: HeroClientProps) {
               lineHeight: 1.65,
               color: "rgba(255,255,255,0.72)",
               maxWidth: "500px",
-              marginBottom: "2.25rem",
+              marginBottom: "2rem",
               letterSpacing: "0.2px",
             }}
           >
             {copy.tagline}
           </motion.p>
+
+          <motion.div
+            role="presentation"
+            variants={item}
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(2.7rem, 6.3vw, 5.85rem)",
+              fontWeight: 400,
+              lineHeight: 1.0,
+              color: "white",
+              letterSpacing: "-1px",
+              marginBottom: "2.25rem",
+            }}
+          >
+            {copy.firstName} {copy.lastName}
+          </motion.div>
 
           <motion.div
             variants={item}
@@ -213,43 +179,6 @@ export default function HeroClient({ locale, copy }: HeroClientProps) {
               {copy.secondaryCta}
             </Button>
           </motion.div>
-
-          <motion.blockquote
-            variants={item}
-            style={{
-              marginTop: "3rem",
-              paddingTop: "2rem",
-              borderTop: "1px solid rgba(255,255,255,0.12)",
-              maxWidth: "560px",
-            }}
-          >
-            <p
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(0.95rem, 1.6vw, 1.2rem)",
-                fontWeight: 400,
-                fontStyle: "italic",
-                lineHeight: 1.65,
-                color: "rgba(255,253,248,0.9)",
-                margin: "0 0 0.75rem",
-                letterSpacing: "0.2px",
-              }}
-            >
-              &ldquo;{copy.quote}&rdquo;
-            </p>
-            <cite
-              style={{
-                display: "block",
-                fontStyle: "normal",
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(0.85rem, 1.2vw, 1rem)",
-                color: "rgba(255,253,248,0.75)",
-                letterSpacing: "0.5px",
-              }}
-            >
-              {copy.quoteAuthor}
-            </cite>
-          </motion.blockquote>
         </motion.div>
       </motion.div>
 
@@ -301,40 +230,6 @@ export default function HeroClient({ locale, copy }: HeroClientProps) {
       >
         <Icon name="arrow-down" white />
       </motion.button>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2.2 }}
-        style={{
-          position: "absolute",
-          bottom: "2rem",
-          right: "clamp(1.25rem, 4vw, 3rem)",
-          zIndex: 10,
-          display: "flex",
-          flexDirection: "column",
-          gap: "3px",
-          alignItems: "flex-end",
-        }}
-        className="hide-mobile"
-      >
-        {[copy.location, copy.founded].map((t, i) => (
-          <span
-            key={i}
-            style={{
-              fontFamily: "var(--font-ui)",
-              fontSize: "10px",
-              fontWeight: 600,
-              letterSpacing: "2.5px",
-              textTransform: "uppercase",
-              color:
-                i === 0 ? "rgba(255,255,255,0.45)" : "rgba(255,255,255,0.25)",
-            }}
-          >
-            {t}
-          </span>
-        ))}
-      </motion.div>
     </header>
   );
 }

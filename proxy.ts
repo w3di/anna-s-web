@@ -16,9 +16,32 @@ const legacyRouteMap = {
   "/our-services": "/sessions",
 } as const;
 
+function detectLocaleFromAcceptLanguage(request: NextRequest): Locale | null {
+  const acceptLanguage = request.headers.get("accept-language");
+  if (!acceptLanguage) return null;
+
+  const preferred = acceptLanguage
+    .split(",")
+    .map((part) => {
+      const [lang, q] = part.trim().split(";q=");
+      return { lang: lang.trim().toLowerCase(), q: q ? parseFloat(q) : 1 };
+    })
+    .sort((a, b) => b.q - a.q);
+
+  for (const { lang } of preferred) {
+    const primary = lang.split("-")[0];
+    if (primary === "cs" || primary === "cz") return "cs";
+    if (primary === "ru") return "ru";
+    if (primary === "en") return "en";
+  }
+
+  return null;
+}
+
 function getPreferredLocale(request: NextRequest): Locale {
   const cookieLocale = request.cookies.get(localeCookieName)?.value;
-  return isLocale(cookieLocale) ? cookieLocale : defaultLocale;
+  if (isLocale(cookieLocale)) return cookieLocale;
+  return detectLocaleFromAcceptLanguage(request) ?? defaultLocale;
 }
 
 export function proxy(request: NextRequest) {

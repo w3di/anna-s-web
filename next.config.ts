@@ -14,6 +14,21 @@ const nextConfig: NextConfig = {
     qualities: [65, 75, 90],
     remotePatterns: [],
   },
+  async redirects() {
+    return [
+      // 301 redirect old /cz/ locale URLs to /cs/
+      {
+        source: "/cz",
+        destination: "/cs",
+        permanent: true,
+      },
+      {
+        source: "/cz/:path*",
+        destination: "/cs/:path*",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

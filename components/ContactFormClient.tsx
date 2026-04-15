@@ -21,7 +21,7 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const LOCALE_TO_COUNTRY: Record<Locale, string> = {
   en: "US",
-  cz: "CZ",
+  cs: "CZ",
   ru: "RU",
 };
 

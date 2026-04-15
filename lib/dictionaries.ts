@@ -1,4 +1,4 @@
-export const locales = ["en", "cz", "ru"] as const;
+export const locales = ["en", "cs", "ru"] as const;
 
 export type Locale = (typeof locales)[number];
 
@@ -179,8 +179,8 @@ export type SiteDictionary = {
 export const dictionaries: Record<Locale, SiteDictionary> = {
   en: {
     localeLabel: "Language",
-    languages: { en: "English", cz: "Čeština", ru: "Русский" },
-    languagesShort: { en: "EN", cz: "CZ", ru: "RU" },
+    languages: { en: "English", cs: "Čeština", ru: "Русский" },
+    languagesShort: { en: "EN", cs: "CZ", ru: "RU" },
     nav: {
       home: "Home",
       about: "About Me",
@@ -190,70 +190,68 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       book: "Book",
     },
     hero: {
-      overline: "Mind of Heart",
+      overline: "",
       firstName: "Anna",
       lastName: "Kolmykova",
       tagline:
-        "Psychologist in Prague — systemic constellation facilitator and process-oriented therapist helping you move through inner transitions with clarity, depth, and care.",
+        "Systemic family facilitator for individuals and businesses, and somatic specialist supporting inner transitions with clarity, depth, and care.",
       primaryCta: "Explore Sessions",
       secondaryCta: "About Me",
-      quote:
-        "Try not to resist the changes that come your way. Instead let life live through you. And do not worry that your life is turning upside down. How do you know that the side you are used to is better than the one to come?",
-      quoteAuthor: "Rumi",
-      location: "Prague · Online",
-      founded: "Est. 2020",
+      quote: "",
+      quoteAuthor: "",
+      location: "",
+      founded: "",
       scrollAria: "Scroll down",
-      seoH1: "Psychologist in Prague — Systemic Constellations & Process-Oriented Therapy",
+      seoH1:
+        "Psychologist in Prague — Systemic Constellations & Process-Oriented Therapy",
     },
     homeAbout: {
       overline: "About Me",
-      title: "Facilitator & psychologist",
-      accent: "at your service",
+      title: "About Me",
+      accent:
+        "Systemic Facilitator and somatic specialist, here to support your process.",
       paragraphs: [
-        "Anna Kolmykova is a psychologist in Prague working at the intersection of psychology, embodiment, and consciousness — supporting individuals and leaders through life transitions, relationships, and inner conflicts with depth and clarity.",
-        "With more than 10 years of experience in international business across Europe, the USA, and Asia, Anna combines strategic thinking with deep systemic and embodied insight.",
-        "Her background in mathematics, clinical psychology, family and organisational constellations, and body-based methods allows her to work with both visible challenges and the deeper dynamics beneath them.",
+        "Anna works at the intersection of psychology, embodiment, and consciousness, supporting individuals and organisations through life transitions, relationships, and inner conflict with clarity, depth, and care.",
+        "With more than 10 years of international corporate experience, she brings together strategic thinking, systemic insight, and embodied awareness.",
+        "Her background in mathematics, clinical psychology and family constellations allows her to work with both visible challenges and the deeper dynamics beneath them.",
+        "Consultations are available online or in person in Prague.",
       ],
-      stats: [
-        { value: "10+", label: "Years of experience" },
-        { value: "3", label: "Core disciplines" },
-        { value: "∞", label: "Potential for change" },
-      ],
+      stats: [],
       locationTitle: "Prague",
       locationText: "Czech Republic · Online",
       primaryCta: "Full Story",
       secondaryCta: "Book a Session",
     },
     homeServices: {
-      overline: "How I Can Help",
-      title: "Sessions & Services",
+      overline: "Sessions",
+      title: "Sessions",
       cta: "All Sessions",
       items: [
         {
           num: "01",
-          title: "Private Session",
-          subtitle: "Constellations",
+          title: "Individual Consultation",
+          subtitle: "90 min",
           description:
-            "Explore hidden patterns behind recurring blocks, conflicts, and emotional loops through a carefully held one-to-one constellation process.",
-          tags: ["Family Systems", "Inner Blocks", "Transitions"],
+            "A longer-term process for exploring inner transitions, relationship challenges, emotional patterns, and personal growth. This work supports deeper self-understanding, integration, and sustainable change over time.",
+          tags: ["Inner Transitions", "Relationships", "Personal Growth"],
           cta: "Learn More",
         },
         {
           num: "02",
-          title: "For Business",
-          subtitle: "& Organisations",
+          title: "Family Constellations",
+          subtitle: "120–150 min",
           description:
-            "Reveal invisible dynamics shaping leadership, succession, decision-making, and organisational alignment when strategy alone is not enough.",
-          tags: ["Leadership", "Strategy", "Succession"],
+            "A systemic approach to understanding family patterns, relational dynamics, and deeper emotional themes. This work reveals what may be operating beneath the surface and supports insight, clarity, and change.",
+          tags: ["Family Systems", "Relational Dynamics", "Insight"],
           cta: "Learn More",
         },
         {
           num: "03",
-          title: "Personal Coaching",
-          subtitle: "& Mentoring",
+          title: "Business & Organisational Constellations",
+          subtitle: "Duration based on complexity",
           description:
-            "A process-oriented journey that combines presence, reflection, and embodied awareness to support clarity, balance, and meaningful movement.",
-          tags: ["Somatic Work", "Coaching", "Mentoring"],
+            "A systemic approach to exploring leadership, team dynamics, decision-making, and challenges within organisations. This work helps reveal hidden patterns, relational dynamics, and underlying tensions that may be influencing the system, supporting greater clarity, alignment, and effective action.",
+          tags: ["Leadership", "Team Dynamics", "Organisational Alignment"],
           cta: "Learn More",
         },
       ],
@@ -316,24 +314,25 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       title: "Frequently Asked Questions",
       items: [
         {
-          question: "What can I expect from a session with a psychologist in Prague?",
-          answer: "Each session is tailored to your needs. Whether you choose systemic constellations, coaching, or process-oriented therapy, it takes place in a safe and confidential environment — in person in Prague or online. A free 20-minute discovery call helps us understand your request before we begin.",
+          question: "What can I expect from a session?",
+          answer:
+            "Each session is shaped around your needs. Whether you come for family constellations, consultancy, or business-related work, the process unfolds in a safe and confidential space — in person in Prague or online. A free 20-minute discovery call allows us to understand your request before we begin.",
         },
         {
           question: "Do you offer online sessions?",
-          answer: "Yes. Psychologist Anna Kolmykova offers sessions both in person in Prague and online via secure video. Online sessions are equally effective and available in English, Czech, and Russian.",
+          answer:
+            "Yes. Sessions are available both in person in Prague and online via secure video.",
         },
         {
-          question: "How much does a psychologist in Prague cost?",
-          answer: "Session prices vary depending on the type and duration. Contact us for current rates. A free 20-minute discovery call is always included to make sure the fit is right.",
-        },
-        {
-          question: "What is the difference between constellations and coaching?",
-          answer: "Systemic constellations reveal hidden patterns in family and organisational systems. Coaching focuses on personal growth, clarity, and moving forward. Both approaches can complement each other, and your psychologist in Prague will help you choose the right format.",
+          question:
+            "What is the difference between constellations and consultancy?",
+          answer:
+            "Systemic constellations help reveal hidden patterns and underlying dynamics within family or organisational systems. Consultancy is a longer-term, therapeutically informed process that supports deeper reflection, integration, and lasting change over time. Both approaches can complement each other, depending on the nature of the issue and the kind of support needed.",
         },
         {
           question: "In which languages do you offer sessions?",
-          answer: "Sessions are available in English, Czech, and Russian — both in person in Prague and online worldwide.",
+          answer:
+            "Sessions are available in English and Russian — both in person in Prague and online worldwide.",
         },
       ],
     },
@@ -342,7 +341,7 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       ctaTitle: "Take the first step today.",
       ctaButton: "Book a Session",
       brandDescription:
-        "Psychologist in Prague — systemic constellation facilitator and process-oriented therapist supporting individuals and leaders through lasting inner change.",
+        "Hear the voice of your heart.",
       pagesTitle: "Pages",
       sessionsTitle: "Sessions",
       sessionLinks: [
@@ -414,64 +413,61 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       ctaSecondary: "View Sessions",
     },
     sessionsPage: {
-      eyebrow: "How I Work",
+      eyebrow: "Sessions",
       title: "Sessions",
       subtitle: "Choose the path that resonates with you",
       items: [
         {
           id: "private",
           num: "01",
-          title: "Private Session",
-          subtitle: "Constellations",
+          title: "Individual Consultation",
+          subtitle: "90 min",
           intro:
-            "Private constellation sessions offer a confidential and supportive space to explore personal, family, or ancestral dynamics influencing your life.",
+            "A longer-term process for exploring inner transitions, relationship challenges, emotional patterns, and personal growth.",
           description:
-            "Hidden patterns become visible, emotional blocks soften, and a new sense of grounding, movement, and inner alignment can emerge.",
+            "This work supports deeper self-understanding, integration, and sustainable change over time.",
           bullets: [
-            "Family and ancestral patterns",
-            "Relationship challenges and intimacy",
-            "Repeating life patterns and inner blocks",
-            "Life transitions and major decisions",
-            "Trauma, grief, and unresolved experiences",
-            "Identity, belonging, and direction",
+            "Inner transitions and life changes",
+            "Relationship challenges",
+            "Emotional patterns and blocks",
+            "Personal growth and self-understanding",
+            "Integration and sustainable change",
           ],
           cta: "Book This Session",
         },
         {
           id: "business",
           num: "02",
-          title: "For Business",
-          subtitle: "& Organisations",
+          title: "Family Constellations",
+          subtitle: "120–150 min",
           intro:
-            "When progress stalls or decisions feel unclear, the causes often lie beyond strategy alone.",
+            "A systemic approach to understanding family patterns, relational dynamics, and deeper emotional themes.",
           description:
-            "Organisational constellations reveal hidden loyalties, unresolved conflicts, and system-level dynamics that shape leadership, succession, and business flow.",
+            "This work reveals what may be operating beneath the surface and supports insight, clarity, and change.",
           bullets: [
-            "Leadership dynamics and succession",
-            "Organisational growth blocks",
-            "Team conflicts and culture",
-            "Strategic decisions and positioning",
-            "Mergers, acquisitions, restructuring",
-            "Founder dynamics and legacy",
+            "Family patterns and ancestral dynamics",
+            "Relational dynamics and bonds",
+            "Deeper emotional themes",
+            "Hidden loyalties and entanglements",
+            "Insight, clarity, and resolution",
           ],
           cta: "Book This Session",
         },
         {
           id: "coaching",
           num: "03",
-          title: "Personal Coaching",
-          subtitle: "& Mentoring",
+          title: "Business & Organisational Constellations",
+          subtitle: "Duration based on complexity",
           intro:
-            "Some questions live in the body, not the mind. This is a process-oriented journey of reflection, presence, and embodied awareness.",
+            "A systemic approach to exploring leadership, team dynamics, decision-making, and challenges within organisations.",
           description:
-            "Especially supportive during life transitions, leadership challenges, and periods of uncertainty — helping restore balance and move forward with clarity.",
+            "This work helps reveal hidden patterns, relational dynamics, and underlying tensions that may be influencing the system, supporting greater clarity, alignment, and effective action.",
           bullets: [
-            "Art-based and creative practices",
-            "Reflective questions and coaching",
-            "Body awareness and somatic practices",
-            "Mind–body–soul integration",
-            "Constellation-informed exploration",
-            "Support during transitions",
+            "Leadership and team dynamics",
+            "Decision-making and strategy",
+            "Organisational challenges and tensions",
+            "Hidden patterns within the system",
+            "Clarity, alignment, and effective action",
           ],
           cta: "Book This Session",
         },
@@ -542,10 +538,10 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
         "Reach out to psychologist Anna Kolmykova in Prague to book a session or ask a question. In-person and online consultations available.",
     },
   },
-  cz: {
+  cs: {
     localeLabel: "Jazyk",
-    languages: { en: "English", cz: "Čeština", ru: "Русский" },
-    languagesShort: { en: "EN", cz: "CZ", ru: "RU" },
+    languages: { en: "English", cs: "Čeština", ru: "Русский" },
+    languagesShort: { en: "EN", cs: "CZ", ru: "RU" },
     nav: {
       home: "Domů",
       about: "O mně",
@@ -555,70 +551,67 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       book: "Rezervace",
     },
     hero: {
-      overline: "Mind of Heart",
+      overline: "",
       firstName: "Anna",
       lastName: "Kolmykova",
       tagline:
-        "Psycholožka v Praze — facilitátorka systemických konstelací a procesně orientovaná terapeutka, která pomáhá procházet vnitřními změnami s jasností, hloubkou a péčí.",
+        "Systemická rodinná facilitátorka pro jednotlivce i firmy a somatická specialistka podporující vnitřní proměny s jasností, hloubkou a péčí.",
       primaryCta: "Prozkoumat sezení",
       secondaryCta: "O mně",
-      quote:
-        "Snaž se neodolávat změnám, které k tobě přicházejí. Místo toho nech život, ať žije skrze tebe. A nedělej si starosti, že se ti život obrací vzhůru nohama. Jak víš, že strana, na kterou jsi zvyklý, je lepší než ta, která přichází?",
-      quoteAuthor: "Rúmí",
-      location: "Praha · Online",
-      founded: "Od r. 2020",
+      quote: "",
+      quoteAuthor: "",
+      location: "",
+      founded: "",
       scrollAria: "Posunout dolů",
-      seoH1: "Psycholožka v Praze — Systemické konstelace a procesně orientovaná terapie",
+      seoH1:
+        "Psycholožka v Praze — Systemické konstelace a procesně orientovaná terapie",
     },
     homeAbout: {
       overline: "O mně",
-      title: "Facilitátorka a psycholožka",
-      accent: "ve vaší službě",
+      title: "O mně",
+      accent: "Systemická facilitátorka a somatická specialistka, připravená podpořit váš proces.",
       paragraphs: [
-        "Anna Kolmykova je psycholožka v Praze, která pracuje na pomezí psychologie, ztělesnění a vědomí — podporuje jednotlivce i lídry při životních změnách, ve vztazích a vnitřních konfliktech s hloubkou a jasností.",
-        "Díky více než 10 letům zkušeností v mezinárodním byznysu v Evropě, USA i Asii propojuje strategické myšlení s hlubokým systémovým a tělesným vhledem.",
-        "Její zázemí v matematice, klinické psychologii, rodinných a organizačních konstelacích i tělově orientovaných metodách umožňuje pracovat s viditelnými problémy i skrytými dynamikami pod nimi.",
+        "Anna pracuje na pomezí psychologie, ztělesnění a vědomí, podporuje jednotlivce i organizace v životních přechodech, vztazích a vnitřních konfliktech s jasností, hloubkou a péčí.",
+        "Díky více než 10 letům mezinárodních korporátních zkušeností propojuje strategické myšlení, systémový vhled a tělesné uvědomění.",
+        "Její zázemí v matematice, klinické psychologii a rodinných konstelacích umožňuje pracovat s viditelnými problémy i hlubší dynamikou pod nimi.",
+        "Konzultace jsou dostupné online nebo osobně v Praze.",
       ],
-      stats: [
-        { value: "10+", label: "let zkušeností" },
-        { value: "3", label: "hlavní disciplíny" },
-        { value: "∞", label: "možnost změny" },
-      ],
+      stats: [],
       locationTitle: "Praha",
       locationText: "Česká republika · Online",
       primaryCta: "Celý příběh",
       secondaryCta: "Rezervovat sezení",
     },
     homeServices: {
-      overline: "Jak mohu pomoci",
-      title: "Sezení a služby",
+      overline: "Sezení",
+      title: "Sezení",
       cta: "Všechna sezení",
       items: [
         {
           num: "01",
-          title: "Individuální sezení",
-          subtitle: "Konstelace",
+          title: "Individuální konzultace",
+          subtitle: "90 min",
           description:
-            "Objevte skryté vzorce za opakujícími se bloky, konflikty a emočními smyčkami v bezpečně vedeném individuálním procesu.",
-          tags: ["Rodinný systém", "Bloky", "Přechody"],
+            "Dlouhodobější proces pro zkoumání vnitřních proměn, vztahových obtíží, emočních vzorců a osobního růstu. Tato práce podporuje hlubší sebepoznání, integraci a udržitelnou změnu v čase.",
+          tags: ["Vnitřní proměny", "Vztahy", "Osobní růst"],
           cta: "Zjistit více",
         },
         {
           num: "02",
-          title: "Pro firmy",
-          subtitle: "a organizace",
+          title: "Rodinné konstelace",
+          subtitle: "120–150 min",
           description:
-            "Odhalte neviditelné dynamiky ovlivňující leadership, nástupnictví, rozhodování a soulad organizace, když strategie sama nestačí.",
-          tags: ["Leadership", "Strategie", "Nástupnictví"],
+            "Systemický přístup k porozumění rodinným vzorcům, vztahovým dynamikám a hlubším emočním tématům. Tato práce odhaluje, co může působit pod povrchem, a podporuje vhled, jasnost a změnu.",
+          tags: ["Rodinné systémy", "Vztahové dynamiky", "Vhled"],
           cta: "Zjistit více",
         },
         {
           num: "03",
-          title: "Osobní koučink",
-          subtitle: "a mentoring",
+          title: "Firemní a organizační konstelace",
+          subtitle: "Délka dle složitosti",
           description:
-            "Procesně orientovaná cesta, která kombinuje přítomnost, reflexi a tělesné uvědomění pro větší jasnost, rovnováhu a směr.",
-          tags: ["Somatika", "Koučink", "Mentoring"],
+            "Systemický přístup ke zkoumání leadershipu, týmových dynamik, rozhodování a výzev v organizacích. Tato práce pomáhá odhalit skryté vzorce, vztahové dynamiky a napětí ovlivňující systém a podporuje větší jasnost, soulad a efektivní akci.",
+          tags: ["Leadership", "Týmové dynamiky", "Organizační soulad"],
           cta: "Zjistit více",
         },
       ],
@@ -681,24 +674,24 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       title: "Často kladené otázky",
       items: [
         {
-          question: "Co mohu očekávat od sezení s psycholožkou v Praze?",
-          answer: "Každé sezení je přizpůsobeno vašim potřebám. Ať zvolíte systemické konstelace, koučink nebo procesně orientovanou terapii, probíhá v bezpečném a důvěrném prostředí — osobně v Praze nebo online. Bezplatný 20minutový úvodní hovor nám pomůže porozumět vašemu dotazu.",
+          question: "Co mohu očekávat od sezení?",
+          answer:
+            "Každé sezení je utvářeno kolem vašich potřeb. Ať přicházíte na rodinné konstelace, konzultaci nebo firemní práci, proces probíhá v bezpečném a důvěrném prostoru — osobně v Praze nebo online. Bezplatný 20minutový úvodní hovor nám umožní porozumět vašemu dotazu.",
         },
         {
           question: "Nabízíte online sezení?",
-          answer: "Ano. Psycholožka Anna Kolmykova nabízí sezení osobně v Praze i online přes zabezpečené video. Online sezení jsou stejně účinná a dostupná v angličtině, češtině a ruštině.",
+          answer:
+            "Ano. Sezení jsou dostupná osobně v Praze i online přes zabezpečené video.",
         },
         {
-          question: "Kolik stojí psycholog v Praze?",
-          answer: "Ceny sezení se liší podle typu a délky. Kontaktujte nás pro aktuální ceník. Bezplatný 20minutový úvodní hovor je vždy součástí, abychom ověřili vzájemnou shodu.",
-        },
-        {
-          question: "Jaký je rozdíl mezi konstelacemi a koučinkem?",
-          answer: "Systemické konstelace odhalují skryté vzorce v rodinných a organizačních systémech. Koučink se zaměřuje na osobní růst, jasnost a pohyb vpřed. Oba přístupy se mohou doplňovat a psycholožka v Praze vám pomůže vybrat správný formát.",
+          question: "Jaký je rozdíl mezi konstelacemi a konzultací?",
+          answer:
+            "Systemické konstelace pomáhají odhalit skryté vzorce a dynamiky v rodinných či organizačních systémech. Konzultace je dlouhodobější, terapeuticky informovaný proces podporující hlubší reflexi, integraci a trvalou změnu. Oba přístupy se mohou doplňovat podle povahy tématu a potřebné podpory.",
         },
         {
           question: "V jakých jazycích nabízíte sezení?",
-          answer: "Sezení jsou dostupná v angličtině, češtině a ruštině — osobně v Praze i online po celém světě.",
+          answer:
+            "Sezení jsou dostupná v angličtině a ruštině — osobně v Praze i online po celém světě.",
         },
       ],
     },
@@ -707,7 +700,7 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       ctaTitle: "Udělejte první krok ještě dnes.",
       ctaButton: "Rezervovat sezení",
       brandDescription:
-        "Psycholožka v Praze — facilitátorka systemických konstelací a procesně orientovaná terapeutka podporující jednotlivce i lídry v trvalé vnitřní změně.",
+        "Hear the voice of your heart.",
       pagesTitle: "Stránky",
       sessionsTitle: "Sezení",
       sessionLinks: [
@@ -776,64 +769,61 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       ctaSecondary: "Zobrazit sezení",
     },
     sessionsPage: {
-      eyebrow: "Jak pracuji",
+      eyebrow: "Sezení",
       title: "Sezení",
       subtitle: "Vyberte si cestu, která s vámi rezonuje",
       items: [
         {
           id: "private",
           num: "01",
-          title: "Individuální sezení",
-          subtitle: "Konstelace",
+          title: "Individuální konzultace",
+          subtitle: "90 min",
           intro:
-            "Individuální konstelace nabízejí důvěrný a podpůrný prostor pro zkoumání osobních, rodinných či transgeneračních dynamik.",
+            "Dlouhodobější proces pro zkoumání vnitřních proměn, vztahových obtíží, emočních vzorců a osobního růstu.",
           description:
-            "Skryté vzorce se stávají viditelnými, emoční bloky se uvolňují a může se objevit nový pocit ukotvení, pohybu a vnitřního souladu.",
+            "Tato práce podporuje hlubší sebepoznání, integraci a udržitelnou změnu v čase.",
           bullets: [
-            "Rodinné a transgenerační vzorce",
-            "Vztahové obtíže a intimita",
-            "Opakující se životní vzorce",
-            "Životní přechody a rozhodnutí",
-            "Trauma, ztráta a neuzavřené emoce",
-            "Identita, sounáležitost a směr",
+            "Vnitřní proměny a životní změny",
+            "Vztahové obtíže",
+            "Emoční vzorce a bloky",
+            "Osobní růst a sebepoznání",
+            "Integrace a udržitelná změna",
           ],
           cta: "Rezervovat toto sezení",
         },
         {
           id: "business",
           num: "02",
-          title: "Pro firmy",
-          subtitle: "a organizace",
+          title: "Rodinné konstelace",
+          subtitle: "120–150 min",
           intro:
-            "Když se růst zastaví nebo rozhodnutí nejsou jasná, příčiny často neleží jen ve strategii.",
+            "Systemický přístup k porozumění rodinným vzorcům, vztahovým dynamikám a hlubším emočním tématům.",
           description:
-            "Organizační konstelace odhalují skryté loajality, neuzavřené konflikty a systémové dynamiky, které formují leadership, nástupnictví i tok v organizaci.",
+            "Tato práce odhaluje, co může působit pod povrchem, a podporuje vhled, jasnost a změnu.",
           bullets: [
-            "Leadership a nástupnictví",
-            "Bloky růstu organizace",
-            "Týmové konflikty a kultura",
-            "Strategická rozhodnutí a pozicování",
-            "Fúze, akvizice, restrukturalizace",
-            "Dynamika zakladatelů a odkaz",
+            "Rodinné vzorce a transgenerační dynamiky",
+            "Vztahové dynamiky a vazby",
+            "Hlubší emoční témata",
+            "Skryté loajality a zapletení",
+            "Vhled, jasnost a řešení",
           ],
           cta: "Rezervovat toto sezení",
         },
         {
           id: "coaching",
           num: "03",
-          title: "Osobní koučink",
-          subtitle: "a mentoring",
+          title: "Firemní a organizační konstelace",
+          subtitle: "Délka dle složitosti",
           intro:
-            "Některé otázky žijí v těle, ne v mysli. Tato cesta propojuje reflexi, přítomnost a ztělesněné uvědomění.",
+            "Systemický přístup ke zkoumání leadershipu, týmových dynamik, rozhodování a výzev v organizacích.",
           description:
-            "Je obzvlášť užitečná během životních změn, výzev v leadershipu a období nejistoty — pomáhá obnovit rovnováhu a směr.",
+            "Tato práce pomáhá odhalit skryté vzorce, vztahové dynamiky a napětí ovlivňující systém a podporuje větší jasnost, soulad a efektivní akci.",
           bullets: [
-            "Tvořivé a art-based techniky",
-            "Reflexivní otázky a koučink",
-            "Somatické praktiky",
-            "Propojení těla, mysli a duše",
-            "Systémová a konstelacemi inspirovaná explorace",
-            "Podpora v přechodových obdobích",
+            "Leadership a týmové dynamiky",
+            "Rozhodování a strategie",
+            "Organizační výzvy a napětí",
+            "Skryté vzorce v systému",
+            "Jasnost, soulad a efektivní akce",
           ],
           cta: "Rezervovat toto sezení",
         },
@@ -889,8 +879,7 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
         "Psycholožka Praha — Anna Kolmykova | Systemické konstelace a koučink",
       homeDescription:
         "Anna Kolmykova — psycholožka v Praze. Systemické konstelace, procesně orientovaná terapie a osobní koučink. Sezení osobně i online. Rezervujte si bezplatný úvodní hovor.",
-      aboutTitle:
-        "O Anně Kolmykové — psycholožka v Praze | Mind of Heart",
+      aboutTitle: "O Anně Kolmykové — psycholožka v Praze | Mind of Heart",
       aboutDescription:
         "Seznamte se s Annou Kolmykovou — facilitátorkou systemických konstelací a procesně orientovanou psycholožkou v Praze. Vzdělání, přístup a certifikace.",
       sessionsTitle:
@@ -905,8 +894,8 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
   },
   ru: {
     localeLabel: "Язык",
-    languages: { en: "English", cz: "Čeština", ru: "Русский" },
-    languagesShort: { en: "EN", cz: "CZ", ru: "RU" },
+    languages: { en: "English", cs: "Čeština", ru: "Русский" },
+    languagesShort: { en: "EN", cs: "CZ", ru: "RU" },
     nav: {
       home: "Главная",
       about: "Обо мне",
@@ -916,70 +905,67 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       book: "Запись",
     },
     hero: {
-      overline: "Mind of Heart",
+      overline: "",
       firstName: "Anna",
       lastName: "Kolmykova",
       tagline:
-        "Психолог в Праге — фасилитатор системных расстановок и процесс-ориентированный терапевт, помогающий проходить внутренние переходы с ясностью, глубиной и вниманием.",
+        "Системный семейный фасилитатор для частных лиц и бизнеса, соматический специалист, поддерживающий внутренние переходы с ясностью, глубиной и вниманием.",
       primaryCta: "Смотреть сессии",
       secondaryCta: "Обо мне",
-      quote:
-        "Не сопротивляйся переменам, которые приходят. Позволь жизни течь через тебя. И не тревожься, что твоя жизнь переворачивается. Откуда ты знаешь, что сторона, к которой ты привык, лучше той, что приходит?",
-      quoteAuthor: "Руми",
-      location: "Прага · Онлайн",
-      founded: "С 2020 года",
+      quote: "",
+      quoteAuthor: "",
+      location: "",
+      founded: "",
       scrollAria: "Прокрутить вниз",
-      seoH1: "Психолог в Праге — Системные расстановки и процесс-ориентированная терапия",
+      seoH1:
+        "Психолог в Праге — Системные расстановки и процесс-ориентированная терапия",
     },
     homeAbout: {
       overline: "Обо мне",
-      title: "Фасилитатор и психолог",
-      accent: "рядом с вами",
+      title: "Обо мне",
+      accent: "Системный фасилитатор и соматический специалист, готовый поддержать ваш процесс.",
       paragraphs: [
-        "Анна Колмыкова — психолог в Праге, работающий на пересечении психологии, телесности и сознания, поддерживая людей и лидеров в жизненных переходах, отношениях и внутренних конфликтах с глубиной и ясностью.",
-        "Более 10 лет международного бизнес-опыта в Европе, США и Азии позволяют ей сочетать стратегическое мышление с глубоким системным и телесным пониманием.",
-        "Образование в математике, клинической психологии, семейных и организационных расстановках, а также телесных методах помогает работать и с видимыми трудностями, и с глубинной динамикой под ними.",
+        "Анна работает на пересечении психологии, телесности и сознания, поддерживая людей и организации в жизненных переходах, отношениях и внутренних конфликтах с ясностью, глубиной и вниманием.",
+        "Более 10 лет международного корпоративного опыта позволяют ей соединять стратегическое мышление, системный взгляд и телесное осознавание.",
+        "Образование в математике, клинической психологии и семейных расстановках позволяет работать и с видимыми трудностями, и с глубинной динамикой под ними.",
+        "Консультации доступны онлайн или лично в Праге.",
       ],
-      stats: [
-        { value: "10+", label: "лет опыта" },
-        { value: "3", label: "ключевые дисциплины" },
-        { value: "∞", label: "возможность перемен" },
-      ],
+      stats: [],
       locationTitle: "Прага",
       locationText: "Чехия · Онлайн",
       primaryCta: "Полная история",
       secondaryCta: "Записаться",
     },
     homeServices: {
-      overline: "Чем я могу помочь",
-      title: "Сессии и услуги",
+      overline: "Сессии",
+      title: "Сессии",
       cta: "Все сессии",
       items: [
         {
           num: "01",
-          title: "Индивидуальная сессия",
-          subtitle: "Расстановки",
+          title: "Индивидуальная консультация",
+          subtitle: "90 мин",
           description:
-            "Исследуйте скрытые паттерны за повторяющимися блоками, конфликтами и эмоциональными циклами в бережно выстроенном индивидуальном процессе.",
-          tags: ["Семейная система", "Блоки", "Переходы"],
+            "Долгосрочный процесс для исследования внутренних переходов, сложностей в отношениях, эмоциональных паттернов и личностного роста. Эта работа поддерживает более глубокое самопонимание, интеграцию и устойчивые изменения.",
+          tags: ["Внутренние переходы", "Отношения", "Личностный рост"],
           cta: "Подробнее",
         },
         {
           num: "02",
-          title: "Для бизнеса",
-          subtitle: "и организаций",
+          title: "Семейные расстановки",
+          subtitle: "120–150 мин",
           description:
-            "Выявите невидимую динамику, влияющую на лидерство, преемственность, принятие решений и согласованность команды, когда одной стратегии недостаточно.",
-          tags: ["Лидерство", "Стратегия", "Преемственность"],
+            "Системный подход к пониманию семейных паттернов, динамики отношений и глубинных эмоциональных тем. Эта работа раскрывает то, что может действовать под поверхностью, и поддерживает осознание, ясность и изменение.",
+          tags: ["Семейные системы", "Динамика отношений", "Осознание"],
           cta: "Подробнее",
         },
         {
           num: "03",
-          title: "Личный коучинг",
-          subtitle: "и менторинг",
+          title: "Бизнес и организационные расстановки",
+          subtitle: "Продолжительность зависит от сложности",
           description:
-            "Процесс-ориентированный путь, который соединяет присутствие, рефлексию и телесное осознавание для большей ясности, баланса и движения.",
-          tags: ["Соматика", "Коучинг", "Менторинг"],
+            "Системный подход к исследованию лидерства, командной динамики, принятия решений и вызовов внутри организаций. Эта работа помогает выявить скрытые паттерны, динамику отношений и напряжения, влияющие на систему, поддерживая ясность, согласованность и эффективное действие.",
+          tags: ["Лидерство", "Командная динамика", "Организационная согласованность"],
           cta: "Подробнее",
         },
       ],
@@ -1042,24 +1028,24 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       title: "Часто задаваемые вопросы",
       items: [
         {
-          question: "Чего ожидать от сессии с психологом в Праге?",
-          answer: "Каждая сессия адаптируется под ваш запрос. Будь то системные расстановки, коучинг или процесс-ориентированная терапия — всё проходит в безопасной и конфиденциальной обстановке, лично в Праге или онлайн. Бесплатный 20-минутный звонок-знакомство поможет понять ваш запрос до начала работы.",
+          question: "Чего ожидать от сессии?",
+          answer:
+            "Каждая сессия выстраивается вокруг вашего запроса. Будь то семейные расстановки, консультация или работа с бизнес-запросом — процесс проходит в безопасном и конфиденциальном пространстве, лично в Праге или онлайн. Бесплатный 20-минутный звонок-знакомство поможет понять ваш запрос до начала работы.",
         },
         {
           question: "Вы проводите онлайн-сессии?",
-          answer: "Да. Психолог Анна Колмыкова проводит сессии лично в Праге и онлайн через защищённое видео. Онлайн-сессии одинаково эффективны и доступны на русском, английском и чешском языках.",
+          answer:
+            "Да. Сессии доступны лично в Праге и онлайн через защищённое видео.",
         },
         {
-          question: "Сколько стоит психолог в Праге?",
-          answer: "Стоимость сессий зависит от типа и продолжительности. Свяжитесь с нами для актуальных цен. Бесплатный 20-минутный ознакомительный звонок всегда включён, чтобы убедиться, что мы подходим друг другу.",
-        },
-        {
-          question: "В чём разница между расстановками и коучингом?",
-          answer: "Системные расстановки раскрывают скрытые паттерны в семейных и организационных системах. Коучинг фокусируется на личностном росте, ясности и движении вперёд. Оба подхода дополняют друг друга, и психолог в Праге поможет выбрать подходящий формат.",
+          question: "В чём разница между расстановками и консультацией?",
+          answer:
+            "Системные расстановки помогают раскрыть скрытые паттерны и динамику в семейных или организационных системах. Консультация — это более длительный, терапевтически обоснованный процесс, поддерживающий глубокую рефлексию, интеграцию и устойчивые изменения. Оба подхода могут дополнять друг друга в зависимости от характера запроса и необходимой поддержки.",
         },
         {
           question: "На каких языках проводятся сессии?",
-          answer: "Сессии доступны на русском, английском и чешском — лично в Праге и онлайн по всему миру.",
+          answer:
+            "Сессии доступны на английском и русском — лично в Праге и онлайн по всему миру.",
         },
       ],
     },
@@ -1068,7 +1054,7 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       ctaTitle: "Сделайте первый шаг сегодня.",
       ctaButton: "Записаться на сессию",
       brandDescription:
-        "Психолог в Праге — фасилитатор системных расстановок и процесс-ориентированный терапевт, поддерживающий людей и лидеров в глубокой внутренней трансформации.",
+        "Hear the voice of your heart.",
       pagesTitle: "Страницы",
       sessionsTitle: "Сессии",
       sessionLinks: [
@@ -1140,64 +1126,61 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       ctaSecondary: "Смотреть сессии",
     },
     sessionsPage: {
-      eyebrow: "Как я работаю",
+      eyebrow: "Сессии",
       title: "Сессии",
       subtitle: "Выберите путь, который откликается именно вам",
       items: [
         {
           id: "private",
           num: "01",
-          title: "Индивидуальная сессия",
-          subtitle: "Расстановки",
+          title: "Индивидуальная консультация",
+          subtitle: "90 мин",
           intro:
-            "Индивидуальные расстановки создают конфиденциальное и поддерживающее пространство для исследования личной, семейной и родовой динамики.",
+            "Долгосрочный процесс для исследования внутренних переходов, сложностей в отношениях, эмоциональных паттернов и личностного роста.",
           description:
-            "Скрытые паттерны становятся видимыми, эмоциональные блоки смягчаются, а вместе с этим появляется больше опоры, движения и внутреннего согласия.",
+            "Эта работа поддерживает более глубокое самопонимание, интеграцию и устойчивые изменения.",
           bullets: [
-            "Семейные и родовые паттерны",
-            "Сложности в отношениях и близости",
-            "Повторяющиеся жизненные сценарии",
-            "Переходные периоды и решения",
-            "Травма, утрата и незавершённые переживания",
-            "Идентичность, принадлежность и направление",
+            "Внутренние переходы и жизненные перемены",
+            "Сложности в отношениях",
+            "Эмоциональные паттерны и блоки",
+            "Личностный рост и самопонимание",
+            "Интеграция и устойчивые изменения",
           ],
           cta: "Записаться на эту сессию",
         },
         {
           id: "business",
           num: "02",
-          title: "Для бизнеса",
-          subtitle: "и организаций",
+          title: "Семейные расстановки",
+          subtitle: "120–150 мин",
           intro:
-            "Когда развитие останавливается, а решения теряют ясность, причины часто лежат глубже, чем просто стратегия.",
+            "Системный подход к пониманию семейных паттернов, динамики отношений и глубинных эмоциональных тем.",
           description:
-            "Организационные расстановки показывают скрытые лояльности, незавершённые конфликты и системную динамику, влияющую на лидерство, преемственность и поток в компании.",
+            "Эта работа раскрывает то, что может действовать под поверхностью, и поддерживает осознание, ясность и изменение.",
           bullets: [
-            "Лидерство и преемственность",
-            "Блоки роста организации",
-            "Конфликты и культура команды",
-            "Стратегические решения и позиционирование",
-            "Слияния, поглощения, реструктуризация",
-            "Динамика основателей и наследие",
+            "Семейные паттерны и родовая динамика",
+            "Динамика отношений и связи",
+            "Глубинные эмоциональные темы",
+            "Скрытые лояльности и переплетения",
+            "Осознание, ясность и разрешение",
           ],
           cta: "Записаться на эту сессию",
         },
         {
           id: "coaching",
           num: "03",
-          title: "Личный коучинг",
-          subtitle: "и менторинг",
+          title: "Бизнес и организационные расстановки",
+          subtitle: "Продолжительность зависит от сложности",
           intro:
-            "Некоторые вопросы живут в теле, а не в уме. Этот путь соединяет рефлексию, присутствие и телесное осознавание.",
+            "Системный подход к исследованию лидерства, командной динамики, принятия решений и вызовов внутри организаций.",
           description:
-            "Особенно полезно во время жизненных переходов, лидерских вызовов и периодов неопределённости — помогает восстановить баланс и ясность.",
+            "Эта работа помогает выявить скрытые паттерны, динамику отношений и напряжения, влияющие на систему, поддерживая ясность, согласованность и эффективное действие.",
           bullets: [
-            "Творческие практики",
-            "Рефлексивные вопросы и коучинг",
-            "Соматические практики",
-            "Интеграция тела, ума и души",
-            "Системное исследование",
-            "Поддержка в переходных периодах",
+            "Лидерство и командная динамика",
+            "Принятие решений и стратегия",
+            "Организационные вызовы и напряжения",
+            "Скрытые паттерны в системе",
+            "Ясность, согласованность и эффективное действие",
           ],
           cta: "Записаться на эту сессию",
         },
@@ -1254,8 +1237,7 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
         "Психолог в Праге — Анна Колмыкова | Системные расстановки и коучинг",
       homeDescription:
         "Анна Колмыкова — психолог в Праге. Системные расстановки, процесс-ориентированная терапия и личный коучинг. Сессии очно и онлайн. Запишитесь на бесплатную консультацию.",
-      aboutTitle:
-        "Об Анне Колмыковой — психолог в Праге | Mind of Heart",
+      aboutTitle: "Об Анне Колмыковой — психолог в Праге | Mind of Heart",
       aboutDescription:
         "Познакомьтесь с Анной Колмыковой — фасилитатор системных расстановок и процесс-ориентированный психолог в Праге. Образование, подход и сертификации.",
       sessionsTitle:

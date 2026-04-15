@@ -105,11 +105,6 @@ const en: BlogDictionary = {
       ],
       faq: [
         {
-          question: "How much does a psychologist in Prague cost?",
-          answer:
-            "Session prices in Prague typically range from 1,500 to 3,500 CZK per session, depending on the practitioner's experience and specialization. Many psychologists, including Anna Kolmykova, offer a free initial discovery call.",
-        },
-        {
           question:
             "Can I find an English-speaking psychologist in Prague?",
           answer:
@@ -392,7 +387,7 @@ const en: BlogDictionary = {
   ],
 };
 
-const cz: BlogDictionary = {
+const cs: BlogDictionary = {
   indexTitle:
     "Blog — Psycholožka v Praze | Mind of Heart",
   indexDescription:
@@ -1100,7 +1095,7 @@ const ru: BlogDictionary = {
   ],
 };
 
-const blogDictionaries: Record<Locale, BlogDictionary> = { en, cz, ru };
+const blogDictionaries: Record<Locale, BlogDictionary> = { en, cs, ru };
 
 export function getBlogDictionary(locale: Locale): BlogDictionary {
   return blogDictionaries[locale] ?? blogDictionaries.en;
@@ -1118,7 +1113,7 @@ export function getAllBlogSlugs(locale: Locale): string[] {
 }
 
 export function getAllBlogRoutes(): Array<{ locale: Locale; slug: string }> {
-  return (["en", "cz", "ru"] as Locale[]).flatMap((locale) =>
+  return (["en", "cs", "ru"] as Locale[]).flatMap((locale) =>
     getAllBlogSlugs(locale).map((slug) => ({ locale, slug }))
   );
 }
@@ -1136,7 +1131,7 @@ export function getBlogAlternateSlugs(
   if (index === -1) return null;
 
   return Object.fromEntries(
-    (["en", "cz", "ru"] as Locale[]).map((l) => [
+    (["en", "cs", "ru"] as Locale[]).map((l) => [
       l,
       getBlogDictionary(l).articles[index]?.slug ?? slug,
     ])

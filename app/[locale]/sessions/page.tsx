@@ -72,23 +72,9 @@ export default async function LocalizedSessionsPage({
     provider: { "@id": personId },
     areaServed: [
       { "@type": "City", name: "Prague" },
-      { "@type": "AdministrativeArea", name: "Online" },
+      { "@type": "Country", name: "Czech Republic" },
     ],
-    availableLanguage: [...availableLanguages],
-    offers: {
-      "@type": "Offer",
-      priceCurrency: "CZK",
-      price: "2500",
-      priceSpecification: {
-        "@type": "PriceSpecification",
-        priceCurrency: "CZK",
-        minPrice: "1500",
-        maxPrice: "3500",
-        unitText: "session",
-      },
-      availability: "https://schema.org/InStock",
-      validFrom: "2025-01-01",
-    },
+    availableLanguage: ["en", "cs", "ru"],
     serviceOutput: {
       "@type": "Thing",
       name: "Psychology Session",

@@ -4,40 +4,39 @@ import { buildLanguageAlternates, toAbsoluteUrl } from "@/lib/seo";
 import { getBlogDictionary } from "@/lib/blog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const defaultOgImage = "/opengraph-image.png";
-  const lastModified = new Date("2026-03-21");
+  const lastModified = new Date();
   const pages = [
     {
       path: "/",
-      imagePath: defaultOgImage,
+      imagePath: "/hero-landscape.webp",
       changeFrequency: "weekly" as const,
       priority: 1,
       lastModified,
     },
     {
       path: "/about",
-      imagePath: defaultOgImage,
+      imagePath: "/about-anna.webp",
       changeFrequency: "monthly" as const,
       priority: 0.8,
       lastModified,
     },
     {
       path: "/sessions",
-      imagePath: defaultOgImage,
+      imagePath: "/sessions-banner.webp",
       changeFrequency: "monthly" as const,
       priority: 0.9,
       lastModified,
     },
     {
       path: "/blog",
-      imagePath: defaultOgImage,
+      imagePath: "/opengraph-image.png",
       changeFrequency: "weekly" as const,
       priority: 0.8,
       lastModified,
     },
     {
       path: "/contact",
-      imagePath: defaultOgImage,
+      imagePath: "/contact-banner.webp",
       changeFrequency: "monthly" as const,
       priority: 0.7,
       lastModified,

@@ -115,16 +115,24 @@ export default function AboutSection({ locale, copy }: AboutSectionProps) {
                   fontWeight: 400,
                   lineHeight: 1.15,
                   color: "#0a0a0a",
-                  marginBottom: "2rem",
+                  marginBottom: "0.6rem",
                 }}
               >
-                <span style={{ display: "block", marginBottom: "0.2rem" }}>
-                  {copy.title}
-                </span>
-                <em style={{ color: "var(--c-blue)", fontStyle: "italic" }}>
-                  {copy.accent}
-                </em>
+                {copy.title}
               </h2>
+              {copy.accent && (
+                <p
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    fontSize: "clamp(0.95rem, 1.4vw, 1.1rem)",
+                    lineHeight: 1.6,
+                    color: "var(--c-blue)",
+                    marginBottom: "2rem",
+                  }}
+                >
+                  {copy.accent}
+                </p>
+              )}
 
               <div
                 style={{
@@ -140,22 +148,6 @@ export default function AboutSection({ locale, copy }: AboutSectionProps) {
               >
                 {copy.paragraphs.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
-                ))}
-              </div>
-
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(3, 1fr)",
-                  gap: "1rem",
-                  padding: "1.8rem 0",
-                  borderTop: "1px solid #e8e4de",
-                  borderBottom: "1px solid #e8e4de",
-                  marginBottom: "2.5rem",
-                }}
-              >
-                {copy.stats.map((s, i) => (
-                  <StatCounter key={i} {...s} delay={0.3 + i * 0.1} />
                 ))}
               </div>
 

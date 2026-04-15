@@ -3,8 +3,6 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import AboutSection from "@/components/AboutSection";
 import ServicesSection from "@/components/ServicesSection";
-import PhilosophySection from "@/components/PhilosophySection";
-import ProcessSection from "@/components/ProcessSection";
 import HomeFaq from "@/components/HomeFaq";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
@@ -86,6 +84,10 @@ export default async function LocalizedHomePage({ params }: LocalePageProps) {
         "@type": "ProfessionalService",
         "@id": serviceId,
         hasOfferCatalog: { "@id": `${homeUrl}#services` },
+        areaServed: [
+          { "@type": "City", name: "Prague" },
+          { "@type": "Country", name: "Czech Republic" },
+        ],
       },
       {
         ...buildLocalizedBreadcrumbSchema(locale, [
@@ -104,15 +106,6 @@ export default async function LocalizedHomePage({ params }: LocalePageProps) {
           },
         })),
       },
-      buildHowToSchema({
-        name: `${dictionary.process.title} ${dictionary.process.accent}`,
-        description: dictionary.process.description,
-        steps: dictionary.process.steps.map((step) => ({
-          name: step.title,
-          text: step.body,
-        })),
-        locale,
-      }),
     ],
   };
 
@@ -151,8 +144,6 @@ export default async function LocalizedHomePage({ params }: LocalePageProps) {
         <Hero locale={locale} copy={dictionary.hero} />
         <AboutSection locale={locale} copy={dictionary.homeAbout} />
         <ServicesSection locale={locale} copy={dictionary.homeServices} />
-        <PhilosophySection copy={dictionary.philosophy} />
-        <ProcessSection locale={locale} copy={dictionary.process} />
         <HomeFaq copy={dictionary.homeFaq} />
       </main>
       <Footer

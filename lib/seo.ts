@@ -8,7 +8,7 @@ export const personId = `${siteUrl}/#person`;
 export const serviceId = `${siteUrl}/#service`;
 export const websiteId = `${siteUrl}/#website`;
 export const defaultOgImagePath = "/opengraph-image.png";
-export const availableLanguages = ["en", "cz", "ru"] as const;
+export const availableLanguages = ["en", "cs", "ru"] as const;
 export const contactEmail = "info@mindofheart.com";
 export const contactPhone = "+420608514450";
 export const serviceAreas = ["Prague", "Online"] as const;
@@ -27,7 +27,7 @@ export const businessGeo = {
 
 const openGraphLocaleMap: Record<Locale, string> = {
   en: "en_US",
-  cz: "cs_CZ",
+  cs: "cs_CZ",
   ru: "ru_RU",
 };
 
@@ -149,7 +149,7 @@ export function buildSiteSchema({ locale, description }: SiteSchemaInput) {
         url: defaultAboutUrl,
         image: toAbsoluteUrl("/about-anna.webp"),
         address: businessAddress,
-        knowsLanguage: [...availableLanguages],
+        knowsLanguage: ["en", "cs", "ru"],
         worksFor: { "@id": serviceId },
         hasCredential: [
           {
@@ -177,23 +177,39 @@ export function buildSiteSchema({ locale, description }: SiteSchemaInput) {
             name: "Prague",
           },
         },
-        sameAs: [defaultHomeUrl, defaultAboutUrl],
       },
       {
-        "@type": "ProfessionalService",
+        "@type": ["ProfessionalService", "LocalBusiness"],
         "@id": serviceId,
-        name: siteName,
+        name: `${siteName} — Anna Kolmykova`,
         url: defaultHomeUrl,
-        image: toAbsoluteUrl("/hero-landscape.webp"),
+        image: toAbsoluteUrl("/about-anna.webp"),
         logo: toAbsoluteUrl("/mind_of_heart_black_cropped.webp"),
         description,
         areaServed: [
           { "@type": "City", name: "Prague" },
-          { "@type": "Country", name: "Online" },
+          {
+            "@type": "Country",
+            name: "Czech Republic",
+          },
         ],
+        availableChannel: {
+          "@type": "ServiceChannel",
+          serviceType: "Online consultation",
+          serviceUrl: contactUrl,
+        },
         email: contactEmail,
         telephone: contactPhone,
         address: businessAddress,
+        geo: businessGeo,
+        knowsAbout: [
+          "Systemic Constellations",
+          "Family Constellations",
+          "Organisational Constellations",
+          "Process-Oriented Psychology",
+          "Personal Coaching",
+          "Psychotherapy",
+        ],
         potentialAction: {
           "@type": "ReserveAction",
           target: {
@@ -221,41 +237,6 @@ export function buildSiteSchema({ locale, description }: SiteSchemaInput) {
           ...availableLanguages.filter((language) => language !== locale),
         ],
         publisher: { "@id": serviceId },
-        potentialAction: {
-          "@type": "SearchAction",
-          target: {
-            "@type": "EntryPoint",
-            urlTemplate: `${defaultHomeUrl}blog?q={search_term_string}`,
-          },
-          "query-input": "required name=search_term_string",
-        },
-      },
-      {
-        "@type": "LocalBusiness",
-        "@id": `${siteUrl}/#localbusiness`,
-        name: `${siteName} — Anna Kolmykova`,
-        description,
-        url: defaultHomeUrl,
-        image: toAbsoluteUrl("/about-anna.webp"),
-        logo: toAbsoluteUrl("/mind_of_heart_black_cropped.webp"),
-        telephone: contactPhone,
-        email: contactEmail,
-        address: businessAddress,
-        geo: businessGeo,
-        areaServed: [
-          { "@type": "City", name: "Prague" },
-          { "@type": "Country", name: "Online" },
-        ],
-        priceRange: "$$",
-        sameAs: [defaultHomeUrl],
-        knowsAbout: [
-          "Systemic Constellations",
-          "Family Constellations",
-          "Organisational Constellations",
-          "Process-Oriented Psychology",
-          "Personal Coaching",
-          "Psychotherapy",
-        ],
       },
     ],
   };
