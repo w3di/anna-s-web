@@ -216,6 +216,11 @@ export function buildSiteSchema({
           "@type": "ServiceChannel",
           serviceType: "Online consultation",
           serviceUrl: contactUrl,
+          availableLanguage: [
+            { "@type": "Language", name: "English", alternateName: "en" },
+            { "@type": "Language", name: "Czech", alternateName: "cs" },
+            { "@type": "Language", name: "Russian", alternateName: "ru" },
+          ],
         },
         email: contactEmail,
         telephone: contactPhone,

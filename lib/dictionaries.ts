@@ -332,7 +332,7 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
         {
           question: "In which languages do you offer sessions?",
           answer:
-            "Sessions are available in English and Russian — both in person in Prague and online worldwide.",
+            "Sessions are available in English, Czech, and Russian — both in person in Prague and online worldwide.",
         },
       ],
     },
@@ -691,7 +691,7 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
         {
           question: "V jakých jazycích nabízíte sezení?",
           answer:
-            "Sezení jsou dostupná v angličtině a ruštině — osobně v Praze i online po celém světě.",
+            "Sezení jsou dostupná v češtině, angličtině a ruštině — osobně v Praze i online po celém světě.",
         },
       ],
     },
@@ -1045,7 +1045,7 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
         {
           question: "На каких языках проводятся сессии?",
           answer:
-            "Сессии доступны на английском и русском — лично в Праге и онлайн по всему миру.",
+            "Сессии доступны на английском, чешском и русском — лично в Праге и онлайн по всему миру.",
         },
       ],
     },
